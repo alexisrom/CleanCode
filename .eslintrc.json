@@ -1,0 +1,32 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "constructor-super": "warn",
+    "valid-typeof": "warn",
+    "complexity": ["warn", 4],
+    "max-statements": ["warn", 16],
+    "max-lines": ["warn", 128],
+    "max-len": ["warn", 64],
+    "max-depth": ["warn", 2],
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "padded-blocks": ["warn", "never"]
+  }
+}
