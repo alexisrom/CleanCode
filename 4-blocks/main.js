@@ -23,30 +23,31 @@ function start() {
 }
 
 function initialize() {
-  // create default board array
-  // sudo random noise
   for (var column = 0; column < BOARD_COLUMNS; column++) {
+    initializeColumn(column);
+  }
+  function initializeColumn(column) {
     board[column] = [];
     nextBoard[column] = [];
     for (var row = 0; row < BOARD_ROWS; row++) {
-      board[column][row] = IS_DEAD;
-      nextBoard[column][row] = IS_DEAD;
-      var randomLifeProbability = Math.random();
-      if (randomLifeProbability > LIFE_PROBABILITY) {
-        board[column][row] = IS_ALIVE;
-      }
+      initializeColumnRow(column, row);
+    }
+  }
+  function initializeColumnRow(column, row) {
+    board[column][row] = IS_DEAD;
+    nextBoard[column][row] = IS_DEAD;
+    var randomLifeProbability = Math.random();
+    if (randomLifeProbability > LIFE_PROBABILITY) {
+      board[column][row] = IS_ALIVE;
     }
   }
 }
 
 function testInitialization() {
+  console.clear();
+  console.log("Begin tests...");
   console.group("Initialization");
   testBoardSize();
-  console.log("board size ok");
-  testNextBoardSize();
-  console.log("nextBoard size ok");
-  testBoardsContents();
-  console.groupEnd();
   function testBoardSize() {
     console.assert(hasBegin(), `board has no begin`, board);
     console.assert(hasEnd(), `board has no end`, board);
@@ -55,9 +56,9 @@ function testInitialization() {
       return board[0][0] !== null;
     }
     function hasEnd() {
-      const lastColumn = BOARD_COLUMNS - 1;
-      const lastRow = BOARD_ROWS - 1;
-      return board[lastColumn][lastRow] !== null;
+      const LAST_COLUMN = BOARD_COLUMNS - 1;
+      const LAST_ROW = BOARD_ROWS - 1;
+      return board[LAST_COLUMN][LAST_ROW] !== null;
     }
     function isNotOversized() {
       return (
@@ -65,6 +66,8 @@ function testInitialization() {
       );
     }
   }
+  console.log("board size ok");
+  testNextBoardSize();
   function testNextBoardSize() {
     console.assert(hasBegin(), `next board has no begin`, nextBoard);
     console.assert(hasEnd(), `next board has no end`, nextBoard);
@@ -73,9 +76,9 @@ function testInitialization() {
       return nextBoard[0][0] !== null;
     }
     function hasEnd() {
-      const lastColumn = BOARD_COLUMNS - 1;
-      const lastRow = BOARD_ROWS - 1;
-      return nextBoard[lastColumn][lastRow] !== null;
+      const LAST_COLUMN = BOARD_COLUMNS - 1;
+      const LAST_ROW = BOARD_ROWS - 1;
+      return nextBoard[LAST_COLUMN][LAST_ROW] !== null;
     }
     function isNotOversized() {
       return (
@@ -84,6 +87,8 @@ function testInitialization() {
       );
     }
   }
+  console.log("nextBoard size ok");
+  testBoardsContents();
   function testBoardsContents() {
     board.forEach(column => {
       column.forEach(row => {
@@ -101,17 +106,22 @@ function testInitialization() {
       return value === IS_ALIVE || value === IS_DEAD;
     }
   }
+  console.groupEnd();
 }
 
 function mainGameLoop() {
-  var now = Date.now();
   updateIteration();
   testUpdateIterations();
-  if (now - initializationTime > TIMING_TEST_MS) {
-    console.log("Test end!!!");
-    return;
+  console.groupEnd();
+  stopOrKeepTesting();
+  function stopOrKeepTesting() {
+    var now = Date.now();
+    if (now - initializationTime < TIMING_TEST_MS) {
+      setTimeout(mainGameLoop, DELAY_MS);
+    } else {
+      console.log("Test end!!!");
+    }
   }
-  setTimeout(mainGameLoop, DELAY_MS);
 }
 
 function updateIteration() {
@@ -119,33 +129,43 @@ function updateIteration() {
   function newGeneration() {
     for (var column = 0; column < BOARD_COLUMNS; column++) {
       for (var row = 0; row < BOARD_ROWS; row++) {
-        var livingNeighbors = countLivingNeighbors(column, row);
-        if (board[column][row] == IS_DEAD) {
-          if (livingNeighbors == REPRODUCTION_POPULATION) {
-            nextBoard[column][row] = IS_ALIVE;
-          }
-        } else {
-          if (
-            livingNeighbors < UNDER_POPULATION ||
-            livingNeighbors > OVER_POPULATION
-          ) {
-            nextBoard[column][row] = IS_DEAD;
-          } else {
-            nextBoard[column][row] = IS_ALIVE;
-          }
-        }
+        generateForCell(column, row);
       }
     }
     board = nextBoard;
+    function generateForCell(column, row) {
+      var livingNeighbors = countLivingNeighbors(column, row);
+      if (board[column][row] == IS_DEAD) {
+        generateForDeadCell();
+      } else {
+        generateForAliveCell();
+      }
+      function generateForDeadCell() {
+        if (livingNeighbors == REPRODUCTION_POPULATION) {
+          nextBoard[column][row] = IS_ALIVE;
+        }
+      }
+      function generateForAliveCell() {
+        if (
+          livingNeighbors < UNDER_POPULATION ||
+          livingNeighbors > OVER_POPULATION
+        ) {
+          nextBoard[column][row] = IS_DEAD;
+        } else {
+          nextBoard[column][row] = IS_ALIVE;
+        }
+      }
+    }
   }
   drawBoardOnCanvas();
   function drawBoardOnCanvas() {
+    // setup canvas
     const DEAD_COLOR = "#fee";
     const ALIVE_COLOR = "#ee66aa";
-    const CELL_SQUARE_PIXELS = 10;
     var boardCanvas = document.getElementById("gameCanvas");
     var canvasContext = boardCanvas.getContext("2d");
-    // setup canvas
+    const CELL_SQUARE_PIXELS = 10;
+
     boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
     boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
     boardCanvas.style.width = boardCanvas.width;
@@ -155,56 +175,39 @@ function updateIteration() {
     canvasContext.fillRect(0, 0, boardCanvas.width, boardCanvas.height);
     for (var column = 0; column < BOARD_COLUMNS; column++) {
       for (var row = 0; row < BOARD_ROWS; row++) {
-        if (board[column][row] == IS_ALIVE) {
-          canvasContext.fillStyle = ALIVE_COLOR;
-          canvasContext.fillRect(
-            column * CELL_SQUARE_PIXELS,
-            row * CELL_SQUARE_PIXELS,
-            CELL_SQUARE_PIXELS,
-            CELL_SQUARE_PIXELS
-          );
-        }
+        fillCell(column, row);
+      }
+    }
+    function fillCell(column, row) {
+      if (board[column][row] == IS_ALIVE) {
+        canvasContext.fillStyle = ALIVE_COLOR;
+        canvasContext.fillRect(
+          column * CELL_SQUARE_PIXELS,
+          row * CELL_SQUARE_PIXELS,
+          CELL_SQUARE_PIXELS,
+          CELL_SQUARE_PIXELS
+        );
       }
     }
   }
 }
 
-function countLivingNeighbors(column, row) {
-  var livingNeighbors = 0;
-  var leftColumn = column - 1;
-  var rightColumn = column + 1;
-  var topRow = row - 1;
-  var bottomRow = row + 1;
-  countIfAlive(leftColumn, topRow);
-  countIfAlive(leftColumn, row);
-  countIfAlive(leftColumn, bottomRow);
-  countIfAlive(column, topRow);
-  countIfAlive(column, bottomRow);
-  countIfAlive(rightColumn, topRow);
-  countIfAlive(rightColumn, row);
-  countIfAlive(rightColumn, bottomRow);
-  function countIfAlive(column, row) {
-    // if x and y on the board
-    if (column > 0 && column < BOARD_COLUMNS && row > 0 && row < BOARD_ROWS) {
-      if (board[column][row] == IS_ALIVE) livingNeighbors++;
-    }
-  }
-  return livingNeighbors;
-}
-
 function testUpdateIterations() {
+  updateIteration();
   testIterations++;
   console.group(`update iteration executed ${testIterations} times`);
   testGoLRules();
   function testGoLRules() {
     for (var column = 0; column < BOARD_COLUMNS; column++) {
       for (var row = 0; row < BOARD_ROWS; row++) {
-        var currentStatus = board[column][row];
-        var nextStatus = nextBoard[column][row];
-        testTransitionOk(currentStatus, nextStatus, column, row);
+        testColumnRow(column, row);
       }
     }
-    console.log("GoL rules ok");
+    function testColumnRow(column, row) {
+      var currentStatus = board[column][row];
+      var nextStatus = nextBoard[column][row];
+      testTransitionOk(currentStatus, nextStatus, column, row);
+    }
     function testTransitionOk(currentStatus, nextStatus, column, row) {
       var livingNeighbors = countLivingNeighbors(column, row);
       var transition = {
@@ -215,12 +218,23 @@ function testUpdateIterations() {
         livingNeighbors
       };
       if (currentStatus == IS_ALIVE) {
+        testTransitionForAliveCell();
+      } else {
+        testTransitionForDeadCell();
+      }
+      function testTransitionForAliveCell() {
         if (nextStatus == IS_ALIVE) {
+          wasOkToKeepAlive();
+        } else {
+          wasOKtoDieByUnderOROverPopulation();
+        }
+        function wasOkToKeepAlive() {
           console.assert(true || livingNeighbors <= OVER_POPULATION, {
             message: "Transition incorrect wasOkToKeepAlive",
             transition
           });
-        } else {
+        }
+        function wasOKtoDieByUnderOROverPopulation() {
           console.assert(
             livingNeighbors < UNDER_POPULATION ||
               livingNeighbors > OVER_POPULATION,
@@ -230,13 +244,20 @@ function testUpdateIterations() {
             }
           );
         }
-      } else {
+      }
+      function testTransitionForDeadCell() {
         if (nextStatus == IS_ALIVE) {
+          wasOkToHaveBorn();
+        } else {
+          WasOkToNotBorn();
+        }
+        function wasOkToHaveBorn() {
           console.assert(livingNeighbors === REPRODUCTION_POPULATION, {
             message: "Transition incorrect isNewBorn",
             transition
           });
-        } else {
+        }
+        function WasOkToNotBorn() {
           console.assert(true || livingNeighbors < REPRODUCTION_POPULATION, {
             message: "Transition incorrect notEnoughToBorn",
             transition
@@ -244,6 +265,32 @@ function testUpdateIterations() {
         }
       }
     }
+    console.log("GoL rules ok");
   }
-  console.groupEnd();
+}
+
+function countLivingNeighbors(column, row) {
+  var livingNeighbors = 0;
+  var leftColumn = column - 1;
+  var rightColumn = column + 1;
+  var topRow = row - 1;
+  var bottomRow = row + 1;
+  visitNeighbors();
+  function visitNeighbors() {
+    countIfAlive(leftColumn, topRow);
+    countIfAlive(leftColumn, row);
+    countIfAlive(leftColumn, bottomRow);
+    countIfAlive(column, topRow);
+    countIfAlive(column, bottomRow);
+    countIfAlive(rightColumn, topRow);
+    countIfAlive(rightColumn, row);
+    countIfAlive(rightColumn, bottomRow);
+    function countIfAlive(column, row) {
+      // if x and y on the board
+      if (column > 0 && column < BOARD_COLUMNS && row > 0 && row < BOARD_ROWS) {
+        if (board[column][row] == IS_ALIVE) livingNeighbors++;
+      }
+    }
+  }
+  return livingNeighbors;
 }
