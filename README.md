@@ -1,7 +1,12 @@
 # Clean Code
 
 **Taller práctico de 10 horas**
+
 Crear y rehacer aplicaciones limpias.
+
+> "Anyone can write code a computer can understand, but professional developers write code _humans_ can understand"
+>
+> -- _Martin Fowler_
 
 ## Introducción
 
@@ -77,3 +82,7 @@ Escribir programas para ser leídos, entendidos y mejorados es un difícil arte 
 
 * Código excepcionalmente robusto
 * Malos olores
+
+> "La verdad sólo se encuentra en un lugar: el código"
+>
+> -- _Robert C. Martin_
