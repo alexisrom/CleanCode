@@ -1,15 +1,14 @@
 import { Board } from "../database/board.js";
-import { CanvasPainter } from "./lib/canvas_painter.js";
-import { LifeGenerator } from "./lib/life_generator.js";
-import { LifeCounter } from "./lib/life_counter.js";
+import { Cell } from "../database/cell.js";
+import { Painter } from "./lib/canvas/painter.js";
+import { Generator } from "./lib/life/generator.js";
 
 export class Game {
   constructor(config, canvasConfig) {
     this._config = config;
-    this._canvasConfig = canvasConfig;
     this._board = new Board(config.COLUMNS, config.ROWS);
-    this._lifeGenerator = new LifeGenerator(this._board, config);
-    this._lifeCounter = new LifeCounter(this._board, config);
+    this._generator = new Generator(this._board, config);
+    this._painter = new Painter(config, canvasConfig);
     this._initialize();
   }
 
@@ -23,8 +22,9 @@ export class Game {
   _initialize() {
     this._board.map(this._initializeCell.bind(this));
   }
-  _initializeCell(cell) {
-    return this._lifeGenerator.initializeState(cell);
+  _initializeCell(item) {
+    const newCell = new Cell(null, null, item.index, 0, 0);
+    return this._generator.initializeState(newCell);
   }
 
   live() {
@@ -32,19 +32,13 @@ export class Game {
     this._drawBoardOnCanvas();
   }
   _calculateNewGeneration() {
-    this._board.map(this._setLifeAroundCell.bind(this));
-    this._board.map(this._generateNextCell.bind(this));
+    this._board.map(this._generateNextState.bind(this));
   }
-  _setLifeAroundCell(cell) {
-    cell.lifeAround = this._lifeCounter.countLifeAround(cell);
-    return cell;
-  }
-  _generateNextCell(cell) {
-    return this._lifeGenerator.generateNextState(cell);
+  _generateNextState(cell) {
+    return this._generator.generateNextState(cell);
   }
 
   _drawBoardOnCanvas() {
-    const canvasPainter = new CanvasPainter(this._config, this._canvasConfig);
-    canvasPainter.fillCanvasWithBoard(this._board);
+    this._painter.fillCanvasWithBoard(this._board);
   }
 }

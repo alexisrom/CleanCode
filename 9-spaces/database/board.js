@@ -1,5 +1,5 @@
 import { Index } from "./index.js";
-import { Cell } from "./cell.js";
+import { Item } from "./item.js";
 export class Board {
   constructor(columns, rows) {
     this._columns = columns;
@@ -19,8 +19,8 @@ export class Board {
       this._board[column] = [];
       for (var row = 0; row < this._rows; row++) {
         const index = new Index(column, row);
-        const newCell = new Cell(null, null, index, 0, 0);
-        this.setItem(index, newCell);
+        const item = new Item(index);
+        this.setItem(index, item);
       }
     }
   }
@@ -52,6 +52,7 @@ export class Board {
       return undefined;
     }
   }
+
   getItem(index) {
     if (this._board[index.column]) {
       return this._board[index.column][index.row];

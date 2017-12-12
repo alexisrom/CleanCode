@@ -2,7 +2,7 @@ import { GameConfig } from "./config/game_config.js";
 import { CanvasConfig } from "./config/canvas_config.js";
 import { TestConfig } from "./config/test_config.js";
 import { Game } from "./app/game.js";
-import { Test } from "./test.js";
+import { Test } from "./test/test.js";
 
 let gameConfig = new GameConfig();
 let canvasConfig = new CanvasConfig();
