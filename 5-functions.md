@@ -4,7 +4,7 @@
 
 > "Una función debería hacer una sóla cosa, hacerla bien, y hacerla sólo ella".
 >
-> -- Ley de Curly.
+> -- _Ley de Curly_.
 
 * **Pequeñas y Organizadas**
 * Con verbos en su nombre que indiquen propósito
