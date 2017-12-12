@@ -1,7 +1,8 @@
+import { Index } from "./../database/index.js";
 export let Test = {
   initialize: function initialize(board, config) {
     console.clear();
-    console.group("initialize");
+    console.group("initialize", config);
     this.boardSize(board, config);
     this.boardContents(board, config);
     console.groupEnd();
@@ -12,21 +13,34 @@ export let Test = {
     console.assert(this.isSmall(board, config), `isSmall`, board);
   },
   hasBegin: function hasBegin(board) {
-    return board.getItemByColumnRow(0, 0) !== null;
+    return board.getItem(new Index(0, 0)) !== null;
   },
   hasEnd: function hasEnd(board, config) {
     const lastColumn = config.COLUMNS - 1;
     const lastRow = config.ROWS - 1;
-    return board.getItemByColumnRow(lastColumn, lastRow) !== null;
+    const index = new Index(lastColumn, lastRow);
+    return board.getItem(index) !== null;
   },
   isSmall: function isSmall(board, config) {
-    return this.noExtraColumn(board, config) && this.noExtraRow(board, config);
+    return (
+      !this.hasExtraColumn(board, config) && !this.hasExtraRow(board, config)
+    );
   },
-  noExtraColumn: function noExtraColumn(board, config) {
-    return board.getItemByColumnRow(config.COLUMNS, 0) == undefined;
+  hasExtraColumn: function hasExtraColumn(board, config) {
+    const index = new Index(config.COLUMNS, 0);
+    try {
+      return board.getItem(index);
+    } catch (e) {
+      return false;
+    }
   },
-  noExtraRow: function noExtraRow(board, config) {
-    return board.getItemByColumnRow(0, config.ROWS) == undefined;
+  hasExtraRow: function hasExtraRow(board, config) {
+    const index = new Index(0, config.ROWS);
+    try {
+      return board.getItem(index);
+    } catch (e) {
+      return false;
+    }
   },
   boardContents: function boardContents(board, config) {
     board.forEach(cell => {

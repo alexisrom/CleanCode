@@ -23,7 +23,7 @@ export class Game {
     this._board.map(this._initializeCell.bind(this));
   }
   _initializeCell(item) {
-    const newCell = new Cell(null, null, item.index, 0, 0);
+    const newCell = new Cell(item.index);
     return this._generator.initializeState(newCell);
   }
 

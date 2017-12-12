@@ -1,3 +1,4 @@
+import { Index } from "./../../../database/index.js";
 export class Counter {
   constructor(board, config) {
     this._board = board;
@@ -23,17 +24,12 @@ export class Counter {
     return liveAround;
   }
   _countIfAlive(column, row) {
-    const cell = this._getCellIfAny(column, row);
-    if (cell) {
-      return this._cellIsAlive(cell);
-    } else {
-      return false;
-    }
-  }
-  _getCellIfAny(column, row) {
-    return this._board.getItemByColumnRow(column, row);
+    const index = new Index(column, row);
+    const cell = this._board.getItem(index);
+    if (this._cellIsAlive(cell)) return 1;
+    else return 0;
   }
   _cellIsAlive(cell) {
-    return cell.state == this._config.IS_ALIVE;
+    return cell && cell.state == this._config.IS_ALIVE;
   }
 }
