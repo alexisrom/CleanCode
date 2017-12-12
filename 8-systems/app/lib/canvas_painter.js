@@ -1,23 +1,22 @@
-import { CanvasConfig } from "./config.js";
-let canvasConfig = new CanvasConfig();
-export class Canvas {
-  constructor(config) {
+export class CanvasPainter {
+  constructor(config, canvasConfig) {
     this._config = config;
+    this._canvasConfig = canvasConfig;
     const CANVAS_ID = "gameCanvas";
     this._canvas = document.getElementById(CANVAS_ID);
     this._setUpCanvasContext();
   }
 
   _setUpCanvasContext() {
-    const canvasSize = this._calculateCanvasSize(
+    const canvasSize = this.calculateCanvasSize(
       this._config.COLUMNS,
       this._config.ROWS,
-      canvasConfig.CELL_SQUARE_PXS
+      this._canvasConfig.CELL_SQUARE_PXS
     );
     this._setSizeOfCanvas(canvasSize);
     this._setCanvasClearContext(canvasSize);
   }
-  _calculateCanvasSize(columns, rows, cellSquarePixels) {
+  calculateCanvasSize(columns, rows, cellSquarePixels) {
     const width = columns * cellSquarePixels;
     const height = rows * cellSquarePixels;
     return { width, height };
@@ -30,7 +29,7 @@ export class Canvas {
   }
   _setCanvasClearContext(size) {
     this._context = this._canvas.getContext("2d");
-    this._context.fillStyle = canvasConfig.DEAD_COLOR;
+    this._context.fillStyle = this._canvasConfig.DEAD_COLOR;
     this._context.fillRect(0, 0, size.width, size.height);
   }
 
@@ -39,7 +38,8 @@ export class Canvas {
   }
   _fillCell(cell) {
     if (this._cellIsAlive(cell)) {
-      this._fillCellState(cell.index, canvasConfig.ALIVE_COLOR);
+      const cell_color = this._canvasConfig.ALIVE_COLOR;
+      this._fillCellState(cell.index, cell_color);
     }
   }
   _cellIsAlive(cell) {
@@ -47,7 +47,7 @@ export class Canvas {
   }
   _fillCellState(index, color) {
     this._context.fillStyle = color;
-    const length = canvasConfig.CELL_SQUARE_PXS;
+    const length = this._canvasConfig.CELL_SQUARE_PXS;
     const left = index.column * length;
     const top = index.row * length;
     this._context.fillRect(left, top, length, length);
