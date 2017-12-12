@@ -1,10 +1,10 @@
-import { Index } from './data.js';
-import { Config } from './config.js';
+import { Index } from "./data.js";
+import { Config } from "./config.js";
 let config = new Config();
 export let Test = {
   initialize: function initialize(board) {
     console.clear();
-    console.group('initialize');
+    console.group("initialize");
     this.boardSize(board);
     this.boardContents(board);
     console.groupEnd();
@@ -19,8 +19,8 @@ export let Test = {
     return board.getItem(index) !== null;
   },
   hasEnd: function hasEnd(board) {
-    const lastColumn = config.BOARD_COLUMNS - 1;
-    const lastRow = config.BOARD_ROWS - 1;
+    const lastColumn = config.COLUMNS - 1;
+    const lastRow = config.ROWS - 1;
     const index = new Index(lastColumn, lastRow);
     return board.getItem(index) !== null;
   },
@@ -28,18 +28,18 @@ export let Test = {
     return this.noExtraColumn(board) && this.noExtraRow(board);
   },
   noExtraColumn: function noExtraColumn(board) {
-    const index = new Index(config.BOARD_COLUMNS, 0);
+    const index = new Index(config.COLUMNS, 0);
     return board.getItem(index) == undefined;
   },
   noExtraRow: function noExtraRow(board) {
-    const index = new Index(0, config.BOARD_ROWS);
+    const index = new Index(0, config.ROWS);
     return board.getItem(index) == undefined;
   },
   boardContents: function boardContents(board) {
     board.forEach(cell => {
       cell === config.IS_ALIVE || cell === config.IS_DEAD;
     });
-    console.log('board contents ok');
+    console.log("board contents ok");
   },
   live: function live(testConfig, board) {
     testConfig.generations++;
@@ -55,7 +55,7 @@ export let Test = {
         this.fromDead(cell);
       }
     });
-    console.log('Test GoL rules end');
+    console.log("Test GoL rules end");
   },
   fromAlive: function fromAlive(cell) {
     if (cell.state == config.IS_ALIVE) {
@@ -66,7 +66,7 @@ export let Test = {
   },
   keepAlive: function keepAlive(cell) {
     console.assert(cell.lifeAround <= config.OVER_POPULATION, {
-      message: 'wasOkToKeepAlive',
+      message: "wasOkToKeepAlive",
       cell
     });
   },
@@ -75,7 +75,7 @@ export let Test = {
       cell.lifeAround <= config.UNDER_POPULATION ||
         cell.lifeAround > config.OVER_POPULATION,
       {
-        message: 'wasOKtoDieByWrongPopulation',
+        message: "wasOKtoDieByWrongPopulation",
         cell
       }
     );
@@ -90,14 +90,14 @@ export let Test = {
   born: function born(cell) {
     if (this.isFirstGeneration(cell)) return;
     console.assert(cell.lifeAround === config.REPRODUCTION, {
-      message: 'wasOkToHaveBorn',
+      message: "wasOkToHaveBorn",
       cell
     });
   },
   notBorn: function notBorn(cell) {
     if (this.isFirstGeneration(cell)) return;
     console.assert(cell.lifeAround < config.REPRODUCTION, {
-      message: 'wasOkToNotBorn',
+      message: "wasOkToNotBorn",
       cell
     });
   },
