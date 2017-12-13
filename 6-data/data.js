@@ -17,10 +17,10 @@ export class Index {
   }
 }
 export class Cell {
-  constructor(state, previous, index, generation, lifeAround) {
+  constructor(index, state, previous, generation, lifeAround) {
+    this._index = index ? index : new Index();
     this._state = state;
     this._previous = previous;
-    this._index = index ? index : new Index();
     this._generation = generation;
     this._lifeAround = lifeAround;
   }
@@ -57,9 +57,9 @@ export class Cell {
 
   clone() {
     return new Cell(
+      this._index,
       this._state,
       this._previous,
-      this._index,
       this._generation,
       this._lifeAround
     );
@@ -85,30 +85,22 @@ export class Board {
       this._board[column] = [];
       for (var row = 0; row < this._rows; row++) {
         const index = new Index(column, row);
-        const newCell = new Cell(null, null, index, 0, 0);
+        const newCell = new Cell(index, null, null, 0, 0);
         this.setItem(index, newCell);
       }
     }
   }
 
   map(callback) {
-    for (var column = 0; column < this._columns; column++) {
-      for (var row = 0; row < this._rows; row++) {
-        const index = new Index(column, row);
-        const cloned = this.cloneItem(index);
-        const mapped = callback(cloned);
-        this.setItem(index, mapped);
-      }
-    }
+    this.forEach(item => {
+      const mapped = callback(item);
+      this.setItem(item.index, mapped);
+    });
   }
   forEach(callback) {
-    for (var column = 0; column < this._columns; column++) {
-      for (var row = 0; row < this._rows; row++) {
-        const index = new Index(column, row);
-        const item = this.getItem(index);
-        callback(item);
-      }
-    }
+    this._board.forEach(column => {
+      column.forEach(item => callback(item));
+    });
   }
 
   cloneItem(index) {
