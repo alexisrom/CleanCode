@@ -37,6 +37,7 @@ export let Test = {
   live: function live(board, config, testConfig) {
     testConfig.generations++;
     console.group(`generation ${testConfig.generations}`);
+    console.table(board);
     this.golRules(board, config);
     console.groupEnd();
   },

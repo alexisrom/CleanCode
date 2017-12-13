@@ -1,5 +1,6 @@
 import { Board } from "./database/board.js";
 import { Cell } from "./database/cell.js";
+import { Item } from "./database/item.js";
 import { Painter } from "./lib/canvas/painter.js";
 import { Generator } from "./lib/life/generator.js";
 import { Counter } from "./lib/life/counter.js";
@@ -37,13 +38,13 @@ export class Game {
   }
 
   _creator(index) {
-    return new Cell(index, null, null, 0, 0);
+    return new Item(index);
   }
   _initialize() {
     this._board.map(this._initializeCell.bind(this));
   }
   _initializeCell(item) {
-    const newCell = new Cell(null, null, item.index, 0, 0);
+    const newCell = new Cell(item.index, null, null, 0, 0);
     return this._generator.initializeState(newCell);
   }
 

@@ -54,7 +54,7 @@ export class Painter {
   }
   _fillState(index, color) {
     this._context.fillStyle = color;
-    const length = this._canvasConfig.CELL_SQUARE_PXS;
+    const length = this._canvasConfig.SQUARE_PXS;
     const left = index.column * length;
     const top = index.row * length;
     this._context.fillRect(left, top, length, length);

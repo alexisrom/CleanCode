@@ -1,7 +1,13 @@
-import { Index } from "./index.js";
-export class Cell {
-  constructor(index, state, previous, generation, lifeAround) {
-    this._index = index ? index : new Index();
+import { Item } from "./item.js";
+export class Cell extends Item {
+  constructor(
+    index,
+    state = null,
+    previous = null,
+    generation = 0,
+    lifeAround = 0
+  ) {
+    super(index);
     this._state = state;
     this._previous = previous;
     this._generation = generation;
@@ -22,13 +28,6 @@ export class Cell {
   }
   set previous(value) {
     this._previous = value;
-  }
-
-  get index() {
-    return this._index;
-  }
-  set index(value) {
-    this._index = value;
   }
 
   get lifeAround() {

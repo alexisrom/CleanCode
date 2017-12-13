@@ -4,10 +4,10 @@ export class Counter {
     this._board = board;
   }
 
-  countLifeAround(cell) {
+  countLifeAround(item) {
     let liveAround = 0;
-    const column = cell.index.column;
-    const row = cell.index.row;
+    const column = item.index.column;
+    const row = item.index.row;
     const leftColumn = column - 1;
     const rightColumn = column + 1;
     const topRow = row - 1;
