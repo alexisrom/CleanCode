@@ -1,3 +1,7 @@
+export const config = {
+  COLUMNS: 140
+};
+
 export class Config {
   constructor() {
     this.COLUMNS = 140;

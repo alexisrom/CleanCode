@@ -143,8 +143,10 @@ function updateIteration() {
     const DEAD_COLOR = "#fee";
     const ALIVE_COLOR = "#ee66aa";
     const CELL_SQUARE_PIXELS = 10;
-    var boardCanvas = document.getElementById("gameCanvas");
-    var canvasContext = boardCanvas.getContext("2d");
+    const CANVAS_ID = "gameCanvas";
+    const CONTEXT_DIMENSIONS = "2d";
+    const boardCanvas = document.getElementById(CANVAS_ID);
+    const canvasContext = boardCanvas.getContext(CONTEXT_DIMENSIONS);
     // setup canvas
     boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
     boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
@@ -153,8 +155,8 @@ function updateIteration() {
     // clear canvas
     canvasContext.fillStyle = DEAD_COLOR;
     canvasContext.fillRect(0, 0, boardCanvas.width, boardCanvas.height);
-    for (var column = 0; column < BOARD_COLUMNS; column++) {
-      for (var row = 0; row < BOARD_ROWS; row++) {
+    for (let column = 0; column < BOARD_COLUMNS; column++) {
+      for (let row = 0; row < BOARD_ROWS; row++) {
         if (board[column][row] == IS_ALIVE) {
           canvasContext.fillStyle = ALIVE_COLOR;
           canvasContext.fillRect(
@@ -170,11 +172,11 @@ function updateIteration() {
 }
 
 function countLivingNeighbors(column, row) {
-  var livingNeighbors = 0;
-  var leftColumn = column - 1;
-  var rightColumn = column + 1;
-  var topRow = row - 1;
-  var bottomRow = row + 1;
+  let livingNeighbors = 0;
+  const leftColumn = column - 1;
+  const rightColumn = column + 1;
+  const topRow = row - 1;
+  const bottomRow = row + 1;
   countIfAlive(leftColumn, topRow);
   countIfAlive(leftColumn, row);
   countIfAlive(leftColumn, bottomRow);
@@ -197,17 +199,17 @@ function testUpdateIterations() {
   console.group(`update iteration executed ${testIterations} times`);
   testGoLRules();
   function testGoLRules() {
-    for (var column = 0; column < BOARD_COLUMNS; column++) {
-      for (var row = 0; row < BOARD_ROWS; row++) {
-        var currentStatus = board[column][row];
-        var nextStatus = nextBoard[column][row];
+    for (let column = 0; column < BOARD_COLUMNS; column++) {
+      for (let row = 0; row < BOARD_ROWS; row++) {
+        const currentStatus = board[column][row];
+        const nextStatus = nextBoard[column][row];
         testTransitionOk(currentStatus, nextStatus, column, row);
       }
     }
     console.log("GoL rules ok");
     function testTransitionOk(currentStatus, nextStatus, column, row) {
-      var livingNeighbors = countLivingNeighbors(column, row);
-      var transition = {
+      const livingNeighbors = countLivingNeighbors(column, row);
+      const transition = {
         currentStatus,
         nextStatus,
         column,

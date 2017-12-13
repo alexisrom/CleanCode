@@ -185,8 +185,15 @@ function cellIsInBoard(column, row) {
   return columnIsInBoard(column) && rowIsInBoard(row);
 }
 function columnIsInBoard(column) {
-  return column >= 0 && column < BOARD_COLUMNS;
+  return columnAfterStart(column) && columnBeforeEnd(column);
 }
+function columnAfterStart(column) {
+  return column >= 0;
+}
+function columnBeforeEnd(column) {
+  return column < BOARD_COLUMNS;
+}
+
 function rowIsInBoard(row) {
   return row >= 0 && row < BOARD_ROWS;
 }
