@@ -1,15 +1,16 @@
 import { Board } from "../database/board.js";
+import { Cell } from "../database/cell.js";
 import { CanvasPainter } from "./lib/canvas_painter.js";
 import { LifeGenerator } from "./lib/life_generator.js";
 import { LifeCounter } from "./lib/life_counter.js";
 
 export class Game {
-  constructor(config, canvasConfig) {
-    this._config = config;
+  constructor(gameConfig, canvasConfig) {
+    this._gameConfig = gameConfig;
     this._canvasConfig = canvasConfig;
-    this._board = new Board(config.COLUMNS, config.ROWS);
-    this._lifeGenerator = new LifeGenerator(this._board, config);
-    this._lifeCounter = new LifeCounter(this._board, config);
+    this._board = new Board(gameConfig.COLUMNS, gameConfig.ROWS, this._creator);
+    this._lifeGenerator = new LifeGenerator(this._board, gameConfig);
+    this._lifeCounter = new LifeCounter(this._board, gameConfig);
     this._initialize();
   }
 
@@ -20,6 +21,9 @@ export class Game {
     this._board = value;
   }
 
+  _creator(index) {
+    return new Cell(index, null, null, 0, 0);
+  }
   _initialize() {
     this._board.map(this._initializeCell.bind(this));
   }
@@ -44,7 +48,10 @@ export class Game {
   }
 
   _drawBoardOnCanvas() {
-    const canvasPainter = new CanvasPainter(this._config, this._canvasConfig);
+    const canvasPainter = new CanvasPainter(
+      this._gameConfig,
+      this._canvasConfig
+    );
     canvasPainter.fillCanvasWithBoard(this._board);
   }
 }

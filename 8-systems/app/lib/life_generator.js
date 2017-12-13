@@ -1,7 +1,7 @@
 export class LifeGenerator {
-  constructor(board, config) {
+  constructor(board, gameConfig) {
     this._board = board;
-    this._config = config;
+    this._gameConfig = gameConfig;
   }
 
   initializeState(cell) {
@@ -14,7 +14,7 @@ export class LifeGenerator {
   }
   _canBeAlive() {
     const randomProbability = Math.random();
-    return randomProbability > this._config.LIFE_PROBABILITY;
+    return randomProbability > this._gameConfig.LIFE_PROBABILITY;
   }
 
   generateNextState(cell) {
@@ -26,7 +26,7 @@ export class LifeGenerator {
     return cell;
   }
   _cellIsDead(cell) {
-    return cell.state == this._config.IS_DEAD;
+    return cell.state == this._gameConfig.IS_DEAD;
   }
   _generateForDeadCell(cell) {
     if (this._cellMustBorn(cell)) {
@@ -41,21 +41,21 @@ export class LifeGenerator {
     }
   }
   _setCellDead(cell) {
-    cell.state = this._config.IS_DEAD;
+    cell.state = this._gameConfig.IS_DEAD;
   }
   _setCellAlive(cell) {
-    cell.state = this._config.IS_ALIVE;
+    cell.state = this._gameConfig.IS_ALIVE;
   }
   _cellMustBorn(cell) {
-    return cell.lifeAround == this._config.REPRODUCTION;
+    return cell.lifeAround == this._gameConfig.REPRODUCTION;
   }
   _cellMustDie(cell) {
     return this._isAlone(cell) || this._isFull(cell);
   }
   _isAlone(cell) {
-    return cell.lifeAround < this._config.UNDER_POPULATION;
+    return cell.lifeAround < this._gameConfig.UNDER_POPULATION;
   }
   _isFull(cell) {
-    return cell.lifeAround > this._config.OVER_POPULATION;
+    return cell.lifeAround > this._gameConfig.OVER_POPULATION;
   }
 }

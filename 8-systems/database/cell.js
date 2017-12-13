@@ -1,9 +1,9 @@
-import { Index } from './index.js';
+import { Index } from "./index.js";
 export class Cell {
-  constructor(state, previous, index, generation, lifeAround) {
+  constructor(index, state, previous, generation, lifeAround) {
+    this._index = index ? index : new Index();
     this._state = state;
     this._previous = previous;
-    this._index = index ? index : new Index();
     this._generation = generation;
     this._lifeAround = lifeAround;
   }
@@ -40,9 +40,9 @@ export class Cell {
 
   clone() {
     return new Cell(
+      this._index,
       this._state,
       this._previous,
-      this._index,
       this._generation,
       this._lifeAround
     );

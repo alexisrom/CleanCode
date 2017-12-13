@@ -1,6 +1,6 @@
 export class CanvasPainter {
-  constructor(config, canvasConfig) {
-    this._config = config;
+  constructor(gameConfig, canvasConfig) {
+    this._gameConfig = gameConfig;
     this._canvasConfig = canvasConfig;
     const CANVAS_ID = "gameCanvas";
     this._canvas = document.getElementById(CANVAS_ID);
@@ -9,8 +9,8 @@ export class CanvasPainter {
 
   _setUpCanvasContext() {
     const canvasSize = this.calculateCanvasSize(
-      this._config.COLUMNS,
-      this._config.ROWS,
+      this._gameConfig.COLUMNS,
+      this._gameConfig.ROWS,
       this._canvasConfig.CELL_SQUARE_PXS
     );
     this._setSizeOfCanvas(canvasSize);
@@ -43,7 +43,7 @@ export class CanvasPainter {
     }
   }
   _cellIsAlive(cell) {
-    return cell.state == this._config.IS_ALIVE;
+    return cell.state == this._gameConfig.IS_ALIVE;
   }
   _fillCellState(index, color) {
     this._context.fillStyle = color;
