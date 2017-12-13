@@ -1,8 +1,8 @@
 import { Board, Index } from "./data.js";
-import { CANVAS, GAME, TEST } from "./config.js";
+import { CANVAS_CONFIG, GAME_CONFIG, TEST_CONFIG } from "./config.js";
 import { Test } from "./test.js";
 
-let board = new Board(GAME.COLUMNS, GAME.ROWS);
+let board = new Board(GAME_CONFIG.COLUMNS, GAME_CONFIG.ROWS);
 
 start();
 function start() {
@@ -29,15 +29,15 @@ function canBeAlive() {
 }
 function mainGameLoop() {
   live();
-  Test.live(TEST, board);
+  Test.live(TEST_CONFIG, board);
   if (keepTesting()) {
-    setTimeout(mainGameLoop, TEST.DELAY_MS);
+    setTimeout(mainGameLoop, TEST_CONFIG.DELAY_MS);
   }
 }
 function keepTesting() {
   const now = Date.now();
-  const workedTime = now - TEST.INITIALIZATION_TIME;
-  return workedTime < TEST.TIMING_TEST_MS;
+  const workedTime = now - TEST_CONFIG.INITIALIZATION_TIME;
+  return workedTime < TEST_CONFIG.TIMING_TEST_MS;
 }
 function live() {
   calculateNewGeneration();
@@ -60,7 +60,7 @@ function generateNextCell(cell) {
   return cell;
 }
 function cellIsDead(cell) {
-  return cell.state == GAME.IS_DEAD;
+  return cell.state == GAME_CONFIG.IS_DEAD;
 }
 function generateForDeadCell(cell) {
   if (cellMustBorn(cell.lifeAround)) {
@@ -75,22 +75,22 @@ function generateForAliveCell(cell) {
   }
 }
 function setCellDead(cell) {
-  cell.state = GAME.IS_DEAD;
+  cell.state = GAME_CONFIG.IS_DEAD;
 }
 function setCellAlive(cell) {
-  cell.state = GAME.IS_ALIVE;
+  cell.state = GAME_CONFIG.IS_ALIVE;
 }
 function cellMustBorn(lifeAround) {
-  return lifeAround == GAME.REPRODUCTION;
+  return lifeAround == GAME_CONFIG.REPRODUCTION;
 }
 function cellMustDie(lifeAround) {
   return isAlone(lifeAround) || isFull(lifeAround);
 }
 function isAlone(lifeAround) {
-  return lifeAround < GAME.UNDER_POPULATION;
+  return lifeAround < GAME_CONFIG.UNDER_POPULATION;
 }
 function isFull(lifeAround) {
-  return lifeAround > GAME.OVER_POPULATION;
+  return lifeAround > GAME_CONFIG.OVER_POPULATION;
 }
 
 function drawBoardOnCanvas() {
@@ -104,20 +104,20 @@ function setUpCanvasContext(canvas) {
   return getCanvasClearContext(canvas);
 }
 function setSizeOfCanvas(canvas) {
-  canvas.width = GAME.COLUMNS * CANVAS.CELL_SQUARE_PXS;
-  canvas.height = GAME.ROWS * CANVAS.CELL_SQUARE_PXS;
+  canvas.width = GAME_CONFIG.COLUMNS * CANVAS_CONFIG.CELL_SQUARE_PXS;
+  canvas.height = GAME_CONFIG.ROWS * CANVAS_CONFIG.CELL_SQUARE_PXS;
   canvas.style.width = canvas.width;
   canvas.style.height = canvas.height;
 }
 function getCanvasClearContext(canvas) {
   const context = canvas.getContext("2d");
-  context.fillStyle = CANVAS.DEAD_COLOR;
+  context.fillStyle = CANVAS_CONFIG.DEAD_COLOR;
   context.fillRect(0, 0, canvas.width, canvas.height);
   return context;
 }
 function fillCanvasContext(context) {
-  for (let column = 0; column < GAME.COLUMNS; column++) {
-    for (let row = 0; row < GAME.ROWS; row++) {
+  for (let column = 0; column < GAME_CONFIG.COLUMNS; column++) {
+    for (let row = 0; row < GAME_CONFIG.ROWS; row++) {
       fillCell(context, column, row);
     }
   }
@@ -128,12 +128,12 @@ function fillCell(context, column, row) {
   }
 }
 function fillCellAlive(context, column, row) {
-  context.fillStyle = CANVAS.ALIVE_COLOR;
+  context.fillStyle = CANVAS_CONFIG.ALIVE_COLOR;
   context.fillRect(
-    column * CANVAS.CELL_SQUARE_PXS,
-    row * CANVAS.CELL_SQUARE_PXS,
-    CANVAS.CELL_SQUARE_PXS,
-    CANVAS.CELL_SQUARE_PXS
+    column * CANVAS_CONFIG.CELL_SQUARE_PXS,
+    row * CANVAS_CONFIG.CELL_SQUARE_PXS,
+    CANVAS_CONFIG.CELL_SQUARE_PXS,
+    CANVAS_CONFIG.CELL_SQUARE_PXS
   );
 }
 function countLifeAround(cell) {
@@ -161,12 +161,12 @@ function cellIsInBoard(column, row) {
   return columnIsInBoard(column) && rowIsInBoard(row);
 }
 function columnIsInBoard(column) {
-  return column >= 0 && column < GAME.COLUMNS;
+  return column >= 0 && column < GAME_CONFIG.COLUMNS;
 }
 function rowIsInBoard(row) {
-  return row >= 0 && row < GAME.ROWS;
+  return row >= 0 && row < GAME_CONFIG.ROWS;
 }
 function cellIsAlive(column, row) {
   const index = new Index(column, row);
-  return board.getItem(index).state == GAME.IS_ALIVE;
+  return board.getItem(index).state == GAME_CONFIG.IS_ALIVE;
 }

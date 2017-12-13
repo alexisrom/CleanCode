@@ -1,11 +1,15 @@
-import { Config } from "./config.js";
-import { Board, Index } from "./data.js";
+import { Board, Cell, Index } from "./data.js";
 import { Canvas } from "./canvas.js";
-let config = new Config();
 
 export class Game {
-  constructor() {
-    this._board = new Board(config.COLUMNS, config.ROWS);
+  constructor(gameConfig, canvasConfig) {
+    this._gameConfig = gameConfig;
+    this._canvasConfig = canvasConfig;
+    this._board = new Board(
+      this._gameConfig.COLUMNS,
+      this._gameConfig.ROWS,
+      this._creator
+    );
     this._initialize();
   }
 
@@ -16,6 +20,9 @@ export class Game {
     this._board = value;
   }
 
+  _creator(index) {
+    return new Cell(index, null, null, 0, 0);
+  }
   _initialize() {
     this._board.map(this._initializeCell.bind(this));
   }
@@ -29,7 +36,7 @@ export class Game {
   }
   _canBeAlive() {
     const randomLifeProbability = Math.random();
-    return randomLifeProbability > config.LIFE_PROBABILITY;
+    return randomLifeProbability > this._gameConfig.LIFE_PROBABILITY;
   }
 
   live() {
@@ -53,7 +60,7 @@ export class Game {
     return cell;
   }
   _cellIsDead(cell) {
-    return cell.state == config.IS_DEAD;
+    return cell.state == this._gameConfig.IS_DEAD;
   }
   _generateForDeadCell(cell) {
     if (this._cellMustBorn(cell)) {
@@ -69,37 +76,37 @@ export class Game {
   }
 
   _setCellDead(cell) {
-    cell.state = config.IS_DEAD;
+    cell.state = this._gameConfig.IS_DEAD;
   }
   _setCellAlive(cell) {
-    cell.state = config.IS_ALIVE;
+    cell.state = this._gameConfig.IS_ALIVE;
   }
   _cellMustBorn(cell) {
-    return cell.lifeAround == config.REPRODUCTION;
+    return cell.lifeAround == this._gameConfig.REPRODUCTION;
   }
   _cellMustDie(cell) {
     return this._isAlone(cell) || this._isFull(cell);
   }
   _isAlone(cell) {
-    return cell.lifeAround < config.UNDER_POPULATION;
+    return cell.lifeAround < this._gameConfig.UNDER_POPULATION;
   }
   _isFull(cell) {
-    return cell.lifeAround > config.OVER_POPULATION;
+    return cell.lifeAround > this._gameConfig.OVER_POPULATION;
   }
 
   _drawBoardOnCanvas() {
-    const canvas = new Canvas(config);
+    const canvas = new Canvas(this._gameConfig, this._canvasConfig);
     canvas.fillCanvasWithBoard(this._board);
   }
 
   _countLifeAround(cell) {
-    var liveAround = 0;
-    var cellColumn = cell.index.column;
-    var cellRow = cell.index.row;
-    var leftColumn = cellColumn - 1;
-    var rightColumn = cellColumn + 1;
-    var topRow = cellRow - 1;
-    var bottomRow = cellRow + 1;
+    let liveAround = 0;
+    const cellColumn = cell.index.column;
+    const cellRow = cell.index.row;
+    const leftColumn = cellColumn - 1;
+    const rightColumn = cellColumn + 1;
+    const topRow = cellRow - 1;
+    const bottomRow = cellRow + 1;
     liveAround += this._countIfAlive(leftColumn, topRow);
     liveAround += this._countIfAlive(leftColumn, cellRow);
     liveAround += this._countIfAlive(leftColumn, bottomRow);
@@ -117,7 +124,7 @@ export class Game {
   }
   _cellIsAlive(cell) {
     if (cell) {
-      return cell.state == config.IS_ALIVE;
+      return cell.state == this._gameConfig.IS_ALIVE;
     } else {
       return false;
     }

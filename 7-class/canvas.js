@@ -1,18 +1,16 @@
-import { CanvasConfig } from "./config.js";
-let canvasConfig = new CanvasConfig();
 export class Canvas {
-  constructor(config) {
-    this._config = config;
-    const CANVAS_ID = "gameCanvas";
-    this._canvas = document.getElementById(CANVAS_ID);
+  constructor(gameConfig, canvasConfig) {
+    this._gameConfig = gameConfig;
+    this._canvasConfig = canvasConfig;
+    this._canvas = document.getElementById(this._canvasConfig.CANVAS_ID);
     this._setUpCanvasContext();
   }
 
   _setUpCanvasContext() {
     const canvasSize = this._calculateCanvasSize(
-      this._config.COLUMNS,
-      this._config.ROWS,
-      canvasConfig.CELL_SQUARE_PXS
+      this._gameConfig.COLUMNS,
+      this._gameConfig.ROWS,
+      this._canvasConfig.CELL_SQUARE_PXS
     );
     this._setSizeOfCanvas(canvasSize);
     this._setCanvasClearContext(canvasSize);
@@ -30,7 +28,7 @@ export class Canvas {
   }
   _setCanvasClearContext(size) {
     this._context = this._canvas.getContext("2d");
-    this._context.fillStyle = canvasConfig.DEAD_COLOR;
+    this._context.fillStyle = this._canvasConfig.DEAD_COLOR;
     this._context.fillRect(0, 0, size.width, size.height);
   }
 
@@ -39,15 +37,15 @@ export class Canvas {
   }
   _fillCell(cell) {
     if (this._cellIsAlive(cell)) {
-      this._fillCellState(cell.index, canvasConfig.ALIVE_COLOR);
+      this._fillCellState(cell.index, this._canvasConfig.ALIVE_COLOR);
     }
   }
   _cellIsAlive(cell) {
-    return cell.state == this._config.IS_ALIVE;
+    return cell.state == this._gameConfig.IS_ALIVE;
   }
   _fillCellState(index, color) {
     this._context.fillStyle = color;
-    const length = canvasConfig.CELL_SQUARE_PXS;
+    const length = this._canvasConfig.CELL_SQUARE_PXS;
     const left = index.column * length;
     const top = index.row * length;
     this._context.fillRect(left, top, length, length);

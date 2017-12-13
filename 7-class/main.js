@@ -1,27 +1,26 @@
-import { TestConfig } from "./config.js";
+import { GAME_CONFIG, CANVAS_CONFIG, TEST_CONFIG } from "./config.js";
 import { Game } from "./game.js";
 import { Test } from "./test.js";
 
-let testConfig = new TestConfig();
 let game;
 
 start();
 function start() {
-  game = new Game();
+  game = new Game(GAME_CONFIG, CANVAS_CONFIG);
   Test.initialize(game.board);
   mainGameLoop();
 }
 
 function mainGameLoop() {
   game.live();
-  Test.live(testConfig, game.board);
+  Test.live(TEST_CONFIG, game.board);
   if (keepTesting()) {
-    setTimeout(mainGameLoop, testConfig.DELAY_MS);
+    setTimeout(mainGameLoop, TEST_CONFIG.DELAY_MS);
   }
 }
 
 function keepTesting() {
   var now = Date.now();
-  var workedTime = now - testConfig.INITIALIZATION_TIME;
-  return workedTime < testConfig.TIMING_TEST_MS;
+  var workedTime = now - TEST_CONFIG.INITIALIZATION_TIME;
+  return workedTime < TEST_CONFIG.TIMING_TEST_MS;
 }
