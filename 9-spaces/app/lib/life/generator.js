@@ -7,41 +7,41 @@ export class Generator {
     this._executor = executor;
   }
 
-  initializeState(cell) {
+  initializeState(item) {
     if (this._judge.canBeAlive()) {
-      this._executor.setCellAlive(cell);
+      this._executor.setAlive(item);
     } else {
-      this._executor.setCellDead(cell);
+      this._executor.setDead(item);
     }
-    return cell;
+    return item;
   }
 
-  generateNextState(cell) {
-    this._setLifeAroundCell(cell);
-    if (this._cellIsDead(cell)) {
-      this._generateForDeadCell(cell);
+  generateNextState(item) {
+    this._setLifeAround(item);
+    if (this._cellIsDead(item)) {
+      this._generateForDead(item);
     } else {
-      this._generateForAliveCell(cell);
+      this._generateForAlive(item);
     }
-    return cell;
+    return item;
   }
-  _setLifeAroundCell(cell) {
-    cell.lifeAround = this._counter.countLifeAround(cell);
-    return cell;
+  _setLifeAround(item) {
+    item.lifeAround = this._counter.countLifeAround(item);
+    return item;
   }
-  _cellIsDead(cell) {
-    return cell.state == this._gameConfig.IS_DEAD;
+  _cellIsDead(item) {
+    return item.state == this._gameConfig.IS_DEAD;
   }
-  _generateForDeadCell(cell) {
-    if (this._judge.cellMustBorn(cell)) {
-      this._executor.setCellAlive(cell);
+  _generateForDead(item) {
+    if (this._judge.mustBorn(item)) {
+      this._executor.setAlive(item);
     }
   }
-  _generateForAliveCell(cell) {
-    if (this._judge.cellMustDie(cell)) {
-      this._executor.setCellDead(cell);
+  _generateForAlive(item) {
+    if (this._judge.mustDie(item)) {
+      this._executor.setDead(item);
     } else {
-      this._executor.setCellAlive(cell);
+      this._executor.setAlive(item);
     }
   }
 }

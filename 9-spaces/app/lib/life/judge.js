@@ -7,16 +7,16 @@ export class Judge {
     const randomProbability = Math.random();
     return randomProbability > this._config.LIFE_PROBABILITY;
   }
-  cellMustBorn(cell) {
-    return cell.lifeAround == this._config.REPRODUCTION;
+  mustBorn(item) {
+    return item.lifeAround == this._config.REPRODUCTION;
   }
-  cellMustDie(cell) {
-    return this.isAlone(cell) || this.isFull(cell);
+  mustDie(item) {
+    return this._isAlone(item) || this._isFull(item);
   }
-  isAlone(cell) {
-    return cell.lifeAround < this._config.UNDER_POPULATION;
+  _isAlone(item) {
+    return item.lifeAround < this._config.UNDER_POPULATION;
   }
-  isFull(cell) {
-    return cell.lifeAround > this._config.OVER_POPULATION;
+  _isFull(item) {
+    return item.lifeAround > this._config.OVER_POPULATION;
   }
 }
