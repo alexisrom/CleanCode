@@ -1,7 +1,7 @@
-export class LifeCounter {
-  constructor(board, gameConfig) {
-    this._board = board;
+export class Counter {
+  constructor(gameConfig, board) {
     this._gameConfig = gameConfig;
+    this._board = board;
   }
 
   countLifeAround(cell) {

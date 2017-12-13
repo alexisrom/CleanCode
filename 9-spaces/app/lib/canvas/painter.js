@@ -1,4 +1,4 @@
-export class CanvasPainter {
+export class Painter {
   constructor(gameConfig, canvasConfig) {
     this._gameConfig = gameConfig;
     this._canvasConfig = canvasConfig;
@@ -7,8 +7,11 @@ export class CanvasPainter {
     this._setUpCanvasContext();
   }
 
+  _getCanvas(canvasId) {
+    return document.getElementById(canvasId);
+  }
   _setUpCanvasContext() {
-    const canvasSize = this.calculateCanvasSize(
+    const canvasSize = this._calculateCanvasSize(
       this._gameConfig.COLUMNS,
       this._gameConfig.ROWS,
       this._canvasConfig.CELL_SQUARE_PXS
@@ -16,7 +19,7 @@ export class CanvasPainter {
     this._setSizeOfCanvas(canvasSize);
     this._setCanvasClearContext(canvasSize);
   }
-  calculateCanvasSize(columns, rows, cellSquarePixels) {
+  _calculateCanvasSize(columns, rows, cellSquarePixels) {
     const width = columns * cellSquarePixels;
     const height = rows * cellSquarePixels;
     return { width, height };
@@ -37,10 +40,14 @@ export class CanvasPainter {
     board.forEach(this._fillCell.bind(this));
   }
   _fillCell(cell) {
+    this._fillCellState(cell.index, this._getColor(cell));
+  }
+  _getColor(cell) {
+    let color = this._canvasConfig.DEAD_COLOR;
     if (this._cellIsAlive(cell)) {
-      const cell_color = this._canvasConfig.ALIVE_COLOR;
-      this._fillCellState(cell.index, cell_color);
+      color = this._canvasConfig.ALIVE_COLOR;
     }
+    return color;
   }
   _cellIsAlive(cell) {
     return cell.state == this._gameConfig.IS_ALIVE;
