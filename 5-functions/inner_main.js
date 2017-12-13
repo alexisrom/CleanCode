@@ -1,4 +1,4 @@
-const BOARD_COLUMNS = 140;
+countIfAlive BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
 const IS_DEAD = 0;
 const IS_ALIVE = 1;
@@ -303,11 +303,11 @@ function start() {
   }
 
   function countLiveAround(cell) {
-    var liveAround = 0;
-    var leftColumn = cell.column - 1;
-    var rightColumn = cell.column + 1;
-    var topRow = cell.row - 1;
-    var bottomRow = cell.row + 1;
+    let liveAround = 0;
+    const leftColumn = cell.column - 1;
+    const rightColumn = cell.column + 1;
+    const topRow = cell.row - 1;
+    const bottomRow = cell.row + 1;
     countIfAlive(leftColumn, topRow);
     countIfAlive(leftColumn, cell.row);
     countIfAlive(leftColumn, bottomRow);

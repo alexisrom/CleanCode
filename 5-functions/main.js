@@ -45,8 +45,11 @@ function setInitialDead(column, row) {
 }
 function setSomeoneAlive(column, row) {
   if (canBeAlive()) {
-    board[column][row] = IS_ALIVE;
+    setCellAlive(column, row);
   }
+}
+function setCellAlive(column, row) {
+  board[column][row] = IS_ALIVE;
 }
 function canBeAlive() {
   const LIFE_PROBABILITY = 0.44;
@@ -136,7 +139,8 @@ function setSizeOfCanvas(canvas) {
   canvas.style.height = canvas.height;
 }
 function getCanvasClearContext(canvas) {
-  const context = canvas.getContext("2d");
+  const CONTEXT_DIMENSION = "2d";
+  const context = canvas.getContext(CONTEXT_DIMENSION);
   context.fillStyle = DEAD_COLOR;
   context.fillRect(0, 0, canvas.width, canvas.height);
   return context;
@@ -163,11 +167,11 @@ function fillCellAlive(context, column, row) {
   );
 }
 function countLiveAround(cell) {
-  var liveAround = 0;
-  var leftColumn = cell.column - 1;
-  var rightColumn = cell.column + 1;
-  var topRow = cell.row - 1;
-  var bottomRow = cell.row + 1;
+  let liveAround = 0;
+  const leftColumn = cell.column - 1;
+  const rightColumn = cell.column + 1;
+  const topRow = cell.row - 1;
+  const bottomRow = cell.row + 1;
   liveAround += countIfAlive(leftColumn, topRow);
   liveAround += countIfAlive(leftColumn, cell.row);
   liveAround += countIfAlive(leftColumn, bottomRow);
@@ -195,7 +199,13 @@ function columnBeforeEnd(column) {
 }
 
 function rowIsInBoard(row) {
-  return row >= 0 && row < BOARD_ROWS;
+  return rowIsAfterInit(row) && rowIsBeforeEnd(row);
+}
+function rowIsAfterInit(row) {
+  return row >= 0;
+}
+function rowIsBeforeEnd(row) {
+  return row < BOARD_ROWS;
 }
 function cellIsAlive(column, row) {
   return board[column][row] == IS_ALIVE;
@@ -265,10 +275,10 @@ function testGoLRules() {
   console.groupEnd();
 }
 function testIfTransitionWasOkForCell(column, row) {
-  var previousStatus = previousBoard[column][row];
-  var currentStatus = board[column][row];
-  var liveAround = countLiveAround(previousBoard, column, row);
-  var transition = {
+  const previousStatus = previousBoard[column][row];
+  const currentStatus = board[column][row];
+  const liveAround = countLiveAround(previousBoard, column, row);
+  const transition = {
     previousStatus,
     currentStatus,
     column,
@@ -347,7 +357,7 @@ function stopOrKeepTesting() {
 }
 function keepTesting() {
   const TIMING_TEST_MS = 5000;
-  var now = Date.now();
-  var workedTime = now - INITIALIZATION_TIME;
+  const now = Date.now();
+  const workedTime = now - INITIALIZATION_TIME;
   return workedTime < TIMING_TEST_MS;
 }

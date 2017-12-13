@@ -1,30 +1,22 @@
-export const config = {
-  COLUMNS: 140
+export const GAME = {
+  COLUMNS: 140,
+  ROWS: 70,
+  IS_DEAD: 0,
+  IS_ALIVE: 1,
+  REPRODUCTION: 3,
+  UNDER_POPULATION: 2,
+  OVER_POPULATION: 3
 };
 
-export class Config {
-  constructor() {
-    this.COLUMNS = 140;
-    this.ROWS = 70;
-    this.IS_DEAD = 0;
-    this.IS_ALIVE = 1;
-    this.REPRODUCTION = 3;
-    this.UNDER_POPULATION = 2;
-    this.OVER_POPULATION = 3;
-  }
-}
-export class CanvasConfig {
-  constructor() {
-    this.DEAD_COLOR = "#eee";
-    this.ALIVE_COLOR = "#0080ff";
-    this.CELL_SQUARE_PXS = 10;
-  }
-}
-export class TestConfig {
-  constructor() {
-    this.DELAY_MS = 50;
-    this.INITIALIZATION_TIME = Date.now();
-    this.TIMING_TEST_MS = 5000;
-    this.generations = 0;
-  }
-}
+export const CANVAS = {
+  DEAD_COLOR: "#eee",
+  ALIVE_COLOR: "#0080ff",
+  CELL_SQUARE_PXS: 10
+};
+
+export const TEST = {
+  DELAY_MS: 50,
+  INITIALIZATION_TIME: Date.now(),
+  TIMING_TEST_MS: 5000,
+  generations: 0
+};

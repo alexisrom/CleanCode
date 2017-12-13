@@ -1,11 +1,8 @@
 import { Board, Index } from "./data.js";
-import { CanvasConfig, Config, TestConfig } from "./config.js";
+import { CANVAS, GAME, TEST } from "./config.js";
 import { Test } from "./test.js";
 
-let config = new Config();
-let canvasConfig = new CanvasConfig();
-let testConfig = new TestConfig();
-let board = new Board(config.COLUMNS, config.ROWS);
+let board = new Board(GAME.COLUMNS, GAME.ROWS);
 
 start();
 function start() {
@@ -32,15 +29,15 @@ function canBeAlive() {
 }
 function mainGameLoop() {
   live();
-  Test.live(testConfig, board);
+  Test.live(TEST, board);
   if (keepTesting()) {
-    setTimeout(mainGameLoop, testConfig.DELAY_MS);
+    setTimeout(mainGameLoop, TEST.DELAY_MS);
   }
 }
 function keepTesting() {
-  var now = Date.now();
-  var workedTime = now - testConfig.INITIALIZATION_TIME;
-  return workedTime < testConfig.TIMING_TEST_MS;
+  const now = Date.now();
+  const workedTime = now - TEST.INITIALIZATION_TIME;
+  return workedTime < TEST.TIMING_TEST_MS;
 }
 function live() {
   calculateNewGeneration();
@@ -63,7 +60,7 @@ function generateNextCell(cell) {
   return cell;
 }
 function cellIsDead(cell) {
-  return cell.state == config.IS_DEAD;
+  return cell.state == GAME.IS_DEAD;
 }
 function generateForDeadCell(cell) {
   if (cellMustBorn(cell.lifeAround)) {
@@ -78,22 +75,22 @@ function generateForAliveCell(cell) {
   }
 }
 function setCellDead(cell) {
-  cell.state = config.IS_DEAD;
+  cell.state = GAME.IS_DEAD;
 }
 function setCellAlive(cell) {
-  cell.state = config.IS_ALIVE;
+  cell.state = GAME.IS_ALIVE;
 }
 function cellMustBorn(lifeAround) {
-  return lifeAround == config.REPRODUCTION;
+  return lifeAround == GAME.REPRODUCTION;
 }
 function cellMustDie(lifeAround) {
   return isAlone(lifeAround) || isFull(lifeAround);
 }
 function isAlone(lifeAround) {
-  return lifeAround < config.UNDER_POPULATION;
+  return lifeAround < GAME.UNDER_POPULATION;
 }
 function isFull(lifeAround) {
-  return lifeAround > config.OVER_POPULATION;
+  return lifeAround > GAME.OVER_POPULATION;
 }
 
 function drawBoardOnCanvas() {
@@ -107,20 +104,20 @@ function setUpCanvasContext(canvas) {
   return getCanvasClearContext(canvas);
 }
 function setSizeOfCanvas(canvas) {
-  canvas.width = config.COLUMNS * canvasConfig.CELL_SQUARE_PXS;
-  canvas.height = config.ROWS * canvasConfig.CELL_SQUARE_PXS;
+  canvas.width = GAME.COLUMNS * CANVAS.CELL_SQUARE_PXS;
+  canvas.height = GAME.ROWS * CANVAS.CELL_SQUARE_PXS;
   canvas.style.width = canvas.width;
   canvas.style.height = canvas.height;
 }
 function getCanvasClearContext(canvas) {
   const context = canvas.getContext("2d");
-  context.fillStyle = canvasConfig.DEAD_COLOR;
+  context.fillStyle = CANVAS.DEAD_COLOR;
   context.fillRect(0, 0, canvas.width, canvas.height);
   return context;
 }
 function fillCanvasContext(context) {
-  for (var column = 0; column < config.COLUMNS; column++) {
-    for (var row = 0; row < config.ROWS; row++) {
+  for (let column = 0; column < GAME.COLUMNS; column++) {
+    for (let row = 0; row < GAME.ROWS; row++) {
       fillCell(context, column, row);
     }
   }
@@ -131,22 +128,22 @@ function fillCell(context, column, row) {
   }
 }
 function fillCellAlive(context, column, row) {
-  context.fillStyle = canvasConfig.ALIVE_COLOR;
+  context.fillStyle = CANVAS.ALIVE_COLOR;
   context.fillRect(
-    column * canvasConfig.CELL_SQUARE_PXS,
-    row * canvasConfig.CELL_SQUARE_PXS,
-    canvasConfig.CELL_SQUARE_PXS,
-    canvasConfig.CELL_SQUARE_PXS
+    column * CANVAS.CELL_SQUARE_PXS,
+    row * CANVAS.CELL_SQUARE_PXS,
+    CANVAS.CELL_SQUARE_PXS,
+    CANVAS.CELL_SQUARE_PXS
   );
 }
 function countLifeAround(cell) {
-  var liveAround = 0;
-  var cellColumn = cell.index.column;
-  var cellRow = cell.index.row;
-  var leftColumn = cellColumn - 1;
-  var rightColumn = cellColumn + 1;
-  var topRow = cellRow - 1;
-  var bottomRow = cellRow + 1;
+  let liveAround = 0;
+  const cellColumn = cell.index.column;
+  const cellRow = cell.index.row;
+  const leftColumn = cellColumn - 1;
+  const rightColumn = cellColumn + 1;
+  const topRow = cellRow - 1;
+  const bottomRow = cellRow + 1;
   liveAround += countIfAlive(leftColumn, topRow);
   liveAround += countIfAlive(leftColumn, cellRow);
   liveAround += countIfAlive(leftColumn, bottomRow);
@@ -164,12 +161,12 @@ function cellIsInBoard(column, row) {
   return columnIsInBoard(column) && rowIsInBoard(row);
 }
 function columnIsInBoard(column) {
-  return column >= 0 && column < config.COLUMNS;
+  return column >= 0 && column < GAME.COLUMNS;
 }
 function rowIsInBoard(row) {
-  return row >= 0 && row < config.ROWS;
+  return row >= 0 && row < GAME.ROWS;
 }
 function cellIsAlive(column, row) {
   const index = new Index(column, row);
-  return board.getItem(index).state == config.IS_ALIVE;
+  return board.getItem(index).state == GAME.IS_ALIVE;
 }
