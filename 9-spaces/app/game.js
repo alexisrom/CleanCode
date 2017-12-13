@@ -1,14 +1,16 @@
-import { Board } from "../database/board.js";
-import { Cell } from "../database/cell.js";
-import { Painter } from "./lib/canvas/painter.js";
-import { Generator } from "./lib/life/generator.js";
+import { Board } from "./database/board.js";
+import { Cell } from "./database/cell.js";
+import { CanvasPainter } from "./lib/canvas_painter.js";
+import { LifeGenerator } from "./lib/life_generator.js";
+import { LifeCounter } from "./lib/life_counter.js";
 
 export class Game {
-  constructor(config, canvasConfig) {
-    this._config = config;
-    this._board = new Board(config.COLUMNS, config.ROWS);
-    this._generator = new Generator(this._board, config);
-    this._painter = new Painter(config, canvasConfig);
+  constructor(gameConfig, canvasConfig) {
+    this._gameConfig = gameConfig;
+    this._canvasConfig = canvasConfig;
+    this._board = new Board(gameConfig.COLUMNS, gameConfig.ROWS, this._creator);
+    this._lifeGenerator = new LifeGenerator(this._board, gameConfig);
+    this._lifeCounter = new LifeCounter(this._board, gameConfig);
     this._initialize();
   }
 
@@ -19,12 +21,14 @@ export class Game {
     this._board = value;
   }
 
+  _creator(index) {
+    return new Cell(index, null, null, 0, 0);
+  }
   _initialize() {
     this._board.map(this._initializeCell.bind(this));
   }
-  _initializeCell(item) {
-    const newCell = new Cell(null, null, item.index, 0, 0);
-    return this._generator.initializeState(newCell);
+  _initializeCell(cell) {
+    return this._lifeGenerator.initializeState(cell);
   }
 
   live() {
@@ -32,13 +36,22 @@ export class Game {
     this._drawBoardOnCanvas();
   }
   _calculateNewGeneration() {
-    this._board.map(this._generateNextState.bind(this));
+    this._board.map(this._setLifeAroundCell.bind(this));
+    this._board.map(this._generateNextCell.bind(this));
   }
-  _generateNextState(cell) {
-    return this._generator.generateNextState(cell);
+  _setLifeAroundCell(cell) {
+    cell.lifeAround = this._lifeCounter.countLifeAround(cell);
+    return cell;
+  }
+  _generateNextCell(cell) {
+    return this._lifeGenerator.generateNextState(cell);
   }
 
   _drawBoardOnCanvas() {
-    this._painter.fillCanvasWithBoard(this._board);
+    const canvasPainter = new CanvasPainter(
+      this._gameConfig,
+      this._canvasConfig
+    );
+    canvasPainter.fillCanvasWithBoard(this._board);
   }
 }

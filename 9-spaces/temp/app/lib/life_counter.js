@@ -1,17 +1,17 @@
 export class LifeCounter {
-  constructor(board, gameConfig) {
+  constructor(board, config) {
     this._board = board;
-    this._gameConfig = gameConfig;
+    this._config = config;
   }
 
   countLifeAround(cell) {
-    let liveAround = 0;
-    const cellColumn = cell.index.column;
-    const cellRow = cell.index.row;
-    const leftColumn = cellColumn - 1;
-    const rightColumn = cellColumn + 1;
-    const topRow = cellRow - 1;
-    const bottomRow = cellRow + 1;
+    var liveAround = 0;
+    var cellColumn = cell.index.column;
+    var cellRow = cell.index.row;
+    var leftColumn = cellColumn - 1;
+    var rightColumn = cellColumn + 1;
+    var topRow = cellRow - 1;
+    var bottomRow = cellRow + 1;
     liveAround += this._countIfAlive(leftColumn, topRow);
     liveAround += this._countIfAlive(leftColumn, cellRow);
     liveAround += this._countIfAlive(leftColumn, bottomRow);
@@ -28,7 +28,7 @@ export class LifeCounter {
   }
   _cellIsAlive(cell) {
     if (cell) {
-      return cell.state == this._gameConfig.IS_ALIVE;
+      return cell.state == this._config.IS_ALIVE;
     } else {
       return false;
     }
