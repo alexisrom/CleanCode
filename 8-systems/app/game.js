@@ -1,5 +1,5 @@
-import { Board } from "../database/board.js";
-import { Cell } from "../database/cell.js";
+import { Board } from "./database/board.js";
+import { Cell } from "./database/cell.js";
 import { CanvasPainter } from "./lib/canvas_painter.js";
 import { LifeGenerator } from "./lib/life_generator.js";
 import { LifeCounter } from "./lib/life_counter.js";
