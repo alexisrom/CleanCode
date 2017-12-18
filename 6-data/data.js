@@ -70,6 +70,7 @@ export class Board {
   constructor(columns, rows) {
     this._columns = columns;
     this._rows = rows;
+    this._board = [];
     this._createBoard();
   }
   get board() {
@@ -80,7 +81,6 @@ export class Board {
   }
 
   _createBoard() {
-    this._board = [];
     for (var column = 0; column < this._columns; column++) {
       this._board[column] = [];
       for (var row = 0; row < this._rows; row++) {
@@ -92,7 +92,7 @@ export class Board {
   }
 
   map(callback) {
-    this.forEach(item => {
+    this.forEach(function(item) {
       const mapped = callback(item);
       this.setItem(item.index, mapped);
     });

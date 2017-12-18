@@ -1,4 +1,4 @@
-countIfAlive BOARD_COLUMNS = 140;
+const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
 const IS_DEAD = 0;
 const IS_ALIVE = 1;
