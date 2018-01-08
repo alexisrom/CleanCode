@@ -1,4 +1,6 @@
 {
   "javascript.format.enable": true,
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "workbench.colorTheme": "Visual Studio Light",
+  "prettier.eslintIntegration": true
 }

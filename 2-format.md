@@ -3,6 +3,7 @@
 ## Código bonito.
 
 ![Tabs vs Spaces](./tabs_vs_spaces.png)
+[eslint-recommended](https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js)
 
 > "Always leave the campground cleaner than you found it"
 >

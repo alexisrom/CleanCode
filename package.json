@@ -1,0 +1,24 @@
+{
+  "name": "cleancode",
+  "version": "1.0.0",
+  "description": "Tutorial de código limpio",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier-eslint": "^8.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AcademiaBinaria/CleanCode.git"
+  },
+  "author":
+    "Alberto Basalo <albertobasalo@agorabinaria.com> (http://agorabinaria.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AcademiaBinaria/CleanCode/issues"
+  },
+  "homepage": "https://github.com/AcademiaBinaria/CleanCode#readme"
+}
