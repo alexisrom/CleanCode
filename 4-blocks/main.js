@@ -1,17 +1,17 @@
 const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
-const LIFE_PROBABILITY = 0.44;
-const IS_DEAD = 0;
-const IS_ALIVE = 1;
-const REPRODUCTION_POPULATION = 3;
-const UNDER_POPULATION = 2;
-const OVER_POPULATION = 3;
 const DELAY_MS = 50;
+const IS_ALIVE = 1;
+const IS_DEAD = 0;
+const LIFE_PROBABILITY = 0.44;
+const OVER_POPULATION = 3;
+const REPRODUCTION_POPULATION = 3;
 const TIMING_TEST_MS = 5000;
-var initializationTime = Date.now();
-var testIterations = 0;
+const UNDER_POPULATION = 2;
 var board = [];
+var initializationTime = Date.now();
 var nextBoard = [];
+var testIterations = 0;
 
 start();
 function start() {
