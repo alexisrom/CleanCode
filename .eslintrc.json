@@ -14,20 +14,15 @@
   },
   "rules": {
     "complexity": ["warn", 4],
+    "consistent-return": "warn",
     "no-console": "off",
     "no-const-assign": "warn",
-    "no-this-before-super": "warn",
     "no-multiple-empty-lines": ["warn", { "max": 1 }],
-    "no-undef": "warn",
-    "no-unreachable": "warn",
-    "no-unused-vars": "warn",
-    "constructor-super": "warn",
     "max-depth": ["warn", 2],
     "max-len": ["warn", 64],
     "max-lines": ["warn", 128],
     "max-statements": ["warn", 8],
-    "max-params": ["warn", 4],
-    "padded-blocks": ["warn", "never"],
-    "valid-typeof": "warn"
+    "max-statements-per-line": ["warn", 1],
+    "max-params": ["warn", 4]
   }
 }
