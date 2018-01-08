@@ -1,6 +1,17 @@
 {
+  "editor.formatOnType": true,
   "javascript.format.enable": true,
   "eslint.autoFixOnSave": true,
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "Visual Studio Light",
-  "prettier.eslintIntegration": true
+  "prettier.eslintIntegration": true,
+  "material-icon-theme.activeIconPack": "angular",
+  "material-icon-theme.files.associations": {},
+  "material-icon-theme.folders.associations": {},
+  "material-icon-theme.folders.color": "#90a4ae",
+  "material-icon-theme.folders.theme": "specific",
+  "material-icon-theme.hidesExplorerArrows": false,
+  "material-icon-theme.languages.associations": {},
+  "material-icon-theme.showUpdateMessage": true,
+  "material-icon-theme.showWelcomeMessage": true
 }
