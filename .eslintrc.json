@@ -22,7 +22,7 @@
     "max-len": ["warn", 64],
     "max-lines": ["warn", 128],
     "max-statements": ["warn", 8],
-    "max-statements-per-line": ["warn", 1],
+    "max-statements-per-line": ["warn", { "max": 1 }],
     "max-params": ["warn", 4]
   }
 }
