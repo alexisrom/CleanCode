@@ -3,8 +3,8 @@ var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
 // canvas and grid size defaults
-var gridWidth = 140;
-var gridHeight = 70;
+var gridWidth = 14;
+var gridHeight = 7;
 var gridSquareWidth = 10;
 
 canvas.width = gridWidth * gridSquareWidth;
@@ -21,8 +21,8 @@ for (var x = 0; x < gridWidth; x++) {
   grid[x] = [];
   gridNext[x] = [];
   for (var y = 0; y < gridHeight; y++) {
-    grid[x][y] = 0;
-    gridNext[x][y] = 0;
+    grid[x][y] = [];
+    gridNext[x][y] = [];
 
     var rand = Math.random() * 100;
 
@@ -34,22 +34,20 @@ for (var x = 0; x < gridWidth; x++) {
 
 // life init grid
 function life() {
-  // console.log("living");
-  // console.table(grid);
   // touch each grid coord
   for (var x = 0; x < gridWidth; x++) {
     for (var y = 0; y < gridHeight; y++) {
       // counts alive or dead for neighbours
-      var count = countNearby(x, y, grid);
+      var count = countNearby(x, y);
 
       if (grid[x][y] == 0) {
         if (count == 3) {
+          // life is born
           gridNext[x][y] = 1;
-        } else {
-          gridNext[x][y] = 0;
         }
       } else {
         if (count < 2 || count > 3) {
+          // underpopulation & overpopulation
           gridNext[x][y] = 0;
         } else {
           gridNext[x][y] = 1;
@@ -58,17 +56,7 @@ function life() {
     }
   }
   // replace old grid with new population grid
-  cloneGrid(grid, gridNext);
-  // console.table(grid);
-  // console.log("lived");
-}
-
-function cloneGrid(newGrid, currentGrid) {
-  for (var x = 0; x < gridWidth; x++) {
-    for (var y = 0; y < gridHeight; y++) {
-      newGrid[x][y] = currentGrid[x][y];
-    }
-  }
+  grid = gridNext;
 }
 
 // count grid neighbours
@@ -87,7 +75,7 @@ function countNearby(x, y) {
 
   function counter(x, y) {
     // if x and y on the grid
-    if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight) {
+    if (x > 0 && x < gridWidth && y > 0 && y < gridHeight) {
       if (grid[x][y] == 1) count++;
     }
   }
@@ -147,6 +135,5 @@ export const game = {
   gridHeight,
   gridNext,
   life,
-  draw,
   countNearby
 };
