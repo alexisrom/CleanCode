@@ -18,7 +18,7 @@ function doTestInitialization() {
   console.groupEnd();
 }
 function doTestLife() {
-  console.group("describe iterations rules");
+  console.group("describe life iterations");
   testLife(game);
   console.groupEnd();
 }

@@ -1,6 +1,6 @@
 export function testLife(game) {
   for (let i = 0; i < 20; i++) {
-    console.group("it should do iteration " + i);
+    console.group("it should live iteration " + i);
     testIteration(game);
     console.groupEnd();
   }
@@ -11,7 +11,6 @@ function testIteration(game) {
   const next = cloneGrid(game, game.grid);
   testGoLRules(game, ancient, next);
 }
-
 function cloneGrid(game, currentGrid) {
   const clonedGrid = createNewGrid();
   for (let x = 0; x < game.gridWidth; x++) {
@@ -31,7 +30,6 @@ function cloneGrid(game, currentGrid) {
   }
   return clonedGrid;
 }
-
 function testGoLRules(game, ancientGrid, nextGrid) {
   for (let column = 0; column < game.gridWidth; column++) {
     for (let row = 0; row < game.gridHeight; row++) {

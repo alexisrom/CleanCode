@@ -1,31 +1,36 @@
 export function testInitialization(game) {
   console.group("describe main grid");
-  sizeGrid(game, game.grid);
-  contentGrid(game.grid);
+  testGrid(game, game.grid);
   console.groupEnd();
   console.group("describe next state grid");
-  sizeGrid(game, game.gridNext);
-  contentGrid(game.gridNext);
+  testGrid(game, game.gridNext);
   console.groupEnd();
+}
+function testGrid(game, grid) {
+  sizeGrid(game, grid);
+  contentGrid(grid);
 }
 function sizeGrid(game, grid) {
   console.group("it should have a correct size");
-  console.assert(
-    hasBegin(grid),
-    `should has a begin cell but has no begin`,
-    game.grid
-  );
-  console.assert(
-    hasEnd(grid, game.gridWidth, game.gridHeight),
-    `has no end`,
-    game.grid
-  );
-  console.assert(
-    isNotOversized(grid, game.gridWidth, game.gridHeight),
-    `is oversized`,
-    game.grid
-  );
+  checkExpects();
   console.groupEnd();
+  function checkExpects() {
+    console.assert(
+      hasBegin(grid),
+      `should has a begin cell but has no begin`,
+      game.grid
+    );
+    console.assert(
+      hasEnd(grid, game.gridWidth, game.gridHeight),
+      `has no end`,
+      game.grid
+    );
+    console.assert(
+      isNotOversized(grid, game.gridWidth, game.gridHeight),
+      `is oversized`,
+      game.grid
+    );
+  }
   function hasBegin(grid) {
     return grid[0][0] !== null;
   }
