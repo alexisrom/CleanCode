@@ -1,12 +1,20 @@
+// setup canvas
+var canvas = document.getElementById("gameCanvas");
+var ctx = canvas.getContext("2d");
+
 // canvas and grid size defaults
-var gridWidth = 140;
-var gridHeight = 70;
+var gridWidth = 14;
+var gridHeight = 7;
 var gridSquareWidth = 10;
+
+canvas.width = gridWidth * gridSquareWidth;
+canvas.height = gridHeight * gridSquareWidth;
+canvas.style.width = canvas.width;
+canvas.style.height = canvas.height;
 
 var grid = [];
 var gridNext = [];
 
-var initializationTime = Date.now();
 // create default grid array
 // sudo random noise
 for (var x = 0; x < gridWidth; x++) {
@@ -18,7 +26,9 @@ for (var x = 0; x < gridWidth; x++) {
 
     var rand = Math.random() * 100;
 
-    if (rand > 44) grid[x][y] = 1;
+    if (rand > 44) {
+      grid[x][y] = 1;
+    }
   }
 }
 
@@ -84,16 +94,9 @@ function update(dt) {
 }
 
 function draw() {
-  var canvas = document.getElementById("gameCanvas");
-  var ctx = canvas.getContext("2d");
-  canvas.width = gridWidth * gridSquareWidth;
-  canvas.height = gridHeight * gridSquareWidth;
-  canvas.style.width = canvas.width;
-  canvas.style.height = canvas.height;
   // clear canvas
   ctx.fillStyle = "#fee";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  // setup canvas
 
   for (var x = 0; x < gridWidth; x++) {
     for (var y = 0; y < gridHeight; y++) {
@@ -117,123 +120,20 @@ function gameLoop() {
   var dt = (now - lastTime) / 1000.0;
 
   update(dt);
-  console.group(`life executed ${times} times`);
-  testGoLRules();
-  console.groupEnd();
-  keepTesting();
-  function keepTesting() {
-    if (Date.now() - initializationTime > 5000) {
-      console.log("Test end!!!");
-      return;
-    }
-    times++;
-    setTimeout(gameLoop, 50);
-  }
+
+  lastTime = now;
+  window.setTimeout(gameLoop, 50);
 }
 
-console.clear();
-console.log("Begin tests...");
-testInitialization();
-times = 1;
-gameLoop();
+// start game
+// gameLoop();
 
-function testInitialization() {
-  console.group("Initialization");
-  sizeGrid();
-  console.log("grid sizes ok");
-  sizeNext();
-  console.log("gridNext sizes ok");
-  contentGrids();
-  console.groupEnd();
-}
-
-function contentGrids() {
-  grid.forEach(column => {
-    column.forEach(row => {
-      console.assert(valueOK(row), `grid has invalid data`, row);
-    });
-  });
-  console.log("grid contents ok");
-  gridNext.forEach(column => {
-    column.forEach(row => {
-      console.assert(valueOK(row), `grid has invalid data`, row);
-    });
-  });
-  console.log("gridNext contents ok");
-}
-
-function valueOK(value) {
-  return Array.isArray(value) || value === 1 || value === 0;
-}
-
-function sizeGrid() {
-  console.assert(hasBegin(), `grid has no begin`, grid);
-  console.assert(hasEnd(), `grid has no end`, grid);
-  console.assert(isNotOversized(), `grid is oversized`, grid);
-  function hasBegin() {
-    return grid[0][0] !== null;
-  }
-  function hasEnd() {
-    return grid[gridWidth - 1][gridHeight - 1] !== null;
-  }
-  function isNotOversized() {
-    return grid[gridWidth] == undefined && grid[0][gridHeight] == undefined;
-  }
-}
-
-function sizeNext() {
-  console.assert(hasBegin(), `grid has no begin`, gridNext);
-  console.assert(hasEnd(), `grid has no end`, gridNext);
-  console.assert(isNotOversized(), `grid is oversized`, gridNext);
-  function hasBegin() {
-    return gridNext[0][0] !== null;
-  }
-  function hasEnd() {
-    return gridNext[gridWidth - 1][gridHeight - 1] !== null;
-  }
-  function isNotOversized() {
-    return (
-      gridNext[gridWidth] === undefined && gridNext[0][gridHeight] === undefined
-    );
-  }
-}
-
-function testGoLRules() {
-  for (var x = 0; x < gridWidth; x++) {
-    for (var y = 0; y < gridHeight; y++) {
-      var currentCell = grid[x][y];
-      var nextCell = gridNext[x][y];
-      testTransitionOk(currentCell, nextCell, x, y);
-    }
-  }
-  console.log("GoL rules ok");
-  function testTransitionOk(current, next, x, y) {
-    var count = countNearby(x, y);
-    var status = { current, next, x, y, count };
-    if (current == 1) {
-      if (next == 1) {
-        console.assert(true || count <= 3, {
-          message: "Transition incorrect wasOkToKeepAlive",
-          status
-        });
-      } else {
-        console.assert(count > 3, {
-          message: "Transition incorrect diesByOverPopulation",
-          status
-        });
-      }
-    } else {
-      if (next == 1) {
-        console.assert(count === 3, {
-          message: "Transition incorrect isNewBorn",
-          status
-        });
-      } else {
-        console.assert(true || count < 3, {
-          message: "Transition incorrect notEnoughToBorn",
-          status
-        });
-      }
-    }
-  }
-}
+// FOR TESTING PURPOSES
+export const game = {
+  grid,
+  gridWidth,
+  gridHeight,
+  gridNext,
+  life,
+  countNearby
+};
