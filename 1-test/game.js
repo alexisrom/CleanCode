@@ -3,8 +3,8 @@ var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
 // canvas and grid size defaults
-var gridWidth = 25;
-var gridHeight = 25;
+var gridWidth = 140;
+var gridHeight = 70;
 var gridSquareWidth = 10;
 
 canvas.width = gridWidth * gridSquareWidth;

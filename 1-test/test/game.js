@@ -1,6 +1,6 @@
-import { game } from "./game.js";
-import { testInitialization } from "./test/initialization.js";
-import { testLife } from "./test/life.js";
+import { game } from "../game.js";
+import { testInitialization } from "./initialization.js";
+import { testLife } from "./life.js";
 
 console.clear();
 doTest();
