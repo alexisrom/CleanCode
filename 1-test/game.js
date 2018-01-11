@@ -3,8 +3,8 @@ var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
 // canvas and grid size defaults
-var gridWidth = 140;
-var gridHeight = 70;
+var gridWidth = 25;
+var gridHeight = 25;
 var gridSquareWidth = 10;
 
 canvas.width = gridWidth * gridSquareWidth;
@@ -34,8 +34,6 @@ for (var x = 0; x < gridWidth; x++) {
 
 // life init grid
 function life() {
-  // console.log("living");
-  // console.table(grid);
   // touch each grid coord
   for (var x = 0; x < gridWidth; x++) {
     for (var y = 0; y < gridHeight; y++) {
@@ -59,8 +57,7 @@ function life() {
   }
   // replace old grid with new population grid
   cloneGrid(grid, gridNext);
-  // console.table(grid);
-  // console.log("lived");
+  // grid = gridNext;
 }
 
 function cloneGrid(newGrid, currentGrid) {
@@ -107,6 +104,7 @@ function update(dt) {
 
 function draw() {
   // clear canvas
+  // console.table(grid);
   ctx.fillStyle = "#fee";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -142,11 +140,12 @@ function gameLoop() {
 
 // FOR TESTING PURPOSES
 export const game = {
+  countNearby,
+  draw,
+  gameLoop,
   grid,
-  gridWidth,
   gridHeight,
   gridNext,
-  life,
-  draw,
-  countNearby
+  gridWidth,
+  life
 };
