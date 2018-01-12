@@ -1,8 +1,8 @@
 const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
 const DELAY_MS = 50;
-const IS_ALIVE = 1;
-const IS_DEAD = 0;
+const ALIVE = 1;
+const DEAD = 0;
 const LIFE_PROBABILITY = 0.44;
 const OVER_POPULATION = 3;
 const REPRODUCTION_POPULATION = 3;
@@ -29,11 +29,11 @@ function initializeBoard() {
     }
   }
   function initializeColumnRow(column, row) {
-    board[column][row] = IS_DEAD;
-    nextBoard[column][row] = IS_DEAD;
+    board[column][row] = DEAD;
+    nextBoard[column][row] = DEAD;
     const randomLifeProbability = Math.random();
     if (randomLifeProbability > LIFE_PROBABILITY) {
-      board[column][row] = IS_ALIVE;
+      board[column][row] = ALIVE;
     }
   }
 }
@@ -61,24 +61,24 @@ function updateIteration() {
     cloneBoard(board, nextBoard);
     function generateForCell(column, row) {
       const livingNeighbors = countLivingNeighbors(column, row);
-      if (board[column][row] == IS_DEAD) {
-        generateForDeadCell();
+      if (board[column][row] == DEAD) {
+        generateFromDeadCell();
       } else {
-        generateForAliveCell();
+        generateFromLivingCell();
       }
-      function generateForDeadCell() {
+      function generateFromDeadCell() {
         if (livingNeighbors == REPRODUCTION_POPULATION) {
-          nextBoard[column][row] = IS_ALIVE;
+          nextBoard[column][row] = ALIVE;
         }
       }
-      function generateForAliveCell() {
+      function generateFromLivingCell() {
         if (
           livingNeighbors < UNDER_POPULATION ||
           livingNeighbors > OVER_POPULATION
         ) {
-          nextBoard[column][row] = IS_DEAD;
+          nextBoard[column][row] = DEAD;
         } else {
-          nextBoard[column][row] = IS_ALIVE;
+          nextBoard[column][row] = ALIVE;
         }
       }
     }
@@ -120,10 +120,10 @@ function drawBoardOnCanvas() {
     }
   }
   function fillCell(column, row) {
-    if (board[column][row] == IS_ALIVE) {
-      fillAliveCell();
+    if (board[column][row] == ALIVE) {
+      fillLivingCell();
     }
-    function fillAliveCell() {
+    function fillLivingCell() {
       canvasContext.fillStyle = ALIVE_COLOR;
       canvasContext.fillRect(
         column * CELL_SQUARE_PIXELS,
@@ -150,7 +150,7 @@ function countLivingNeighbors(column, row) {
   countIfAlive(rightColumn, bottomRow);
   function countIfAlive(column, row) {
     if (isCellOnBoard(column, row)) {
-      if (board[column][row] == IS_ALIVE) livingNeighbors++;
+      if (board[column][row] == ALIVE) livingNeighbors++;
     }
   }
   function isCellOnBoard(column, row) {

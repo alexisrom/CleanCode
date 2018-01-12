@@ -11,10 +11,10 @@ export function testLife(game) {
   }
 }
 function testIteration(game) {
-  const ancient = cloneBoard(game, game.board);
+  const former = cloneBoard(game, game.board);
   game.updateIteration();
   const next = cloneBoard(game, game.board);
-  testGoLRules(game, ancient, next);
+  testGoLRules(game, former, next);
 }
 function cloneBoard(game, currentBoard) {
   const clonedBoard = createNewBoard();
@@ -35,17 +35,17 @@ function cloneBoard(game, currentBoard) {
   }
   return clonedBoard;
 }
-function testGoLRules(game, ancientBoard, nextBoard) {
+function testGoLRules(game, formerBoard, nextBoard) {
   for (let column = 0; column < game.BOARD_COLUMNS; column++) {
     for (let row = 0; row < game.BOARD_ROWS; row++) {
       testCell(column, row);
     }
   }
   function testCell(column, row) {
-    const ancient = ancientBoard[column][row];
+    const former = formerBoard[column][row];
     const next = nextBoard[column][row];
-    const count = countLivingNeighbors(column, row, ancient);
-    const status = { column, row, count, ancient, next };
+    const count = countLivingNeighbors(column, row, former);
+    const status = { column, row, count, former, next };
     testTransitionOk(status);
     function countLivingNeighbors(column, row, ancient) {
       let livingNeighbors = -ancient;
@@ -61,7 +61,7 @@ function testGoLRules(game, ancientBoard, nextBoard) {
           column < game.BOARD_COLUMNS &&
           row < game.BOARD_ROWS
         ) {
-          if (ancientBoard[column][row] == 1) livingNeighbors++;
+          if (formerBoard[column][row] == 1) livingNeighbors++;
         }
       }
       return livingNeighbors;
