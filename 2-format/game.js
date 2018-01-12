@@ -89,12 +89,12 @@ function draw() {
   canvas.style.height = canvas.height;
   // clear canvas
   // console.table(grid);
-  ctx.fillStyle = "#fee";
+  ctx.fillStyle = "#ffbaba";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   for (var x = 0; x < gridWidth; x++) {
     for (var y = 0; y < gridHeight; y++) {
       if (grid[x][y] == 1) {
-        ctx.fillStyle = "#ee66aa";
+        ctx.fillStyle = "#ff0000";
         ctx.fillRect(
           x * gridSquareWidth,
           y * gridSquareWidth,

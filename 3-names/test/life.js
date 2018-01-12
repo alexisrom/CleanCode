@@ -67,7 +67,7 @@ function testGoLRules(game, formerBoard, nextBoard) {
       return livingNeighbors;
     }
     function testTransitionOk(status) {
-      if (status.ancient == 0) {
+      if (status.former == 0) {
         testTransitionForDead();
       } else {
         testTransitionForAlive();
