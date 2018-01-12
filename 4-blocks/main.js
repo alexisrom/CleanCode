@@ -92,25 +92,28 @@ function updateIteration() {
   }
 }
 function drawBoardOnCanvas() {
-  // setup canvas
   const DEAD_COLOR = "#a98600";
   const ALIVE_COLOR = "#f8ed62";
   const boardCanvas = document.getElementById("gameCanvas");
   const canvasContext = boardCanvas.getContext("2d");
   const CELL_SQUARE_PIXELS = 10;
-
-  boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
-  boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
-  boardCanvas.style.width = boardCanvas.width;
-  boardCanvas.style.height = boardCanvas.height;
-  // clear canvas
-  canvasContext.fillStyle = DEAD_COLOR;
-  canvasContext.fillRect(
-    0,
-    0,
-    boardCanvas.width,
-    boardCanvas.height
-  );
+  setUpCanvas();
+  function setUpCanvas() {
+    boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
+    boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
+    boardCanvas.style.width = boardCanvas.width;
+    boardCanvas.style.height = boardCanvas.height;
+    clearCanvas();
+    function clearCanvas() {
+      canvasContext.fillStyle = DEAD_COLOR;
+      canvasContext.fillRect(
+        0,
+        0,
+        boardCanvas.width,
+        boardCanvas.height
+      );
+    }
+  }
   for (let column = 0; column < BOARD_COLUMNS; column++) {
     for (let row = 0; row < BOARD_ROWS; row++) {
       fillCell(column, row);
@@ -118,6 +121,9 @@ function drawBoardOnCanvas() {
   }
   function fillCell(column, row) {
     if (board[column][row] == IS_ALIVE) {
+      fillAliveCell();
+    }
+    function fillAliveCell() {
       canvasContext.fillStyle = ALIVE_COLOR;
       canvasContext.fillRect(
         column * CELL_SQUARE_PIXELS,
