@@ -149,15 +149,17 @@ function countLivingNeighbors(column, row) {
   countIfAlive(rightColumn, row);
   countIfAlive(rightColumn, bottomRow);
   function countIfAlive(column, row) {
-    // if x and y on the board
-    if (
+    if (isCellOnBoard(column, row)) {
+      if (board[column][row] == IS_ALIVE) livingNeighbors++;
+    }
+  }
+  function isCellOnBoard(column, row) {
+    return (
       column >= 0 &&
       column < BOARD_COLUMNS &&
       row >= 0 &&
       row < BOARD_ROWS
-    ) {
-      if (board[column][row] == IS_ALIVE) livingNeighbors++;
-    }
+    );
   }
   return livingNeighbors;
 }
