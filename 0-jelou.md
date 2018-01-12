@@ -6,8 +6,8 @@
 >
 > -- Eagleson's Law
 
-* Cualquier código de más de una semana es heredado
-* El código heredado, como el pescado de una semana, huele mal
+* Cualquier código de más de una semana es heredado.
+* El código heredado, como el pescado de una semana, huele mal.
 * El código heredado es una oportunidad de mejora.
 * Reescribirlo para entenderlo es una necesidad.
 

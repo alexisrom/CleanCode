@@ -6,10 +6,10 @@
 >
 > -- _Martin Golding_
 
-* Limpiar requiere cambiar por dentro sin cambiar por fuera
-* Necesitamos pruebas para limpiar tranquilos
-* Los tests SON código
-* Los tests deben estar limpios
+* Limpiar requiere cambiar por dentro sin cambiar por fuera.
+* Necesitamos pruebas para limpiar tranquilos.
+* Los tests SON código.
+* Los tests deben estar limpios.
 * Si funciona, y tienes pruebas, tócalo!!!
 
 > "Why do most developers fear to make continuous changes to their code? They are afraid they’ll break it! Why are they afraid they’ll break it? Because they don’t have tests."
