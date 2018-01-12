@@ -9,9 +9,9 @@ const REPRODUCTION_POPULATION = 3;
 const MINUTE_MS = 60 * 1000;
 const LIVE_GAME_MS = MINUTE_MS;
 const UNDER_POPULATION = 2;
-var board = [];
-var initializationTime = Date.now();
-var nextBoard = [];
+const board = [];
+const initializationTime = Date.now();
+const nextBoard = [];
 
 function start() {
   initializeBoard();
@@ -20,13 +20,13 @@ function start() {
 function initializeBoard() {
   // create default board array
   // sudo random noise
-  for (var column = 0; column < BOARD_COLUMNS; column++) {
+  for (let column = 0; column < BOARD_COLUMNS; column++) {
     board[column] = [];
     nextBoard[column] = [];
-    for (var row = 0; row < BOARD_ROWS; row++) {
+    for (let row = 0; row < BOARD_ROWS; row++) {
       board[column][row] = IS_DEAD;
       nextBoard[column][row] = IS_DEAD;
-      var randomLifeProbability = Math.random();
+      const randomLifeProbability = Math.random();
       if (randomLifeProbability > LIFE_PROBABILITY) {
         board[column][row] = IS_ALIVE;
       }
@@ -34,7 +34,7 @@ function initializeBoard() {
   }
 }
 function mainGameLoop() {
-  var now = Date.now();
+  const now = Date.now();
   updateIteration();
   drawBoardOnCanvas();
   if (now - initializationTime > LIVE_GAME_MS) {
@@ -45,9 +45,12 @@ function mainGameLoop() {
 function updateIteration() {
   newGeneration();
   function newGeneration() {
-    for (var column = 0; column < BOARD_COLUMNS; column++) {
-      for (var row = 0; row < BOARD_ROWS; row++) {
-        var livingNeighbors = countLivingNeighbors(column, row);
+    for (let column = 0; column < BOARD_COLUMNS; column++) {
+      for (let row = 0; row < BOARD_ROWS; row++) {
+        const livingNeighbors = countLivingNeighbors(
+          column,
+          row
+        );
         if (board[column][row] == IS_DEAD) {
           if (livingNeighbors == REPRODUCTION_POPULATION) {
             nextBoard[column][row] = IS_ALIVE;
@@ -68,8 +71,8 @@ function updateIteration() {
     }
     cloneBoard(board, nextBoard);
     function cloneBoard(clonedBoard, currentBoard) {
-      for (var column = 0; column < BOARD_COLUMNS; column++) {
-        for (var row = 0; row < BOARD_ROWS; row++) {
+      for (let column = 0; column < BOARD_COLUMNS; column++) {
+        for (let row = 0; row < BOARD_ROWS; row++) {
           clonedBoard[column][row] = currentBoard[column][row];
         }
       }
