@@ -4,7 +4,7 @@ import { testLife } from "./life.js";
 
 console.clear();
 doTest();
-game.mainGameLoop();
+game.loopGame();
 
 function doTest() {
   console.group("describe Game of life...");

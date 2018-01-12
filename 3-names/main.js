@@ -15,7 +15,7 @@ const nextBoard = [];
 
 function start() {
   initializeBoard();
-  mainGameLoop();
+  loopGame();
 }
 function initializeBoard() {
   // create default board array
@@ -33,18 +33,18 @@ function initializeBoard() {
     }
   }
 }
-function mainGameLoop() {
+function loopGame() {
   const now = Date.now();
   updateIteration();
   drawBoardOnCanvas();
   if (now - initializationTime > LIVE_GAME_MS) {
     return;
   }
-  setTimeout(mainGameLoop, DELAY_MS);
+  setTimeout(loopGame, DELAY_MS);
 }
 function updateIteration() {
-  newGeneration();
-  function newGeneration() {
+  setNewGeneration();
+  function setNewGeneration() {
     for (let column = 0; column < BOARD_COLUMNS; column++) {
       for (let row = 0; row < BOARD_ROWS; row++) {
         const livingNeighbors = countLivingNeighbors(
@@ -151,7 +151,7 @@ export const game = {
   board,
   countLivingNeighbors,
   initializeBoard,
-  mainGameLoop,
+  loopGame,
   nextBoard,
   updateIteration
 };

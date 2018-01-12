@@ -15,7 +15,7 @@ const nextBoard = [];
 
 function start() {
   initializeBoard();
-  mainGameLoop();
+  loopGame();
 }
 function initializeBoard() {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
@@ -37,7 +37,7 @@ function initializeBoard() {
     }
   }
 }
-function mainGameLoop() {
+function loopGame() {
   updateIteration();
   drawBoardOnCanvas();
   stopOrKeepTesting();
@@ -46,13 +46,13 @@ function mainGameLoop() {
     if (now - initializationTime > LIVE_GAME_MS) {
       return;
     } else {
-      setTimeout(mainGameLoop, DELAY_MS);
+      setTimeout(loopGame, DELAY_MS);
     }
   }
 }
 function updateIteration() {
-  newGeneration();
-  function newGeneration() {
+  setNewGeneration();
+  function setNewGeneration() {
     for (let column = 0; column < BOARD_COLUMNS; column++) {
       for (let row = 0; row < BOARD_ROWS; row++) {
         generateForCell(column, row);
@@ -150,7 +150,9 @@ function countLivingNeighbors(column, row) {
   countIfAlive(rightColumn, bottomRow);
   function countIfAlive(column, row) {
     if (isCellOnBoard(column, row)) {
-      if (board[column][row] == ALIVE) livingNeighbors++;
+      if (board[column][row] == ALIVE) {
+        livingNeighbors++;
+      }
     }
   }
   function isCellOnBoard(column, row) {
@@ -171,7 +173,7 @@ export const game = {
   board,
   countLivingNeighbors,
   initializeBoard,
-  mainGameLoop,
+  loopGame,
   nextBoard,
   updateIteration
 };
