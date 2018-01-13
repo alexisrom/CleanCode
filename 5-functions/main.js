@@ -1,363 +1,179 @@
-const ALIVE_COLOR = "#0080ff";
-const BIRTH_POPULATION = 3;
 const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
-const CELL_SQUARE_PIXELS = 10;
-const DEAD_COLOR = "#eee";
 const DELAY_MS = 50;
-const INITIALIZATION_TIME = Date.now();
-const IS_ALIVE = 1;
-const IS_DEAD = 0;
+const ALIVE = 1;
+const DEAD = 0;
+const LIFE_PROBABILITY = 0.44;
 const OVER_POPULATION = 3;
+const REPRODUCTION_POPULATION = 3;
+const MINUTE_MS = 60 * 1000;
+const LIVE_GAME_MS = MINUTE_MS;
 const UNDER_POPULATION = 2;
-let board = [];
-let generationTests = 0;
-let nextBoard = [];
-let previousBoard = [];
+const board = [];
+const initializationTime = Date.now();
+const nextBoard = [];
 
-start();
 function start() {
   initializeBoard();
-  console.clear();
-  console.group("Begin tests...");
-  testInitialization();
-  mainGameLoop();
+  loopGame();
 }
 function initializeBoard() {
-  for (var column = 0; column < BOARD_COLUMNS; column++) {
+  for (let column = 0; column < BOARD_COLUMNS; column++) {
     initializeColumn(column);
   }
-}
-function initializeColumn(column) {
-  board[column] = [];
-  nextBoard[column] = [];
-  for (var row = 0; row < BOARD_ROWS; row++) {
-    initializeColumnRow(column, row);
+  function initializeColumn(column) {
+    board[column] = [];
+    nextBoard[column] = [];
+    for (let row = 0; row < BOARD_ROWS; row++) {
+      initializeColumnRow(column, row);
+    }
   }
-}
-function initializeColumnRow(column, row) {
-  setInitialDead(column, row);
-  setSomeoneAlive(column, row);
-}
-function setInitialDead(column, row) {
-  board[column][row] = IS_DEAD;
-  nextBoard[column][row] = IS_DEAD;
-}
-function setSomeoneAlive(column, row) {
-  if (canBeAlive()) {
-    setCellAlive(column, row);
-  }
-}
-function setCellAlive(column, row) {
-  board[column][row] = IS_ALIVE;
-}
-function canBeAlive() {
-  const LIFE_PROBABILITY = 0.44;
-  const randomLifeProbability = Math.random();
-  return randomLifeProbability > LIFE_PROBABILITY;
-}
-function mainGameLoop() {
-  iterateGeneration();
-  testUpdateIterations();
-  stopOrKeepTesting();
-}
-function iterateGeneration() {
-  calculateNewGeneration();
-  drawBoardOnCanvas();
-}
-function calculateNewGeneration() {
-  generateNextForEachCell();
-  setBoardWithNextStates();
-}
-function generateNextForEachCell() {
-  for (var column = 0; column < BOARD_COLUMNS; column++) {
-    for (var row = 0; row < BOARD_ROWS; row++) {
-      generateNextCell(column, row);
+  function initializeColumnRow(column, row) {
+    board[column][row] = DEAD;
+    nextBoard[column][row] = DEAD;
+    const randomLifeProbability = Math.random();
+    if (randomLifeProbability > LIFE_PROBABILITY) {
+      board[column][row] = ALIVE;
     }
   }
 }
-function generateNextCell(column, row) {
-  const cell = { board, column, row };
-  const liveAround = countLiveAround(cell);
-  if (cellIsDead(cell)) {
-    generateForDeadCell(liveAround, cell);
-  } else {
-    generateForAliveCell(liveAround, cell);
+function loopGame() {
+  updateIteration();
+  drawBoardOnCanvas();
+  stopOrKeepTesting();
+  function stopOrKeepTesting() {
+    const now = Date.now();
+    if (now - initializationTime > LIVE_GAME_MS) {
+      return;
+    } else {
+      setTimeout(loopGame, DELAY_MS);
+    }
   }
 }
-function cellIsDead(cell) {
-  return cell.board[cell.column][cell.row] == IS_DEAD;
-}
-function generateForDeadCell(liveAround, cell) {
-  if (cellMustBorn(liveAround)) {
-    setNextCellAlive(cell);
+function updateIteration() {
+  setNewGeneration();
+  function setNewGeneration() {
+    for (let column = 0; column < BOARD_COLUMNS; column++) {
+      for (let row = 0; row < BOARD_ROWS; row++) {
+        generateForCell(column, row);
+      }
+    }
+    cloneBoard(board, nextBoard);
+    function generateForCell(column, row) {
+      const livingNeighbors = countLivingNeighbors(column, row);
+      if (board[column][row] == DEAD) {
+        generateFromDeadCell();
+      } else {
+        generateFromLivingCell();
+      }
+      function generateFromDeadCell() {
+        if (livingNeighbors == REPRODUCTION_POPULATION) {
+          nextBoard[column][row] = ALIVE;
+        }
+      }
+      function generateFromLivingCell() {
+        if (
+          livingNeighbors < UNDER_POPULATION ||
+          livingNeighbors > OVER_POPULATION
+        ) {
+          nextBoard[column][row] = DEAD;
+        } else {
+          nextBoard[column][row] = ALIVE;
+        }
+      }
+    }
+    function cloneBoard(clonedBoard, currentBoard) {
+      for (let column = 0; column < BOARD_COLUMNS; column++) {
+        for (let row = 0; row < BOARD_ROWS; row++) {
+          clonedBoard[column][row] = currentBoard[column][row];
+        }
+      }
+    }
   }
-}
-function generateForAliveCell(liveAround, cell) {
-  if (cellMustDie(liveAround)) {
-    setNextCellDead(cell);
-  } else {
-    setNextCellAlive(cell);
-  }
-}
-function setNextCellDead(cell) {
-  nextBoard[cell.column][cell.row] = IS_DEAD;
-}
-function setNextCellAlive(cell) {
-  nextBoard[cell.column][cell.row] = IS_ALIVE;
-}
-function cellMustBorn(liveAround) {
-  return liveAround == BIRTH_POPULATION;
-}
-function cellMustDie(liveAround) {
-  return isAlone(liveAround) || isFull(liveAround);
-}
-function isAlone(liveAround) {
-  return liveAround < UNDER_POPULATION;
-}
-function isFull(liveAround) {
-  return liveAround > OVER_POPULATION;
-}
-function setBoardWithNextStates() {
-  previousBoard = board;
-  board = nextBoard;
 }
 function drawBoardOnCanvas() {
-  const CANVAS_ID = "gameCanvas";
-  const canvas = document.getElementById(CANVAS_ID);
-  const context = setUpCanvasContext(canvas);
-  fillCanvasContext(context);
-}
-function setUpCanvasContext(canvas) {
-  setSizeOfCanvas(canvas);
-  return getCanvasClearContext(canvas);
-}
-function setSizeOfCanvas(canvas) {
-  canvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
-  canvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
-  canvas.style.width = canvas.width;
-  canvas.style.height = canvas.height;
-}
-function getCanvasClearContext(canvas) {
-  const CONTEXT_DIMENSION = "2d";
-  const context = canvas.getContext(CONTEXT_DIMENSION);
-  context.fillStyle = DEAD_COLOR;
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  return context;
-}
-function fillCanvasContext(context) {
-  for (var column = 0; column < BOARD_COLUMNS; column++) {
-    for (var row = 0; row < BOARD_ROWS; row++) {
-      fillCell(context, column, row);
+  const DEAD_COLOR = "#a98600";
+  const ALIVE_COLOR = "#f8ed62";
+  const boardCanvas = document.getElementById("gameCanvas");
+  const canvasContext = boardCanvas.getContext("2d");
+  const CELL_SQUARE_PIXELS = 10;
+  setUpCanvas();
+  function setUpCanvas() {
+    boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
+    boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
+    boardCanvas.style.width = boardCanvas.width;
+    boardCanvas.style.height = boardCanvas.height;
+    clearCanvas();
+    function clearCanvas() {
+      canvasContext.fillStyle = DEAD_COLOR;
+      canvasContext.fillRect(
+        0,
+        0,
+        boardCanvas.width,
+        boardCanvas.height
+      );
+    }
+  }
+  for (let column = 0; column < BOARD_COLUMNS; column++) {
+    for (let row = 0; row < BOARD_ROWS; row++) {
+      fillCell(column, row);
+    }
+  }
+  function fillCell(column, row) {
+    if (board[column][row] == ALIVE) {
+      fillLivingCell();
+    }
+    function fillLivingCell() {
+      canvasContext.fillStyle = ALIVE_COLOR;
+      canvasContext.fillRect(
+        column * CELL_SQUARE_PIXELS,
+        row * CELL_SQUARE_PIXELS,
+        CELL_SQUARE_PIXELS,
+        CELL_SQUARE_PIXELS
+      );
     }
   }
 }
-function fillCell(context, column, row) {
-  if (cellIsAlive(column, row)) {
-    fillCellAlive(context, column, row);
+function countLivingNeighbors(column, row) {
+  let livingNeighbors = 0;
+  const leftColumn = column - 1;
+  const rightColumn = column + 1;
+  const topRow = row - 1;
+  const bottomRow = row + 1;
+  countIfAlive(leftColumn, topRow);
+  countIfAlive(leftColumn, row);
+  countIfAlive(leftColumn, bottomRow);
+  countIfAlive(column, topRow);
+  countIfAlive(column, bottomRow);
+  countIfAlive(rightColumn, topRow);
+  countIfAlive(rightColumn, row);
+  countIfAlive(rightColumn, bottomRow);
+  function countIfAlive(column, row) {
+    if (isCellOnBoard(column, row)) {
+      if (board[column][row] == ALIVE) {
+        livingNeighbors++;
+      }
+    }
   }
-}
-function fillCellAlive(context, column, row) {
-  context.fillStyle = ALIVE_COLOR;
-  context.fillRect(
-    column * CELL_SQUARE_PIXELS,
-    row * CELL_SQUARE_PIXELS,
-    CELL_SQUARE_PIXELS,
-    CELL_SQUARE_PIXELS
-  );
-}
-function countLiveAround(cell) {
-  let liveAround = 0;
-  const leftColumn = cell.column - 1;
-  const rightColumn = cell.column + 1;
-  const topRow = cell.row - 1;
-  const bottomRow = cell.row + 1;
-  liveAround += countIfAlive(leftColumn, topRow);
-  liveAround += countIfAlive(leftColumn, cell.row);
-  liveAround += countIfAlive(leftColumn, bottomRow);
-  liveAround += countIfAlive(cell.column, topRow);
-  liveAround += countIfAlive(cell.column, bottomRow);
-  liveAround += countIfAlive(rightColumn, topRow);
-  liveAround += countIfAlive(rightColumn, cell.row);
-  liveAround += countIfAlive(rightColumn, bottomRow);
-  return liveAround;
-}
-function countIfAlive(column, row) {
-  return cellIsInBoard(column, row) && cellIsAlive(column, row);
-}
-function cellIsInBoard(column, row) {
-  return columnIsInBoard(column) && rowIsInBoard(row);
-}
-function columnIsInBoard(column) {
-  return columnAfterStart(column) && columnBeforeEnd(column);
-}
-function columnAfterStart(column) {
-  return column >= 0;
-}
-function columnBeforeEnd(column) {
-  return column < BOARD_COLUMNS;
+  function isCellOnBoard(column, row) {
+    return (
+      column >= 0 &&
+      column < BOARD_COLUMNS &&
+      row >= 0 &&
+      row < BOARD_ROWS
+    );
+  }
+  return livingNeighbors;
 }
 
-function rowIsInBoard(row) {
-  return rowIsAfterInit(row) && rowIsBeforeEnd(row);
-}
-function rowIsAfterInit(row) {
-  return row >= 0;
-}
-function rowIsBeforeEnd(row) {
-  return row < BOARD_ROWS;
-}
-function cellIsAlive(column, row) {
-  return board[column][row] == IS_ALIVE;
-}
-function testInitialization() {
-  console.group("Initialization Ok");
-  testBoardsSize();
-  testBoardsContents();
-  console.groupEnd();
-}
-function testBoardsSize() {
-  testBoardSize(board);
-  console.log("board size ok");
-  testBoardSize(nextBoard);
-  console.log("nextBoard size ok");
-}
-function testBoardSize(board) {
-  console.assert(hasBegin(board), `hasBegin`, board);
-  console.assert(hasEnd(board), `hasEnd`, board);
-  console.assert(isNotLarger(board), `isNotLarger`, board);
-}
-function hasBegin(board) {
-  return board[0][0] !== null;
-}
-function hasEnd(board) {
-  const LAST_COLUMN = BOARD_COLUMNS - 1;
-  const LAST_ROW = BOARD_ROWS - 1;
-  return board[LAST_COLUMN][LAST_ROW] !== null;
-}
-function isNotLarger(board) {
-  return noExtraColumn(board) && noExtraRow(board);
-}
-function noExtraColumn(board) {
-  return board[BOARD_COLUMNS] == undefined;
-}
-function noExtraRow(board) {
-  return board[0][BOARD_ROWS] == undefined;
-}
-function testBoardsContents() {
-  testEachCellContent(board);
-  console.log("board contents ok");
-  testEachCellContent(nextBoard);
-  console.log("nextBoard contents ok");
-}
-function testEachCellContent(board) {
-  board.forEach(column => {
-    column.forEach(row => {
-      console.assert(testCell(row), `testCell`, row);
-    });
-  });
-}
-function testCell(cell) {
-  return cell === IS_ALIVE || cell === IS_DEAD;
-}
-function testUpdateIterations() {
-  generationTests++;
-  testGoLRules();
-}
-function testGoLRules() {
-  console.group(`iterate generation ${generationTests}`);
-  for (var column = 0; column < BOARD_COLUMNS; column++) {
-    for (var row = 0; row < BOARD_ROWS; row++) {
-      testIfTransitionWasOkForCell(column, row);
-    }
-  }
-  console.log("Test GoL rules end");
-  console.groupEnd();
-}
-function testIfTransitionWasOkForCell(column, row) {
-  const previousStatus = previousBoard[column][row];
-  const currentStatus = board[column][row];
-  const liveAround = countLiveAround(previousBoard, column, row);
-  const transition = {
-    previousStatus,
-    currentStatus,
-    column,
-    row,
-    liveAround
-  };
-  if (previousStatus == IS_ALIVE) {
-    testTransitionFromAliveCell(transition);
-  } else {
-    testTransitionFromDeadCell(transition);
-  }
-}
-function testTransitionFromAliveCell(transition) {
-  if (transition.currentStatus == IS_ALIVE) {
-    testIfWasOkToKeepAlive(transition);
-  } else {
-    testIfWasOKtoDieByWrongPopulation(transition);
-  }
-}
-function testIfWasOkToKeepAlive(transition) {
-  console.assert(wasOkToKeepAlive(transition), {
-    message: "wasOkToKeepAlive",
-    transition
-  });
-}
-function wasOkToKeepAlive(transition) {
-  return is1G() || transition.liveAround <= OVER_POPULATION;
-}
-function is1G() {
-  return generationTests == 1;
-}
-function testIfWasOKtoDieByWrongPopulation(transition) {
-  console.assert(wasOKtoDieByWrongPopulation(transition), {
-    message: "wasOKtoDieByWrongPopulation",
-    transition
-  });
-}
-function wasOKtoDieByWrongPopulation(transition) {
-  return (
-    transition.liveAround < UNDER_POPULATION ||
-    transition.liveAround > OVER_POPULATION
-  );
-}
-function testTransitionFromDeadCell(transition) {
-  if (transition.currentStatus == IS_ALIVE) {
-    testIfWasOkToHaveBorn(transition);
-  } else {
-    testIfWasOkToNotBorn(transition);
-  }
-}
-function testIfWasOkToHaveBorn(transition) {
-  console.assert(wasOkToHaveBorn(), {
-    message: "wasOkToHaveBorn",
-    transition
-  });
-}
-function wasOkToHaveBorn(transition) {
-  return is1G() || transition.liveAround === BIRTH_POPULATION;
-}
-function testIfWasOkToNotBorn(transition) {
-  console.assert(wasOkToNotBorn(transition), {
-    message: "wasOkToNotBorn",
-    transition
-  });
-}
-function wasOkToNotBorn(transition) {
-  return is1G() || transition.liveAround < BIRTH_POPULATION;
-}
-function stopOrKeepTesting() {
-  if (keepTesting()) {
-    setTimeout(mainGameLoop, DELAY_MS);
-  } else {
-    console.log("Test end!!!");
-    console.groupEnd();
-  }
-}
-function keepTesting() {
-  const TIMING_TEST_MS = 5000;
-  const now = Date.now();
-  const workedTime = now - INITIALIZATION_TIME;
-  return workedTime < TIMING_TEST_MS;
-}
+// FOR TESTING PURPOSES
+export const game = {
+  BOARD_COLUMNS,
+  BOARD_ROWS,
+  board,
+  countLivingNeighbors,
+  initializeBoard,
+  loopGame,
+  nextBoard,
+  updateIteration
+};
