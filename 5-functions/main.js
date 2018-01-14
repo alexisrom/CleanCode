@@ -31,16 +31,19 @@ function initializeColumn(column) {
   board[column] = [];
   nextBoard[column] = [];
   for (let row = 0; row < BOARD_ROWS; row++) {
-    initializeColumnRow(column, row);
+    initializeCell(column, row);
   }
 }
-function initializeColumnRow(column, row) {
+function initializeCell(column, row) {
   board[column][row] = DEAD;
   nextBoard[column][row] = DEAD;
-  const randomLifeProbability = Math.random();
-  if (randomLifeProbability > LIFE_PROBABILITY) {
-    board[column][row] = ALIVE;
+  if (canBorn()) {
+    setCellAlive(column, row);
   }
+}
+function canBorn() {
+  const randomLifeProbability = Math.random();
+  return randomLifeProbability > LIFE_PROBABILITY;
 }
 function loopGame() {
   updateIteration();
@@ -48,15 +51,20 @@ function loopGame() {
   stopOrKeepTesting();
 }
 function stopOrKeepTesting() {
-  const now = Date.now();
-  if (now - initializationTime > LIVE_GAME_MS) {
+  if (isOverTime()) {
     return;
   } else {
     setTimeout(loopGame, DELAY_MS);
   }
 }
+function isOverTime() {
+  const now = Date.now();
+  const timeRunning = now - initializationTime;
+  return timeRunning > LIVE_GAME_MS;
+}
 function updateIteration() {
   setNewGeneration();
+  cloneBoard(board, nextBoard);
 }
 function setNewGeneration() {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
@@ -64,30 +72,35 @@ function setNewGeneration() {
       generateFromCell(column, row);
     }
   }
-  cloneBoard(board, nextBoard);
 }
 function generateFromCell(column, row) {
   const livingNeighbors = countLivingNeighbors(column, row);
-  if (board[column][row] == DEAD) {
+  if (isCellDead(column, row)) {
     generateFromDeadCell(livingNeighbors, column, row);
   } else {
     generateFromLivingCell(livingNeighbors, column, row);
   }
 }
 function generateFromDeadCell(livingNeighbors, column, row) {
-  if (livingNeighbors == REPRODUCTION_POPULATION) {
+  if (mustBorn(livingNeighbors)) {
     nextBoard[column][row] = ALIVE;
   }
 }
 function generateFromLivingCell(livingNeighbors, column, row) {
-  if (
-    livingNeighbors < UNDER_POPULATION ||
-    livingNeighbors > OVER_POPULATION
-  ) {
+  if (mustDie(livingNeighbors)) {
     nextBoard[column][row] = DEAD;
   } else {
     nextBoard[column][row] = ALIVE;
   }
+}
+function mustBorn(livingNeighbors) {
+  return livingNeighbors == REPRODUCTION_POPULATION;
+}
+function mustDie(livingNeighbors) {
+  return (
+    livingNeighbors < UNDER_POPULATION ||
+    livingNeighbors > OVER_POPULATION
+  );
 }
 function cloneBoard(clonedBoard, currentBoard) {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
@@ -121,7 +134,7 @@ function clearCanvas() {
   );
 }
 function fillCell(column, row) {
-  if (board[column][row] == ALIVE) {
+  if (isCellAlive(column, row)) {
     fillLivingCell(column, row);
   }
 }
@@ -135,24 +148,25 @@ function fillLivingCell(column, row) {
   );
 }
 function countLivingNeighbors(column, row) {
-  let livingNeighbors = 0;
-  const leftColumn = column - 1;
-  const rightColumn = column + 1;
-  const topRow = row - 1;
-  const bottomRow = row + 1;
-  livingNeighbors += countIfAlive(leftColumn, topRow);
-  livingNeighbors += countIfAlive(leftColumn, row);
-  livingNeighbors += countIfAlive(leftColumn, bottomRow);
-  livingNeighbors += countIfAlive(column, topRow);
-  livingNeighbors += countIfAlive(column, bottomRow);
-  livingNeighbors += countIfAlive(rightColumn, topRow);
-  livingNeighbors += countIfAlive(rightColumn, row);
-  livingNeighbors += countIfAlive(rightColumn, bottomRow);
+  const livingAround = geLivingCellsAround(column, row);
+  let livingNeighbors = livingAround;
+  if (isCellAlive(column, row)) {
+    return (livingNeighbors = livingAround - 1);
+  }
   return livingNeighbors;
+}
+function geLivingCellsAround(column, row) {
+  let livingAround = 0;
+  for (let x = -1; x < 2; x++) {
+    for (let y = -1; y < 2; y++) {
+      livingAround += countIfAlive(column + x, row + y);
+    }
+  }
+  return livingAround;
 }
 function countIfAlive(column, row) {
   if (isCellOnBoard(column, row)) {
-    if (board[column][row] == ALIVE) {
+    if (isCellAlive(column, row)) {
       return 1;
     }
   }
@@ -166,7 +180,18 @@ function isCellOnBoard(column, row) {
     row < BOARD_ROWS
   );
 }
-
+function isCellAlive(column, row) {
+  return board[column][row] == ALIVE;
+}
+function isCellDead(column, row) {
+  return board[column][row] == DEAD;
+}
+function setCellAlive(column, row) {
+  board[column][row] = ALIVE;
+}
+function setCellDead(column, row) {
+  board[column][row] = DEAD;
+}
 // FOR TESTING PURPOSES
 export const game = {
   BOARD_COLUMNS,

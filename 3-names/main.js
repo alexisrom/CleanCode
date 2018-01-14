@@ -70,11 +70,11 @@ function updateIteration() {
       }
     }
     cloneBoard(board, nextBoard);
-    function cloneBoard(clonedBoard, currentBoard) {
-      for (let column = 0; column < BOARD_COLUMNS; column++) {
-        for (let row = 0; row < BOARD_ROWS; row++) {
-          clonedBoard[column][row] = currentBoard[column][row];
-        }
+  }
+  function cloneBoard(clonedBoard, currentBoard) {
+    for (let column = 0; column < BOARD_COLUMNS; column++) {
+      for (let row = 0; row < BOARD_ROWS; row++) {
+        clonedBoard[column][row] = currentBoard[column][row];
       }
     }
   }

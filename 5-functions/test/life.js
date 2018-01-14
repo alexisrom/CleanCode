@@ -47,8 +47,8 @@ function testGoLRules(game, formerBoard, nextBoard) {
     const count = countLivingNeighbors(column, row, former);
     const status = { column, row, count, former, next };
     testTransitionOk(status);
-    function countLivingNeighbors(column, row, ancient) {
-      let livingNeighbors = -ancient;
+    function countLivingNeighbors(column, row, former) {
+      let livingNeighbors = -former;
       for (let x = -1; x < 2; x++) {
         for (let y = -1; y < 2; y++) {
           countIfAlive(column + x, row + y);
