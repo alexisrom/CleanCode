@@ -3,7 +3,7 @@
   "javascript.format.enable": true,
   "eslint.autoFixOnSave": true,
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Visual Studio Light",
+  "workbench.colorTheme": "Default Dark+",
   "prettier.arrowParens": "avoid",
   "prettier.bracketSpacing": true,
   "prettier.disableLanguages": [],
