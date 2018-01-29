@@ -1,16 +1,16 @@
 export function testInitialization(game) {
-  console.group("describe main grid");
-  testGrid(game, game.grid);
-  console.groupEnd();
-  console.group("describe next state grid");
-  testGrid(game, game.gridNext);
+  console.group("describe initialization");
+  testGrid(game, game.grid, 'main');
+  testGrid(game, game.gridNext, 'next');
   console.groupEnd();
 }
-function testGrid(game, grid) {
-  sizeGrid(game, grid);
-  contentGrid(grid);
+function testGrid(game, grid, name) {
+  console.group(`describe ${name} grid`);
+  testSizeGrid(game, grid);
+  testContentGrid(grid);
+  console.groupEnd();
 }
-function sizeGrid(game, grid) {
+function testSizeGrid(game, grid) {
   console.group("it should have a correct size");
   checkExpects();
   console.groupEnd();
@@ -44,15 +44,15 @@ function sizeGrid(game, grid) {
     );
   }
 }
-function contentGrid(grid) {
+function testContentGrid(grid) {
   console.group("it should have a correct content");
   grid.forEach(column => {
     column.forEach(row => {
-      console.assert(valueOK(row), `has invalid data`, row);
+      console.assert(isValueOK(row), `has invalid data`, row);
     });
   });
   console.groupEnd();
-  function valueOK(value) {
+  function isValueOK(value) {
     return Array.isArray(value) || value === 1 || value === 0;
   }
 }
