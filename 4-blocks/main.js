@@ -45,9 +45,9 @@ function initializeColumnRow(column, row) {
 function loopGame() {
   updateIteration();
   drawBoardOnCanvas();
-  stopOrKeepTesting();
+  stopOrKeepIterations();
 }
-function stopOrKeepTesting() {
+function stopOrKeepIterations() {
   const now = Date.now();
   if (now - initializationTime > LIVE_GAME_MS) {
     return;
@@ -169,12 +169,17 @@ function isCellOnBoard(column, row) {
 
 // FOR TESTING PURPOSES
 export const game = {
+  ALIVE,
   BOARD_COLUMNS,
   BOARD_ROWS,
   board,
   countLivingNeighbors,
+  DEAD,
   initializeBoard,
   loopGame,
   nextBoard,
-  updateIteration
+  OVER_POPULATION,
+  REPRODUCTION_POPULATION,
+  UNDER_POPULATION,
+  updateIteration,
 };

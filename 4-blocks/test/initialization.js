@@ -1,63 +1,61 @@
 export function testInitialization(game) {
+  console.group("describe initialization");
   game.initializeBoard();
-  console.group("describe main grid");
-  testBoard(game, game.board);
-  console.groupEnd();
-  console.group("describe next state grid");
-  testBoard(game, game.nextBoard);
+  testGrid(game, game.board, 'main');
+  testGrid(game, game.nextBoard, 'next');
   console.groupEnd();
 }
-function testBoard(game, grid) {
-  testBoardSize(game, grid);
-  testBoardContent(grid);
-}
-function testBoardSize(game, grid) {
-  console.group("it should have a correct size");
-  checkExpects();
+function testGrid(game, board, name) {
+  console.group(`describe ${name} grid`);
+  testSizeGrid();
+  testContentGrid();
   console.groupEnd();
-  function checkExpects() {
-    console.assert(
-      hasBegin(grid),
-      `should has a begin cell but has no begin`,
-      game.grid
-    );
-    console.assert(
-      hasEnd(grid, game.BOARD_COLUMNS, game.BOARD_ROWS),
-      `has no end`,
-      game.grid
-    );
-    console.assert(
-      isNotOversized(grid, game.BOARD_COLUMNS, game.BOARD_ROWS),
-      `is oversized`,
-      game.grid
-    );
-  }
-  function hasBegin(grid) {
-    return grid[0][0] !== null;
-  }
-  function hasEnd(grid, BOARD_COLUMNS, BOARD_ROWS) {
-    return grid[BOARD_COLUMNS - 1][BOARD_ROWS - 1] !== null;
-  }
-  function isNotOversized(grid, BOARD_COLUMNS, BOARD_ROWS) {
-    return (
-      grid[BOARD_COLUMNS] == undefined &&
-      grid[0][BOARD_ROWS] == undefined
-    );
-  }
-}
-function testBoardContent(grid) {
-  console.group("it should have a correct content");
-  grid.forEach(column => {
-    column.forEach(row => {
+  function testSizeGrid() {
+    console.group("it should have a correct size");
+    checkExpects();
+    console.groupEnd();
+    function checkExpects() {
       console.assert(
-        isCellValueOK(row),
-        `has invalid data`,
-        row
+        hasBegin(),
+        `should has a begin cell but has no begin`,
+        game.board
       );
+      console.assert(
+        hasEnd(),
+        `has no end`,
+        game.board
+      );
+      console.assert(
+        isNotOversized(),
+        `is oversized`,
+        game.board
+      );
+    }
+    function hasBegin() {
+      return board[0][0] !== null;
+    }
+    function hasEnd() {
+      const lastColumn = game.BOARD_COLUMNS - 1;
+      const lastRow = game.BOARD_ROWS - 1;
+      return board[lastColumn][lastRow] !== null;
+    }
+    function isNotOversized() {
+      return (
+        board[game.BOARD_COLUMNS] == undefined &&
+        board[0][game.BOARD_ROWS] == undefined
+      );
+    }
+  }
+  function testContentGrid() {
+    console.group("it should have a correct content");
+    board.forEach(column => {
+      column.forEach(row => {
+        console.assert(isValueOK(row), `has invalid data`, row);
+      });
     });
-  });
-  console.groupEnd();
-  function isCellValueOK(value) {
-    return Array.isArray(value) || value === 1 || value === 0;
+    console.groupEnd();
+    function isValueOK(value) {
+      return value === game.ALIVE || value === game.DEAD;
+    }
   }
 }
