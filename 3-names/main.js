@@ -146,12 +146,17 @@ function countLivingNeighbors(column, row) {
 
 // FOR TESTING PURPOSES
 export const game = {
+  ALIVE,
   BOARD_COLUMNS,
   BOARD_ROWS,
   board,
   countLivingNeighbors,
+  DEAD,
   initializeBoard,
   loopGame,
   nextBoard,
-  updateIteration
+  OVER_POPULATION,
+  REPRODUCTION_POPULATION,
+  UNDER_POPULATION,
+  updateIteration,
 };

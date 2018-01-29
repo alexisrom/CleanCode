@@ -1,101 +1,113 @@
 export function testLife(game) {
-  const LIFE_ITERATIONS = 10;
-  for (
-    let iteration = 0;
-    iteration < LIFE_ITERATIONS;
-    iteration++
-  ) {
-    console.group("it should live iteration " + iteration);
-    testIteration(game);
-    console.groupEnd();
+  console.group("describe life iterations");
+  for (let i = 0; i < 20; i++) {
+    testIteration(game, i);
   }
+  console.groupEnd();
 }
-function testIteration(game) {
-  const former = cloneBoard(game, game.board);
-  game.updateIteration();
-  const next = cloneBoard(game, game.board);
-  testGoLRules(game, former, next);
-}
-function cloneBoard(game, currentBoard) {
-  const clonedBoard = createNewBoard();
-  for (let column = 0; column < game.BOARD_COLUMNS; column++) {
-    for (let row = 0; row < game.BOARD_ROWS; row++) {
-      clonedBoard[column][row] = currentBoard[column][row];
-    }
-  }
-  function createNewBoard() {
-    const newBoard = [];
-    for (let x = 0; x < game.BOARD_COLUMNS; x++) {
-      newBoard[x] = [];
-      for (let y = 0; y < game.BOARD_ROWS; y++) {
-        newBoard[x][y] = 0;
-      }
-    }
-    return newBoard;
-  }
-  return clonedBoard;
-}
-function testGoLRules(game, formerBoard, nextBoard) {
-  for (let column = 0; column < game.BOARD_COLUMNS; column++) {
-    for (let row = 0; row < game.BOARD_ROWS; row++) {
-      testCell(column, row);
-    }
-  }
-  function testCell(column, row) {
-    const former = formerBoard[column][row];
-    const next = nextBoard[column][row];
-    const count = countLivingNeighbors(column, row, former);
-    const status = { column, row, count, former, next };
-    testTransitionOk(status);
-    function countLivingNeighbors(column, row, ancient) {
-      let livingNeighbors = -ancient;
-      for (let x = -1; x < 2; x++) {
-        for (let y = -1; y < 2; y++) {
-          countIfAlive(column + x, row + y);
+function testIteration(game, iteration) {
+  let formerBoard;
+  let nextBoard;
+  console.group("it should live on iteration " + iteration);
+  iterateGame();
+  testGoLRules();
+  console.groupEnd();
+  function iterateGame() {
+    formerBoard = cloneBoard(game, game.board);
+    game.updateIteration();
+    nextBoard = cloneBoard(game, game.board);
+    function cloneBoard(game, currentBoard) {
+      const clonedBoard = createNewBoard();
+      for (let x = 0; x < game.BOARD_COLUMNS; x++) {
+        for (let y = 0; y < game.BOARD_ROWS; y++) {
+          clonedBoard[x][y] = currentBoard[x][y];
         }
       }
-      function countIfAlive(column, row) {
-        if (
-          column >= 0 &&
-          row >= 0 &&
-          column < game.BOARD_COLUMNS &&
-          row < game.BOARD_ROWS
-        ) {
-          if (formerBoard[column][row] == 1) livingNeighbors++;
+      function createNewBoard() {
+        const newBoard = [];
+        for (let x = 0; x < game.BOARD_COLUMNS; x++) {
+          newBoard[x] = [];
+          for (let y = 0; y < game.BOARD_ROWS; y++) {
+            newBoard[x][y] = 0;
+          }
+        }
+        return newBoard;
+      }
+      return clonedBoard;
+    }
+  }
+  function testGoLRules() {
+    for (let column = 0; column < game.BOARD_COLUMNS; column++) {
+      for (let row = 0; row < game.BOARD_ROWS; row++) {
+        testCell(column, row);
+      }
+    }
+    function testCell(column, row) {
+      const status = getStatus(column, row);
+      testTransition(status);
+      function getStatus(column, row) {
+        const formerCell = formerBoard[column][row];
+        const nextCell = nextBoard[column][row];
+        let lifeCount = countNearby(column, row);
+        if (formerCell) {
+          lifeCount--;
+        }
+        return { column, row, lifeCount, formerCell, nextCell };
+        function countNearby(column, row) {
+          let lifeCounter = 0;
+          for (let x = -1; x < 2; x++) {
+            for (let y = -1; y < 2; y++) {
+              countIfAlive(column + x, row + y);
+            }
+          }
+          function countIfAlive(column, row) {
+            if (isInBoard(column, row)) {
+              if (formerBoard[column][row] == game.ALIVE) {
+                lifeCounter++;
+              }
+            }
+          }
+          function isInBoard(column, row) {
+            return column >= 0 &&
+              row >= 0 &&
+              column < game.BOARD_COLUMNS &&
+              row < game.BOARD_ROWS;
+          }
+          return lifeCounter;
         }
       }
-      return livingNeighbors;
-    }
-    function testTransitionOk(status) {
-      if (status.former == 0) {
-        testTransitionForDead();
-      } else {
-        testTransitionForAlive();
-      }
-      function testTransitionForDead() {
-        if (status.count == 3) {
-          console.assert(status.next == 1, {
-            message: "should have born",
-            status
-          });
+      function testTransition(status) {
+        if (status.formerCell == game.DEAD) {
+          testTransitionForDead();
         } else {
-          console.assert(status.next == 0, {
-            message: "should keep dead",
-            status
-          });
+          testTransitionForAlive();
         }
-      }
-      function testTransitionForAlive() {
-        if (status.count < 2 || status.count > 3) {
-          console.assert(status.next == 0, {
-            message: "should die",
-            status
-          });
-        } else {
-          console.assert(status.next == 1, {
-            message: "should keep alive",
-            status
-          });
+        function testTransitionForDead() {
+          if (status.lifeCount == game.REPRODUCTION_POPULATION) {
+            console.assert(status.nextCell == game.ALIVE, {
+              message: "should have born",
+              status
+            });
+          } else {
+            console.assert(status.nextCell == game.DEAD, {
+              message: "should keep dead",
+              status
+            });
+          }
+        }
+        function testTransitionForAlive() {
+          if (status.lifeCount < game.UNDER_POPULATION ||
+            status.lifeCount > game.OVER_POPULATION) {
+            console.assert(status.nextCell == game.DEAD, {
+              message: "should die",
+              status
+            });
+          } else {
+            console.assert(status.nextCell == game.ALIVE, {
+              message: "should keep alive",
+              status
+            });
+          }
         }
       }
     }

@@ -3,22 +3,13 @@ import { testInitialization } from "./initialization.js";
 import { testLife } from "./life.js";
 
 console.clear();
-doTest();
+testGame();
+console.info('Start Visual Game');
 game.loopGame();
 
-function doTest() {
+function testGame() {
   console.group("describe Game of life...");
-  doTestInitialization();
-  doTestLife();
-  console.groupEnd();
-}
-function doTestInitialization() {
-  console.group("describe initialization");
   testInitialization(game);
-  console.groupEnd();
-}
-function doTestLife() {
-  console.group("describe life iterations");
   testLife(game);
   console.groupEnd();
 }
