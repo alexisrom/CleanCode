@@ -14,7 +14,7 @@ function testIteration(game, iteration) {
   console.groupEnd();
   function iterateGame() {
     formerBoard = cloneBoard(game, game.board);
-    game.updateIteration();
+    game.updateIteration(game.board);
     nextBoard = cloneBoard(game, game.board);
     function cloneBoard(game, currentBoard) {
       const clonedBoard = createNewBoard();
@@ -37,7 +37,11 @@ function testIteration(game, iteration) {
     }
   }
   function testGoLRules() {
-    for (let column = 0; column < game.BOARD_COLUMNS; column++) {
+    for (
+      let column = 0;
+      column < game.BOARD_COLUMNS;
+      column++
+    ) {
       for (let row = 0; row < game.BOARD_ROWS; row++) {
         testCell(column, row);
       }
@@ -68,10 +72,12 @@ function testIteration(game, iteration) {
             }
           }
           function isInBoard(column, row) {
-            return column >= 0 &&
+            return (
+              column >= 0 &&
               row >= 0 &&
               column < game.BOARD_COLUMNS &&
-              row < game.BOARD_ROWS;
+              row < game.BOARD_ROWS
+            );
           }
           return lifeCounter;
         }
@@ -83,7 +89,9 @@ function testIteration(game, iteration) {
           testTransitionForAlive();
         }
         function testTransitionForDead() {
-          if (status.lifeCount == game.REPRODUCTION_POPULATION) {
+          if (
+            status.lifeCount == game.REPRODUCTION_POPULATION
+          ) {
             console.assert(status.nextCell == game.ALIVE, {
               message: "should have born",
               status
@@ -96,8 +104,10 @@ function testIteration(game, iteration) {
           }
         }
         function testTransitionForAlive() {
-          if (status.lifeCount < game.UNDER_POPULATION ||
-            status.lifeCount > game.OVER_POPULATION) {
+          if (
+            status.lifeCount < game.UNDER_POPULATION ||
+            status.lifeCount > game.OVER_POPULATION
+          ) {
             console.assert(status.nextCell == game.DEAD, {
               message: "should die",
               status
