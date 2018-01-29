@@ -35,10 +35,10 @@ function initializeColumn(column) {
   }
 }
 function initializeCell(column, row) {
-  board[column][row] = DEAD;
-  nextBoard[column][row] = DEAD;
+  setCellDead(board, column, row);
+  setCellDead(nextBoard, column, row);
   if (canBorn()) {
-    setCellAlive(column, row);
+    setCellAlive(board, column, row);
   }
 }
 function canBorn() {
@@ -46,11 +46,11 @@ function canBorn() {
   return randomLifeProbability > LIFE_PROBABILITY;
 }
 function loopGame() {
-  updateIteration();
-  drawBoardOnCanvas();
-  stopOrKeepTesting();
+  updateIteration(board);
+  drawBoardOnCanvas(board);
+  stopOrKeepIterations();
 }
-function stopOrKeepTesting() {
+function stopOrKeepIterations() {
   if (isOverTime()) {
     return;
   } else {
@@ -62,19 +62,19 @@ function isOverTime() {
   const timeRunning = now - initializationTime;
   return timeRunning > LIVE_GAME_MS;
 }
-function updateIteration() {
-  setNewGeneration();
+function updateIteration(board) {
+  setNewGeneration(board);
   cloneBoard(board, nextBoard);
 }
-function setNewGeneration() {
+function setNewGeneration(board) {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
     for (let row = 0; row < BOARD_ROWS; row++) {
-      generateFromCell(column, row);
+      generateFromCell(board, column, row);
     }
   }
 }
-function generateFromCell(column, row) {
-  const livingNeighbors = countLivingNeighbors(column, row);
+function generateFromCell(board, column, row) {
+  const livingNeighbors = countLivingNeighbors(board, column, row);
   if (isCellDead(column, row)) {
     generateFromDeadCell(livingNeighbors, column, row);
   } else {
@@ -83,14 +83,14 @@ function generateFromCell(column, row) {
 }
 function generateFromDeadCell(livingNeighbors, column, row) {
   if (mustBorn(livingNeighbors)) {
-    nextBoard[column][row] = ALIVE;
+    setCellAlive(nextBoard, column, row);
   }
 }
 function generateFromLivingCell(livingNeighbors, column, row) {
   if (mustDie(livingNeighbors)) {
-    nextBoard[column][row] = DEAD;
+    setCellDead(nextBoard, column, row);
   } else {
-    nextBoard[column][row] = ALIVE;
+    setCellAlive(nextBoard, column, row);
   }
 }
 function mustBorn(livingNeighbors) {
@@ -109,11 +109,11 @@ function cloneBoard(clonedBoard, currentBoard) {
     }
   }
 }
-function drawBoardOnCanvas() {
+function drawBoardOnCanvas(board) {
   setUpCanvas();
   for (let column = 0; column < BOARD_COLUMNS; column++) {
     for (let row = 0; row < BOARD_ROWS; row++) {
-      fillCell(column, row);
+      fillCell(board, column, row);
     }
   }
 }
@@ -133,8 +133,8 @@ function clearCanvas() {
     boardCanvas.height
   );
 }
-function fillCell(column, row) {
-  if (isCellAlive(column, row)) {
+function fillCell(board, column, row) {
+  if (isCellAlive(board, column, row)) {
     fillLivingCell(column, row);
   }
 }
@@ -147,15 +147,15 @@ function fillLivingCell(column, row) {
     CELL_SQUARE_PIXELS
   );
 }
-function countLivingNeighbors(column, row) {
-  const livingAround = geLivingCellsAround(column, row);
+function countLivingNeighbors(board, column, row) {
+  const livingAround = getLivingCellsAround(column, row);
   let livingNeighbors = livingAround;
-  if (isCellAlive(column, row)) {
+  if (isCellAlive(board, column, row)) {
     return (livingNeighbors = livingAround - 1);
   }
   return livingNeighbors;
 }
-function geLivingCellsAround(column, row) {
+function getLivingCellsAround(column, row) {
   let livingAround = 0;
   for (let x = -1; x < 2; x++) {
     for (let y = -1; y < 2; y++) {
@@ -164,9 +164,9 @@ function geLivingCellsAround(column, row) {
   }
   return livingAround;
 }
-function countIfAlive(column, row) {
+function countIfAlive(board, column, row) {
   if (isCellOnBoard(column, row)) {
-    if (isCellAlive(column, row)) {
+    if (isCellAlive(board, column, row)) {
       return 1;
     }
   }
@@ -180,26 +180,31 @@ function isCellOnBoard(column, row) {
     row < BOARD_ROWS
   );
 }
-function isCellAlive(column, row) {
+function isCellAlive(board, column, row) {
   return board[column][row] == ALIVE;
 }
-function isCellDead(column, row) {
+function isCellDead(board, column, row) {
   return board[column][row] == DEAD;
 }
-function setCellAlive(column, row) {
+function setCellAlive(board, column, row) {
   board[column][row] = ALIVE;
 }
-function setCellDead(column, row) {
+function setCellDead(board, column, row) {
   board[column][row] = DEAD;
 }
 // FOR TESTING PURPOSES
 export const game = {
+  ALIVE,
   BOARD_COLUMNS,
   BOARD_ROWS,
   board,
   countLivingNeighbors,
+  DEAD,
   initializeBoard,
   loopGame,
   nextBoard,
-  updateIteration
+  OVER_POPULATION,
+  REPRODUCTION_POPULATION,
+  UNDER_POPULATION,
+  updateIteration,
 };
