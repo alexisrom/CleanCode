@@ -65,7 +65,8 @@ function countNearby(x, y) {
   counter(x + 1, y + 1);
   function counter(x, y) {
     // if x and y on the grid
-    if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight) {
+    if (x >= 0 && x < gridWidth
+      && y >= 0 && y < gridHeight) {
       if (grid[x][y] == 1) count++;
     }
   }
@@ -88,7 +89,6 @@ function draw() {
   canvas.style.width = canvas.width;
   canvas.style.height = canvas.height;
   // clear canvas
-  // console.table(grid);
   ctx.fillStyle = "#ffbaba";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   for (var x = 0; x < gridWidth; x++) {
