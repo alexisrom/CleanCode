@@ -1,3 +1,4 @@
+import { Index } from '../database/index.js';
 export function testLife(game) {
   console.group("describe life iterations");
   for (let i = 0; i < 2; i++) {
@@ -6,67 +7,37 @@ export function testLife(game) {
   console.groupEnd();
 }
 function testIteration(game, iteration) {
-  let formerBoard;
-  let nextBoard;
   console.group("it should live on iteration " + iteration);
   iterateGame();
   testGoLRules();
   console.groupEnd();
   function iterateGame() {
-    formerBoard = cloneBoard(game, game.board);
     game.updateIteration(game.board);
-    nextBoard = cloneBoard(game, game.board);
-    function cloneBoard(game, currentBoard) {
-      const clonedBoard = createNewBoard();
-      for (let x = 0; x < game.CONFIG.BOARD_COLUMNS; x++) {
-        for (let y = 0; y < game.CONFIG.BOARD_ROWS; y++) {
-          clonedBoard[x][y] = currentBoard[x][y];
-        }
-      }
-      function createNewBoard() {
-        const newBoard = [];
-        for (let x = 0; x < game.CONFIG.BOARD_COLUMNS; x++) {
-          newBoard[x] = [];
-          for (let y = 0; y < game.CONFIG.BOARD_ROWS; y++) {
-            newBoard[x][y] = 0;
-          }
-        }
-        return newBoard;
-      }
-      return clonedBoard;
-    }
   }
   function testGoLRules() {
-    for (
-      let column = 0;
-      column < game.CONFIG.BOARD_COLUMNS;
-      column++
-    ) {
-      for (let row = 0; row < game.CONFIG.BOARD_ROWS; row++) {
-        testCell(column, row);
-      }
-    }
-    function testCell(column, row) {
-      const status = getStatus(column, row);
+    // TO DO: foreEach Cell..
+    game.board.forEach(testCell);
+    function testCell(cell, index, board) {
+      const status = cell.status;
+      testLifeCounter(cell, index, board);
       testTransition(status);
-      function getStatus(column, row) {
-        const formerCell = formerBoard[column][row];
-        const nextCell = nextBoard[column][row];
-        let lifeCount = countNearby(column, row);
-        if (formerCell) {
-          lifeCount--;
-        }
-        return { column, row, lifeCount, formerCell, nextCell };
-        function countNearby(column, row) {
+      function testLifeCounter(cell, index, board) {
+        let lifeAround = countLifeAround(cell, index, board);
+        console.assert(cell.status.lifeAround == lifeAround, {
+          message: "should count lifeAround",
+          cell
+        });
+        function countLifeAround(cell, index, board) {
           let lifeCounter = 0;
           for (let x = -1; x < 2; x++) {
             for (let y = -1; y < 2; y++) {
-              countIfAlive(column + x, row + y);
+              countIfAlive(index.column + x, index.row + y, board);
             }
           }
-          function countIfAlive(column, row) {
+          function countIfAlive(column, row, board) {
             if (isInBoard(column, row)) {
-              if (formerBoard[column][row] == game.CONFIG.ALIVE) {
+              const neighbor = board.getItem(new Index(column, row));
+              if (neighbor.status.former == game.CONFIG.ALIVE) {
                 lifeCounter++;
               }
             }
@@ -83,21 +54,21 @@ function testIteration(game, iteration) {
         }
       }
       function testTransition(status) {
-        if (status.formerCell == game.CONFIG.DEAD) {
+        if (status.former == game.CONFIG.DEAD) {
           testTransitionForDead();
         } else {
           testTransitionForAlive();
         }
         function testTransitionForDead() {
           if (
-            status.lifeCount == game.CONFIG.REPRODUCTION_POPULATION
+            status.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
           ) {
-            console.assert(status.nextCell == game.CONFIG.ALIVE, {
+            console.assert(status.current == game.CONFIG.ALIVE, {
               message: "should have born",
               status
             });
           } else {
-            console.assert(status.nextCell == game.CONFIG.DEAD, {
+            console.assert(status.current == game.CONFIG.DEAD, {
               message: "should keep dead",
               status
             });
@@ -105,15 +76,15 @@ function testIteration(game, iteration) {
         }
         function testTransitionForAlive() {
           if (
-            status.lifeCount < game.CONFIG.UNDER_POPULATION ||
-            status.lifeCount > game.CONFIG.OVER_POPULATION
+            status.lifeAround < game.CONFIG.UNDER_POPULATION ||
+            status.lifeAround > game.CONFIG.OVER_POPULATION
           ) {
-            console.assert(status.nextCell == game.CONFIG.DEAD, {
+            console.assert(status.current == game.CONFIG.DEAD, {
               message: "should die",
               status
             });
           } else {
-            console.assert(status.nextCell == game.CONFIG.ALIVE, {
+            console.assert(status.current == game.CONFIG.ALIVE, {
               message: "should keep alive",
               status
             });

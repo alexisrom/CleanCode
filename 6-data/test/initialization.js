@@ -1,16 +1,15 @@
 export function testInitialization(game) {
   console.group("describe initialization");
   game.initializeBoard();
-  testGrid(game, game.board, 'main');
-  testGrid(game, game.nextBoard, 'next');
+  testBoard(game, game.board._board);
   console.groupEnd();
 }
-function testGrid(game, board, name) {
-  console.group(`describe ${name} grid`);
-  testSizeGrid();
-  testContentGrid();
+function testBoard(game, board) {
+  console.group(`describe board grid`);
+  testBoardSize();
+  testBoardContent();
   console.groupEnd();
-  function testSizeGrid() {
+  function testBoardSize() {
     console.group("it should have a correct size");
     checkExpects();
     console.groupEnd();
@@ -46,11 +45,12 @@ function testGrid(game, board, name) {
       );
     }
   }
-  function testContentGrid() {
+  function testBoardContent() {
     console.group("it should have a correct content");
     board.forEach(column => {
       column.forEach(row => {
-        console.assert(isValueOK(row), `has invalid data`, row);
+        console.assert(isValueOK(row.status.former), `has former invalid data`, row);
+        console.assert(isValueOK(row.status.current), `has current invalid data`, row);
       });
     });
     console.groupEnd();

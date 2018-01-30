@@ -1,7 +1,9 @@
 import { GAME } from './config/game.js';
 import { CANVAS } from './config/canvas.js';
+import { Board } from './database/board.js';
+import { Index } from './database/index.js';
 const initializationTime = Date.now();
-const board = [];
+const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
 const nextBoard = [];
 const boardCanvas = document.getElementById("gameCanvas");
 const canvasContext = boardCanvas.getContext("2d");
@@ -11,22 +13,15 @@ function start() {
   loopGame();
 }
 function initializeBoard() {
-  for (let column = 0; column < GAME.BOARD_COLUMNS; column++) {
-    initializeColumn(column);
-  }
+  this.board.forEach(initializeCell);
 }
-function initializeColumn(column) {
-  board[column] = [];
-  nextBoard[column] = [];
-  for (let row = 0; row < GAME.BOARD_ROWS; row++) {
-    initializeCell(column, row);
-  }
-}
-function initializeCell(column, row) {
-  setCellDead(board, column, row);
-  setCellDead(nextBoard, column, row);
+
+function initializeCell(cell) {
+  cell.status.former = GAME.DEAD;
   if (canBorn()) {
-    setCellAlive(board, column, row);
+    setCellAlive(cell);
+  } else {
+    setCellDead(cell);
   }
 }
 function canBorn() {
@@ -35,7 +30,7 @@ function canBorn() {
 }
 function loopGame() {
   updateIteration(board);
-  drawBoardOnCanvas(board);
+  // drawBoardOnCanvas(board);
   stopOrKeepIterations();
 }
 function stopOrKeepIterations() {
@@ -52,54 +47,48 @@ function isOverTime() {
 }
 function updateIteration(board) {
   setNewGeneration(board);
-  cloneBoard(board, nextBoard);
 }
 function setNewGeneration(board) {
-  for (let column = 0; column < GAME.BOARD_COLUMNS; column++) {
-    for (let row = 0; row < GAME.BOARD_ROWS; row++) {
-      generateFromCell(board, column, row);
+  board.forEach(generateFromCell);
+}
+function generateFromCell(cell, index, board) {
+  setLifeAround(cell, index, board);
+  if (isCellDead(cell)) {
+    generateFromDeadCell(cell);
+  } else {
+    generateFromLivingCell(cell);
+  }
+}
+function setLifeAround(cell, index, board) {
+  let lifeAround = 0;
+  for (let x = -1; x < 2; x++) {
+    for (let y = -1; y < 2; y++) {
+      lifeAround += countIfAlive(board, index.column + x, index.row + y);
     }
   }
+  cell.lifeAround = lifeAround;
 }
-function generateFromCell(board, column, row) {
-  const livingNeighbors = countLivingNeighbors(
-    board,
-    column,
-    row
-  );
-  if (isCellDead(board, column, row)) {
-    generateFromDeadCell(livingNeighbors, column, row);
+
+function generateFromDeadCell(cell) {
+  if (mustBorn(cell)) {
+    setCellAlive(cell);
+  }
+}
+function generateFromLivingCell(cell) {
+  if (mustDie(cell)) {
+    setCellDead(cell);
   } else {
-    generateFromLivingCell(livingNeighbors, column, row);
+    setCellAlive(cell);
   }
 }
-function generateFromDeadCell(livingNeighbors, column, row) {
-  if (mustBorn(livingNeighbors)) {
-    setCellAlive(nextBoard, column, row);
-  }
+function mustBorn(cell) {
+  return cell.status.lifeAround == GAME.REPRODUCTION_POPULATION;
 }
-function generateFromLivingCell(livingNeighbors, column, row) {
-  if (mustDie(livingNeighbors)) {
-    setCellDead(nextBoard, column, row);
-  } else {
-    setCellAlive(nextBoard, column, row);
-  }
-}
-function mustBorn(livingNeighbors) {
-  return livingNeighbors == GAME.REPRODUCTION_POPULATION;
-}
-function mustDie(livingNeighbors) {
+function mustDie(cell) {
   return (
-    livingNeighbors < GAME.UNDER_POPULATION ||
-    livingNeighbors > GAME.OVER_POPULATION
+    cell.status.lifeAround < GAME.UNDER_POPULATION ||
+    cell.status.lifeAround > GAME.OVER_POPULATION
   );
-}
-function cloneBoard(clonedBoard, currentBoard) {
-  for (let column = 0; column < GAME.BOARD_COLUMNS; column++) {
-    for (let row = 0; row < GAME.BOARD_ROWS; row++) {
-      clonedBoard[column][row] = currentBoard[column][row];
-    }
-  }
 }
 function drawBoardOnCanvas(board) {
   setUpCanvas();
@@ -139,56 +128,33 @@ function fillLivingCell(column, row) {
     CANVAS.CELL_SQUARE_PXS
   );
 }
-function countLivingNeighbors(board, column, row) {
-  const livingAround = getLivingCellsAround(board, column, row);
-  let livingNeighbors = livingAround;
-  if (isCellAlive(board, column, row)) {
-    return (livingNeighbors = livingAround - 1);
-  }
-  return livingNeighbors;
-}
-function getLivingCellsAround(board, column, row) {
-  let livingAround = 0;
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      livingAround += countIfAlive(board, column + x, row + y);
-    }
-  }
-  return livingAround;
-}
 function countIfAlive(board, column, row) {
-  if (isCellOnBoard(column, row)) {
-    if (isCellAlive(board, column, row)) {
+  const index = new Index(column, row);
+  if (board.isOnBoard(index)) {
+    const cell = board.getItem(index);
+    if (isCellAlive(cell)) {
       return 1;
     }
   }
   return 0;
 }
-function isCellOnBoard(column, row) {
-  return (
-    column >= 0 &&
-    column < GAME.BOARD_COLUMNS &&
-    row >= 0 &&
-    row < GAME.BOARD_ROWS
-  );
+
+function isCellAlive(cell) {
+  return cell.status.current == GAME.ALIVE;
 }
-function isCellAlive(board, column, row) {
-  return board[column][row] == GAME.ALIVE;
+function isCellDead(cell) {
+  return cell.status.current == GAME.DEAD;
 }
-function isCellDead(board, column, row) {
-  return board[column][row] == GAME.DEAD;
+function setCellAlive(cell) {
+  cell.status.current = GAME.ALIVE;
 }
-function setCellAlive(board, column, row) {
-  board[column][row] = GAME.ALIVE;
-}
-function setCellDead(board, column, row) {
-  board[column][row] = GAME.DEAD;
+function setCellDead(cell) {
+  cell.status.current = GAME.DEAD;
 }
 // FOR TESTING PURPOSES
 export const game = {
   CONFIG: GAME,
   board,
-  countLivingNeighbors,
   initializeBoard,
   loopGame,
   nextBoard,
