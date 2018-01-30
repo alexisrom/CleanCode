@@ -1,7 +1,7 @@
 import { Index } from '../database/index.js';
 export function testLife(game) {
   console.group("describe life iterations");
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 5; i++) {
     testIteration(game, i);
   }
   console.groupEnd();
@@ -15,17 +15,15 @@ function testIteration(game, iteration) {
     game.updateIteration(game.board);
   }
   function testGoLRules() {
-    // TO DO: foreEach Cell..
     game.board.forEach(testCell);
     function testCell(cell, index, board) {
-      const status = cell.status;
-      testLifeCounter(cell, index, board);
-      testTransition(status);
+      // testLifeCounter(cell, index, board);
+      testTransition(cell);
       function testLifeCounter(cell, index, board) {
         let lifeAround = countLifeAround(cell, index, board);
-        console.assert(cell.status.lifeAround == lifeAround, {
+        console.assert(cell.lifeAround == lifeAround, {
           message: "should count lifeAround",
-          cell
+          data: { cell, lifeAround }
         });
         function countLifeAround(cell, index, board) {
           let lifeCounter = 0;
@@ -53,40 +51,41 @@ function testIteration(game, iteration) {
           return lifeCounter;
         }
       }
-      function testTransition(status) {
-        if (status.former == game.CONFIG.DEAD) {
+      function testTransition(cell) {
+        if (cell.status.former == game.CONFIG.DEAD) {
           testTransitionForDead();
         } else {
           testTransitionForAlive();
         }
         function testTransitionForDead() {
           if (
-            status.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
+            cell.status.generation == 0 ||
+            cell.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
           ) {
-            console.assert(status.current == game.CONFIG.ALIVE, {
+            console.assert(cell.status.current == game.CONFIG.ALIVE, {
               message: "should have born",
-              status
+              cell
             });
           } else {
-            console.assert(status.current == game.CONFIG.DEAD, {
-              message: "should keep dead",
-              status
+            console.assert(cell.status.current == game.CONFIG.DEAD, {
+              message: "should keep dead: " + game.CONFIG.DEAD,
+              cell
             });
           }
         }
         function testTransitionForAlive() {
           if (
-            status.lifeAround < game.CONFIG.UNDER_POPULATION ||
-            status.lifeAround > game.CONFIG.OVER_POPULATION
+            cell.lifeAround < game.CONFIG.UNDER_POPULATION ||
+            cell.lifeAround > game.CONFIG.OVER_POPULATION
           ) {
-            console.assert(status.current == game.CONFIG.DEAD, {
+            console.assert(cell.status.current == game.CONFIG.DEAD, {
               message: "should die",
-              status
+              cell
             });
           } else {
-            console.assert(status.current == game.CONFIG.ALIVE, {
+            console.assert(cell.status.current == game.CONFIG.ALIVE, {
               message: "should keep alive",
-              status
+              cell
             });
           }
         }

@@ -4,7 +4,6 @@ import { Board } from './database/board.js';
 import { Index } from './database/index.js';
 const initializationTime = Date.now();
 const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
-const nextBoard = [];
 const boardCanvas = document.getElementById("gameCanvas");
 const canvasContext = boardCanvas.getContext("2d");
 
@@ -30,7 +29,7 @@ function canBorn() {
 }
 function loopGame() {
   updateIteration(board);
-  // drawBoardOnCanvas(board);
+  drawBoardOnCanvas(board);
   stopOrKeepIterations();
 }
 function stopOrKeepIterations() {
@@ -46,32 +45,44 @@ function isOverTime() {
   return timeRunning > GAME.LIVE_GAME_MS;
 }
 function updateIteration(board) {
-  setNewGeneration(board);
+  board.forEach(setFormerStatus);
+  board.forEach(countLifeAround);
+  board.forEach(generateCellNewState);
 }
-function setNewGeneration(board) {
-  board.forEach(generateFromCell);
+function setFormerStatus(cell) {
+  cell.status.former = cell.status.current;
+  cell.status.generation++;
 }
-function generateFromCell(cell, index, board) {
-  setLifeAround(cell, index, board);
+function countLifeAround(cell, index, board) {
+  cell.lifeAround = 0;
+  for (let x = -1; x < 2; x++) {
+    for (let y = -1; y < 2; y++) {
+      const neighborIndex = new Index(index.column + x, index.row + y);
+      cell.lifeAround += countIfNeighborWasAlive(neighborIndex, board);
+    }
+  }
+}
+function countIfNeighborWasAlive(neighborIndex, board) {
+  if (board.isOnBoard(neighborIndex)) {
+    const neighbor = board.getItem(neighborIndex);
+    if (wasCellAlive(neighbor)) {
+      return 1;
+    }
+  }
+  return 0;
+}
+function generateCellNewState(cell) {
   if (isCellDead(cell)) {
     generateFromDeadCell(cell);
   } else {
     generateFromLivingCell(cell);
   }
 }
-function setLifeAround(cell, index, board) {
-  let lifeAround = 0;
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      lifeAround += countIfAlive(board, index.column + x, index.row + y);
-    }
-  }
-  cell.lifeAround = lifeAround;
-}
-
 function generateFromDeadCell(cell) {
   if (mustBorn(cell)) {
     setCellAlive(cell);
+  } else {
+    setCellDead(cell);
   }
 }
 function generateFromLivingCell(cell) {
@@ -81,22 +92,20 @@ function generateFromLivingCell(cell) {
     setCellAlive(cell);
   }
 }
+
+// To DO: Nacen pocos y mueren demasiados
 function mustBorn(cell) {
-  return cell.status.lifeAround == GAME.REPRODUCTION_POPULATION;
+  return cell.lifeAround == GAME.REPRODUCTION_POPULATION;
 }
 function mustDie(cell) {
   return (
-    cell.status.lifeAround < GAME.UNDER_POPULATION ||
-    cell.status.lifeAround > GAME.OVER_POPULATION
+    cell.lifeAround < GAME.UNDER_POPULATION ||
+    cell.lifeAround > GAME.OVER_POPULATION
   );
 }
 function drawBoardOnCanvas(board) {
   setUpCanvas();
-  for (let column = 0; column < GAME.BOARD_COLUMNS; column++) {
-    for (let row = 0; row < GAME.BOARD_ROWS; row++) {
-      fillCell(board, column, row);
-    }
-  }
+  board.forEach(fillCell)
 }
 function setUpCanvas() {
   boardCanvas.width = GAME.BOARD_COLUMNS * CANVAS.CELL_SQUARE_PXS;
@@ -114,9 +123,9 @@ function clearCanvas() {
     boardCanvas.height
   );
 }
-function fillCell(board, column, row) {
-  if (isCellAlive(board, column, row)) {
-    fillLivingCell(column, row);
+function fillCell(cell, index) {
+  if (isCellAlive(cell)) {
+    fillLivingCell(index.column, index.row);
   }
 }
 function fillLivingCell(column, row) {
@@ -127,18 +136,11 @@ function fillLivingCell(column, row) {
     CANVAS.CELL_SQUARE_PXS,
     CANVAS.CELL_SQUARE_PXS
   );
-}
-function countIfAlive(board, column, row) {
-  const index = new Index(column, row);
-  if (board.isOnBoard(index)) {
-    const cell = board.getItem(index);
-    if (isCellAlive(cell)) {
-      return 1;
-    }
-  }
-  return 0;
-}
 
+}
+function wasCellAlive(cell) {
+  return cell.status.former == GAME.ALIVE;
+}
 function isCellAlive(cell) {
   return cell.status.current == GAME.ALIVE;
 }
@@ -157,6 +159,5 @@ export const game = {
   board,
   initializeBoard,
   loopGame,
-  nextBoard,
   updateIteration
 };
