@@ -1,5 +1,5 @@
-import { Index } from './index.js';
-import { Cell } from './cell.js';
+import { Index } from "./index.js";
+import { Cell } from "./cell.js";
 export class Board {
   constructor(columns, rows) {
     this.columns = columns;
@@ -8,15 +8,12 @@ export class Board {
   }
 
   forEach(callback) {
-    this._board
-      .forEach(column => {
-        column
-          .forEach(item => {
-            callback(item, item.index, this);
-          });
+    this._board.forEach(column => {
+      column.forEach(item => {
+        callback(item, item.index, this);
       });
+    });
   }
-
   isOnBoard(index) {
     const columns = this._board.length;
     return (
@@ -26,7 +23,6 @@ export class Board {
       index.row < this._board[columns - 1].length
     );
   }
-
   getItem(index) {
     if (this._board[index.column]) {
       return this._board[index.column][index.row];
@@ -34,7 +30,8 @@ export class Board {
       return undefined;
     }
   }
-  setItem(index, item) {
+  setItem(item) {
+    const index = item.index;
     if (this._board[index.column]) {
       item.index = index;
       this._board[index.column][index.row] = item;
@@ -48,7 +45,7 @@ export class Board {
       for (var row = 0; row < this.rows; row++) {
         const index = new Index(column, row);
         const newCell = new Cell(index);
-        this.setItem(index, newCell);
+        this.setItem(newCell);
       }
     }
   }

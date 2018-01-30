@@ -4,7 +4,7 @@ import { testLife } from "./life.js";
 
 console.clear();
 testGame();
-console.info("Start Visual Game");
+console.info("Start Visual Game Of Life");
 game.loopGame();
 
 function testGame() {

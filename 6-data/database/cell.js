@@ -1,8 +1,8 @@
-import { Status } from './status.js';
+import { Status } from "./status.js";
 export class Cell {
-  constructor(index, status = new Status(), lifeAround = 0) {
+  constructor(index, status = new Status()) {
     this.index = index;
     this.status = status;
-    this.lifeAround = lifeAround;
+    this.lifeAround = 0;
   }
 }

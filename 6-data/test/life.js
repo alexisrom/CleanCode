@@ -7,63 +7,57 @@ export function testLife(game) {
 }
 function testIteration(game, iteration) {
   console.group("it should live on iteration " + iteration);
-  iterateGame();
-  testGoLRules();
+  game.updateIteration(game.board);
+  game.board.forEach(testCell);
   console.groupEnd();
-  function iterateGame() {
-    game.updateIteration(game.board);
-  }
-  function testGoLRules() {
-    game.board.forEach(testCell);
-    function testCell(cell) {
-      if (cell.status.former == game.CONFIG.DEAD) {
-        testTransitionForDead();
+  function testCell(cell) {
+    if (cell.status.former == game.CONFIG.DEAD) {
+      testTransitionForDead();
+    } else {
+      testTransitionForAlive();
+    }
+    function testTransitionForDead() {
+      if (
+        cell.status.generation == 1 ||
+        cell.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
+      ) {
+        console.assert(
+          cell.status.current == game.CONFIG.ALIVE,
+          {
+            message: "should have born",
+            cell
+          }
+        );
       } else {
-        testTransitionForAlive();
+        console.assert(
+          cell.status.current == game.CONFIG.DEAD,
+          {
+            message: "should keep dead",
+            cell
+          }
+        );
       }
-      function testTransitionForDead() {
-        if (
-          cell.status.generation == 1 ||
-          cell.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
-        ) {
-          console.assert(
-            cell.status.current == game.CONFIG.ALIVE,
-            {
-              message: "should have born",
-              cell
-            }
-          );
-        } else {
-          console.assert(
-            cell.status.current == game.CONFIG.DEAD,
-            {
-              message: "should keep dead: " + game.CONFIG.DEAD,
-              cell
-            }
-          );
-        }
-      }
-      function testTransitionForAlive() {
-        if (
-          cell.lifeAround < game.CONFIG.UNDER_POPULATION ||
-          cell.lifeAround > game.CONFIG.OVER_POPULATION
-        ) {
-          console.assert(
-            cell.status.current == game.CONFIG.DEAD,
-            {
-              message: "should die",
-              cell
-            }
-          );
-        } else {
-          console.assert(
-            cell.status.current == game.CONFIG.ALIVE,
-            {
-              message: "should keep alive",
-              cell
-            }
-          );
-        }
+    }
+    function testTransitionForAlive() {
+      if (
+        cell.lifeAround < game.CONFIG.UNDER_POPULATION ||
+        cell.lifeAround > game.CONFIG.OVER_POPULATION
+      ) {
+        console.assert(
+          cell.status.current == game.CONFIG.DEAD,
+          {
+            message: "should die",
+            cell
+          }
+        );
+      } else {
+        console.assert(
+          cell.status.current == game.CONFIG.ALIVE,
+          {
+            message: "should keep alive",
+            cell
+          }
+        );
       }
     }
   }

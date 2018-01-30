@@ -5,7 +5,7 @@ export function testInitialization(game) {
   console.groupEnd();
 }
 function testBoard(game, board) {
-  console.group(`describe board grid`);
+  console.group(`describe board`);
   testBoardSize();
   testBoardContent();
   console.groupEnd();
@@ -14,11 +14,7 @@ function testBoard(game, board) {
     checkExpects();
     console.groupEnd();
     function checkExpects() {
-      console.assert(
-        hasBegin(),
-        `should has a begin cell but has no begin`,
-        game.board
-      );
+      console.assert(hasBegin(), `has no begin`, game.board);
       console.assert(hasEnd(), `has no end`, game.board);
       console.assert(
         isNotOversized(),
@@ -50,12 +46,12 @@ function testBoard(game, board) {
       column.forEach(row => {
         console.assert(
           isValueOK(row.status.current),
-          `has current invalid data`,
+          `has invalid data on current`,
           row
         );
         console.assert(
           isValueOK(row.status.next),
-          `has next invalid data`,
+          `has invalid data on next`,
           row
         );
       });
