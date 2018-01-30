@@ -1,17 +1,17 @@
-export function testLife(game) {
+export function testLife(main) {
   console.group("describe life iterations");
   for (let i = 0; i < 5; i++) {
-    testIteration(game, i);
+    testIteration(main, i);
   }
   console.groupEnd();
 }
-function testIteration(game, iteration) {
+function testIteration(main, iteration) {
   console.group("it should live on iteration " + iteration);
-  game.updateIteration(game.board);
-  game.board.forEach(testCell);
+  main.updateIteration();
+  main.board.forEach(testCell);
   console.groupEnd();
   function testCell(cell) {
-    if (cell.status.former == game.CONFIG.DEAD) {
+    if (cell.status.former == main.CONFIG.DEAD) {
       testTransitionForDead();
     } else {
       testTransitionForAlive();
@@ -19,10 +19,10 @@ function testIteration(game, iteration) {
     function testTransitionForDead() {
       if (
         cell.status.generation == 1 ||
-        cell.lifeAround == game.CONFIG.REPRODUCTION_POPULATION
+        cell.lifeAround == main.CONFIG.REPRODUCTION_POPULATION
       ) {
         console.assert(
-          cell.status.current == game.CONFIG.ALIVE,
+          cell.status.current == main.CONFIG.ALIVE,
           {
             message: "should have born",
             cell
@@ -30,7 +30,7 @@ function testIteration(game, iteration) {
         );
       } else {
         console.assert(
-          cell.status.current == game.CONFIG.DEAD,
+          cell.status.current == main.CONFIG.DEAD,
           {
             message: "should keep dead",
             cell
@@ -40,11 +40,11 @@ function testIteration(game, iteration) {
     }
     function testTransitionForAlive() {
       if (
-        cell.lifeAround < game.CONFIG.UNDER_POPULATION ||
-        cell.lifeAround > game.CONFIG.OVER_POPULATION
+        cell.lifeAround < main.CONFIG.UNDER_POPULATION ||
+        cell.lifeAround > main.CONFIG.OVER_POPULATION
       ) {
         console.assert(
-          cell.status.current == game.CONFIG.DEAD,
+          cell.status.current == main.CONFIG.DEAD,
           {
             message: "should die",
             cell
@@ -52,7 +52,7 @@ function testIteration(game, iteration) {
         );
       } else {
         console.assert(
-          cell.status.current == game.CONFIG.ALIVE,
+          cell.status.current == main.CONFIG.ALIVE,
           {
             message: "should keep alive",
             cell

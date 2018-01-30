@@ -1,10 +1,10 @@
-export function testInitialization(game) {
+export function testInitialization(main) {
   console.group("describe initialization");
-  game.initializeBoard();
-  testBoard(game, game.board._board);
+  main.initializeBoard();
+  testBoard(main, main.board._board);
   console.groupEnd();
 }
-function testBoard(game, board) {
+function testBoard(main, board) {
   console.group(`describe board`);
   testBoardSize();
   testBoardContent();
@@ -14,20 +14,20 @@ function testBoard(game, board) {
     checkExpects();
     console.groupEnd();
     function checkExpects() {
-      console.assert(hasBegin(), `has no begin`, game.board);
-      console.assert(hasEnd(), `has no end`, game.board);
+      console.assert(hasBegin(), `has no begin`, main.board);
+      console.assert(hasEnd(), `has no end`, main.board);
       console.assert(
         isNotOversized(),
         `is oversized`,
-        game.board
+        main.board
       );
     }
     function hasBegin() {
       return board[0] != null && board[0][0] !== null;
     }
     function hasEnd() {
-      const lastColumn = game.CONFIG.BOARD_COLUMNS - 1;
-      const lastRow = game.CONFIG.BOARD_ROWS - 1;
+      const lastColumn = main.CONFIG.BOARD_COLUMNS - 1;
+      const lastRow = main.CONFIG.BOARD_ROWS - 1;
       return (
         board[lastColumn] != null &&
         board[lastColumn][lastRow] !== null
@@ -35,8 +35,8 @@ function testBoard(game, board) {
     }
     function isNotOversized() {
       return (
-        board[game.CONFIG.BOARD_COLUMNS] == undefined &&
-        board[0][game.CONFIG.BOARD_ROWS] == undefined
+        board[main.CONFIG.BOARD_COLUMNS] == undefined &&
+        board[0][main.CONFIG.BOARD_ROWS] == undefined
       );
     }
   }
@@ -59,8 +59,8 @@ function testBoard(game, board) {
     console.groupEnd();
     function isValueOK(value) {
       return (
-        value === game.CONFIG.ALIVE ||
-        value === game.CONFIG.DEAD
+        value === main.CONFIG.ALIVE ||
+        value === main.CONFIG.DEAD
       );
     }
   }
