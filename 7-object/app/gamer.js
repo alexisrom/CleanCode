@@ -1,7 +1,7 @@
 import { GAME } from "../config/game.js";
 import { Board } from "../database/board.js";
 import { Index } from "../database/index.js";
-export class Game {
+export class Gamer {
   constructor() {
     this.board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
   }

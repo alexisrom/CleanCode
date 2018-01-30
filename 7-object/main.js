@@ -1,8 +1,8 @@
 import { GAME } from "./config/game.js";
-import { Game } from "./app/game.js";
+import { Gamer } from "./app/gamer.js";
 import { Painter } from "./app/painter.js";
 const initializationTime = Date.now();
-const game = new Game();
+const gamer = new Gamer();
 const painter = new Painter();
 
 function start() {
@@ -10,14 +10,14 @@ function start() {
   loopGame();
 }
 function initializeBoard() {
-  game.initializeBoard();
+  gamer.initializeBoard();
 }
 function updateIteration() {
-  game.updateIteration();
+  gamer.updateIteration();
 }
 function loopGame() {
   updateIteration();
-  painter.drawBoardOnCanvas(game.board);
+  painter.drawBoardOnCanvas(gamer.board);
   stopOrKeepIterations();
 }
 function stopOrKeepIterations() {
@@ -36,7 +36,7 @@ function isOverTime() {
 // FOR TESTING PURPOSES
 export const main = {
   CONFIG: GAME,
-  board: game.board,
+  board: gamer.board,
   initializeBoard,
   loopGame,
   updateIteration

@@ -4,10 +4,11 @@ export class Painter {
   constructor() {
     this.boardCanvas = document.getElementById("gameCanvas");
     this.canvasContext = this.boardCanvas.getContext("2d");
+    this.setUpCanvas();
   }
 
   drawBoardOnCanvas(board) {
-    this.setUpCanvas();
+    this.clearCanvas();
     board.forEach(this.fillCell.bind(this));
   }
   setUpCanvas() {
@@ -16,7 +17,6 @@ export class Painter {
     canvas.height = GAME.BOARD_ROWS * CANVAS.CELL_SQUARE_PXS;
     canvas.style.width = canvas.width;
     canvas.style.height = canvas.height;
-    this.clearCanvas();
   }
   clearCanvas() {
     const context = this.canvasContext;
@@ -31,12 +31,8 @@ export class Painter {
   }
   fillLivingCell(column, row) {
     const context = this.canvasContext;
+    const pxs = CANVAS.CELL_SQUARE_PXS;
     context.fillStyle = CANVAS.ALIVE_COLOR;
-    context.fillRect(
-      column * CANVAS.CELL_SQUARE_PXS,
-      row * CANVAS.CELL_SQUARE_PXS,
-      CANVAS.CELL_SQUARE_PXS,
-      CANVAS.CELL_SQUARE_PXS
-    );
+    context.fillRect(column * pxs, row * pxs, pxs, pxs);
   }
 }
