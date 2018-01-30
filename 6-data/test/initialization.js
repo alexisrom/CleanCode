@@ -19,11 +19,7 @@ function testBoard(game, board) {
         `should has a begin cell but has no begin`,
         game.board
       );
-      console.assert(
-        hasEnd(),
-        `has no end`,
-        game.board
-      );
+      console.assert(hasEnd(), `has no end`, game.board);
       console.assert(
         isNotOversized(),
         `is oversized`,
@@ -36,7 +32,10 @@ function testBoard(game, board) {
     function hasEnd() {
       const lastColumn = game.CONFIG.BOARD_COLUMNS - 1;
       const lastRow = game.CONFIG.BOARD_ROWS - 1;
-      return board[lastColumn] != null && board[lastColumn][lastRow] !== null;
+      return (
+        board[lastColumn] != null &&
+        board[lastColumn][lastRow] !== null
+      );
     }
     function isNotOversized() {
       return (
@@ -49,13 +48,24 @@ function testBoard(game, board) {
     console.group("it should have a correct content");
     board.forEach(column => {
       column.forEach(row => {
-        console.assert(isValueOK(row.status.former), `has former invalid data`, row);
-        console.assert(isValueOK(row.status.current), `has current invalid data`, row);
+        console.assert(
+          isValueOK(row.status.current),
+          `has current invalid data`,
+          row
+        );
+        console.assert(
+          isValueOK(row.status.next),
+          `has next invalid data`,
+          row
+        );
       });
     });
     console.groupEnd();
     function isValueOK(value) {
-      return value === game.CONFIG.ALIVE || value === game.CONFIG.DEAD;
+      return (
+        value === game.CONFIG.ALIVE ||
+        value === game.CONFIG.DEAD
+      );
     }
   }
 }

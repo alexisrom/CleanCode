@@ -1,7 +1,7 @@
-import { GAME } from './config/game.js';
-import { CANVAS } from './config/canvas.js';
-import { Board } from './database/board.js';
-import { Index } from './database/index.js';
+import { GAME } from "./config/game.js";
+import { CANVAS } from "./config/canvas.js";
+import { Board } from "./database/board.js";
+import { Index } from "./database/index.js";
 const initializationTime = Date.now();
 const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
 const boardCanvas = document.getElementById("gameCanvas");
@@ -14,14 +14,13 @@ function start() {
 function initializeBoard() {
   this.board.forEach(initializeCell);
 }
-
 function initializeCell(cell) {
-  cell.status.former = GAME.DEAD;
   if (canBorn()) {
     setCellAlive(cell);
   } else {
     setCellDead(cell);
   }
+  updateStatus(cell);
 }
 function canBorn() {
   const randomLifeProbability = Math.random();
@@ -45,38 +44,48 @@ function isOverTime() {
   return timeRunning > GAME.LIVE_GAME_MS;
 }
 function updateIteration(board) {
-  board.forEach(setFormerStatus);
-  board.forEach(countLifeAround);
-  board.forEach(generateCellNewState);
+  board.forEach(generateNextCellState);
+  board.forEach(updateStatus);
 }
-function setFormerStatus(cell) {
+function generateNextCellState(cell, index, board) {
+  countLifeAround(cell, index, board);
+  if (isCellDead(cell)) {
+    generateFromDeadCell(cell);
+  } else {
+    generateFromLivingCell(cell);
+  }
+}
+function updateStatus(cell) {
   cell.status.former = cell.status.current;
+  cell.status.current = cell.status.next;
   cell.status.generation++;
 }
 function countLifeAround(cell, index, board) {
   cell.lifeAround = 0;
   for (let x = -1; x < 2; x++) {
     for (let y = -1; y < 2; y++) {
-      const neighborIndex = new Index(index.column + x, index.row + y);
-      cell.lifeAround += countIfNeighborWasAlive(neighborIndex, board);
+      const neighborIndex = new Index(
+        index.column + x,
+        index.row + y
+      );
+      cell.lifeAround += countIfNeighborIsAlive(
+        neighborIndex,
+        board
+      );
     }
   }
+  if (isCellAlive(cell)) {
+    cell.lifeAround--;
+  }
 }
-function countIfNeighborWasAlive(neighborIndex, board) {
+function countIfNeighborIsAlive(neighborIndex, board) {
   if (board.isOnBoard(neighborIndex)) {
     const neighbor = board.getItem(neighborIndex);
-    if (wasCellAlive(neighbor)) {
+    if (isCellAlive(neighbor)) {
       return 1;
     }
   }
   return 0;
-}
-function generateCellNewState(cell) {
-  if (isCellDead(cell)) {
-    generateFromDeadCell(cell);
-  } else {
-    generateFromLivingCell(cell);
-  }
 }
 function generateFromDeadCell(cell) {
   if (mustBorn(cell)) {
@@ -92,8 +101,6 @@ function generateFromLivingCell(cell) {
     setCellAlive(cell);
   }
 }
-
-// To DO: Nacen pocos y mueren demasiados
 function mustBorn(cell) {
   return cell.lifeAround == GAME.REPRODUCTION_POPULATION;
 }
@@ -105,10 +112,11 @@ function mustDie(cell) {
 }
 function drawBoardOnCanvas(board) {
   setUpCanvas();
-  board.forEach(fillCell)
+  board.forEach(fillCell);
 }
 function setUpCanvas() {
-  boardCanvas.width = GAME.BOARD_COLUMNS * CANVAS.CELL_SQUARE_PXS;
+  boardCanvas.width =
+    GAME.BOARD_COLUMNS * CANVAS.CELL_SQUARE_PXS;
   boardCanvas.height = GAME.BOARD_ROWS * CANVAS.CELL_SQUARE_PXS;
   boardCanvas.style.width = boardCanvas.width;
   boardCanvas.style.height = boardCanvas.height;
@@ -136,22 +144,18 @@ function fillLivingCell(column, row) {
     CANVAS.CELL_SQUARE_PXS,
     CANVAS.CELL_SQUARE_PXS
   );
-
-}
-function wasCellAlive(cell) {
-  return cell.status.former == GAME.ALIVE;
 }
 function isCellAlive(cell) {
-  return cell.status.current == GAME.ALIVE;
+  return cell.status.current === GAME.ALIVE;
 }
 function isCellDead(cell) {
-  return cell.status.current == GAME.DEAD;
+  return cell.status.current === GAME.DEAD;
 }
 function setCellAlive(cell) {
-  cell.status.current = GAME.ALIVE;
+  cell.status.next = GAME.ALIVE;
 }
 function setCellDead(cell) {
-  cell.status.current = GAME.DEAD;
+  cell.status.next = GAME.DEAD;
 }
 // FOR TESTING PURPOSES
 export const game = {

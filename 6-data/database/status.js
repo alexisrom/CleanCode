@@ -1,7 +1,8 @@
 export class Status {
-  constructor(former = null, current = null, generation = 0) {
-    this.former = former;
+  constructor(current = null, next = null, generation = 0) {
     this.current = current;
+    this.next = next;
+    this.former = current;
     this.generation = generation;
   }
 }
