@@ -1,4 +1,4 @@
-# 7- CLASS
+# 7- OBJECT
 
 ## Arquitectura limpia
 
