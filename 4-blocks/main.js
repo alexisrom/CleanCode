@@ -67,22 +67,22 @@ function generateNextCellState() {
   cloneToCurrentBoard(board, nextBoard);
 }
 function generateFromCell(column, row) {
-  const livingNeighbors = countLifeAround(column, row);
+  const lifeAround = countLifeAround(column, row);
   if (board[column][row] == DEAD) {
-    generateFromDeadCell(livingNeighbors, column, row);
+    generateFromDeadCell(lifeAround, column, row);
   } else {
-    generateFromLivingCell(livingNeighbors, column, row);
+    generateFromLivingCell(lifeAround, column, row);
   }
 }
-function generateFromDeadCell(livingNeighbors, column, row) {
-  if (livingNeighbors == REPRODUCTION_POPULATION) {
+function generateFromDeadCell(lifeAround, column, row) {
+  if (lifeAround == REPRODUCTION_POPULATION) {
     nextBoard[column][row] = ALIVE;
   }
 }
-function generateFromLivingCell(livingNeighbors, column, row) {
+function generateFromLivingCell(lifeAround, column, row) {
   if (
-    livingNeighbors < UNDER_POPULATION ||
-    livingNeighbors > OVER_POPULATION
+    lifeAround < UNDER_POPULATION ||
+    lifeAround > OVER_POPULATION
   ) {
     nextBoard[column][row] = DEAD;
   } else {

@@ -42,11 +42,11 @@ function life() {
     }
   }
   // replace old grid with new population grid
-  cloneGrid(grid, gridNext);
-  function cloneGrid(newGrid, currentGrid) {
+  cloneToCurrentBoard(grid, gridNext);
+  function cloneToCurrentBoard(target, source) {
     for (var x = 0; x < gridWidth; x++) {
       for (var y = 0; y < gridHeight; y++) {
-        newGrid[x][y] = currentGrid[x][y];
+        target[x][y] = source[x][y];
       }
     }
   }
@@ -65,8 +65,7 @@ function countNearby(x, y) {
   counter(x + 1, y + 1);
   function counter(x, y) {
     // if x and y on the grid
-    if (x >= 0 && x < gridWidth
-      && y >= 0 && y < gridHeight) {
+    if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight) {
       if (grid[x][y] == 1) count++;
     }
   }

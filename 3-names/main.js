@@ -43,24 +43,21 @@ function loopGame() {
   setTimeout(loopGame, DELAY_MS);
 }
 function updateIteration() {
-  setNewGeneration();
-  function setNewGeneration() {
+  generateNextCellState();
+  function generateNextCellState() {
     for (let column = 0; column < BOARD_COLUMNS; column++) {
       for (let row = 0; row < BOARD_ROWS; row++) {
-        const livingNeighbors = countLivingNeighbors(
-          column,
-          row
-        );
+        const lifeAround = countLifeAround(column, row);
         if (board[column][row] == DEAD) {
-          if (livingNeighbors == REPRODUCTION_POPULATION) {
+          if (lifeAround == REPRODUCTION_POPULATION) {
             nextBoard[column][row] = ALIVE;
           } else {
             nextBoard[column][row] = DEAD;
           }
         } else {
           if (
-            livingNeighbors < UNDER_POPULATION ||
-            livingNeighbors > OVER_POPULATION
+            lifeAround < UNDER_POPULATION ||
+            lifeAround > OVER_POPULATION
           ) {
             nextBoard[column][row] = DEAD;
           } else {
@@ -69,26 +66,22 @@ function updateIteration() {
         }
       }
     }
-    cloneBoard(board, nextBoard);
+    cloneToCurrentBoard(board, nextBoard);
   }
-  function cloneBoard(clonedBoard, currentBoard) {
+  function cloneToCurrentBoard(target, source) {
     for (let column = 0; column < BOARD_COLUMNS; column++) {
       for (let row = 0; row < BOARD_ROWS; row++) {
-        clonedBoard[column][row] = currentBoard[column][row];
+        target[column][row] = source[column][row];
       }
     }
   }
 }
 function drawBoardOnCanvas() {
   const ALIVE_COLOR = "#ff7f00";
-  const CANVAS_ID = "gameCanvas";
   const CELL_SQUARE_PIXELS = 10;
-  const CONTEXT_DIMENSIONS = "2d";
   const DEAD_COLOR = "#ffc898";
-  const boardCanvas = document.getElementById(CANVAS_ID);
-  const canvasContext = boardCanvas.getContext(
-    CONTEXT_DIMENSIONS
-  );
+  const boardCanvas = document.getElementById("gameCanvas");
+  const canvasContext = boardCanvas.getContext("2d");
   // setup canvas
   boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
   boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
@@ -116,8 +109,8 @@ function drawBoardOnCanvas() {
     }
   }
 }
-function countLivingNeighbors(column, row) {
-  let livingNeighbors = 0;
+function countLifeAround(column, row) {
+  let lifeAround = 0;
   const leftColumn = column - 1;
   const rightColumn = column + 1;
   const topRow = row - 1;
@@ -138,10 +131,10 @@ function countLivingNeighbors(column, row) {
       row >= 0 &&
       row < BOARD_ROWS
     ) {
-      if (board[column][row] == ALIVE) livingNeighbors++;
+      if (board[column][row] == ALIVE) lifeAround++;
     }
   }
-  return livingNeighbors;
+  return lifeAround;
 }
 
 // FOR TESTING PURPOSES
@@ -150,7 +143,7 @@ export const game = {
   BOARD_COLUMNS,
   BOARD_ROWS,
   board,
-  countLivingNeighbors,
+  countLifeAround,
   DEAD,
   initializeBoard,
   loopGame,
@@ -158,5 +151,5 @@ export const game = {
   OVER_POPULATION,
   REPRODUCTION_POPULATION,
   UNDER_POPULATION,
-  updateIteration,
+  updateIteration
 };
