@@ -56,18 +56,18 @@ function stopOrKeepIterations() {
   }
 }
 function updateIteration() {
-  setNewGeneration();
+  generateNextCellState();
 }
-function setNewGeneration() {
+function generateNextCellState() {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
     for (let row = 0; row < BOARD_ROWS; row++) {
       generateFromCell(column, row);
     }
   }
-  cloneBoard(board, nextBoard);
+  cloneToCurrentBoard(board, nextBoard);
 }
 function generateFromCell(column, row) {
-  const livingNeighbors = countLivingNeighbors(column, row);
+  const livingNeighbors = countLifeAround(column, row);
   if (board[column][row] == DEAD) {
     generateFromDeadCell(livingNeighbors, column, row);
   } else {
@@ -89,10 +89,10 @@ function generateFromLivingCell(livingNeighbors, column, row) {
     nextBoard[column][row] = ALIVE;
   }
 }
-function cloneBoard(clonedBoard, currentBoard) {
+function cloneToCurrentBoard(target, source) {
   for (let column = 0; column < BOARD_COLUMNS; column++) {
     for (let row = 0; row < BOARD_ROWS; row++) {
-      clonedBoard[column][row] = currentBoard[column][row];
+      target[column][row] = source[column][row];
     }
   }
 }
@@ -134,21 +134,21 @@ function fillLivingCell(column, row) {
     CELL_SQUARE_PIXELS
   );
 }
-function countLivingNeighbors(column, row) {
-  let livingNeighbors = 0;
+function countLifeAround(column, row) {
+  let lifeAround = 0;
   const leftColumn = column - 1;
   const rightColumn = column + 1;
   const topRow = row - 1;
   const bottomRow = row + 1;
-  livingNeighbors += countIfAlive(leftColumn, topRow);
-  livingNeighbors += countIfAlive(leftColumn, row);
-  livingNeighbors += countIfAlive(leftColumn, bottomRow);
-  livingNeighbors += countIfAlive(column, topRow);
-  livingNeighbors += countIfAlive(column, bottomRow);
-  livingNeighbors += countIfAlive(rightColumn, topRow);
-  livingNeighbors += countIfAlive(rightColumn, row);
-  livingNeighbors += countIfAlive(rightColumn, bottomRow);
-  return livingNeighbors;
+  lifeAround += countIfAlive(leftColumn, topRow);
+  lifeAround += countIfAlive(leftColumn, row);
+  lifeAround += countIfAlive(leftColumn, bottomRow);
+  lifeAround += countIfAlive(column, topRow);
+  lifeAround += countIfAlive(column, bottomRow);
+  lifeAround += countIfAlive(rightColumn, topRow);
+  lifeAround += countIfAlive(rightColumn, row);
+  lifeAround += countIfAlive(rightColumn, bottomRow);
+  return lifeAround;
 }
 function countIfAlive(column, row) {
   if (isCellOnBoard(column, row)) {
@@ -173,7 +173,7 @@ export const game = {
   BOARD_COLUMNS,
   BOARD_ROWS,
   board,
-  countLivingNeighbors,
+  countLifeAround,
   DEAD,
   initializeBoard,
   loopGame,
@@ -181,5 +181,5 @@ export const game = {
   OVER_POPULATION,
   REPRODUCTION_POPULATION,
   UNDER_POPULATION,
-  updateIteration,
+  updateIteration
 };
