@@ -12,13 +12,16 @@ function start() {
 function initializeBoard() {
   gamer.initializeBoard();
 }
+function loopGame() {
+  updateIteration();
+  drawBoardOnCanvas();
+  stopOrKeepIterations();
+}
 function updateIteration() {
   gamer.updateIteration();
 }
-function loopGame() {
-  updateIteration();
+function drawBoardOnCanvas() {
   painter.drawBoardOnCanvas(gamer.board);
-  stopOrKeepIterations();
 }
 function stopOrKeepIterations() {
   if (isOverTime()) {

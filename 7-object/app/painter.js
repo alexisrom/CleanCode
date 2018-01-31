@@ -12,17 +12,18 @@ export class Painter {
     board.forEach(this.fillCell.bind(this));
   }
   setUpCanvas() {
-    const canvas = this.boardCanvas;
-    canvas.width = GAME.BOARD_COLUMNS * CANVAS.CELL_SQUARE_PXS;
-    canvas.height = GAME.BOARD_ROWS * CANVAS.CELL_SQUARE_PXS;
-    canvas.style.width = canvas.width;
-    canvas.style.height = canvas.height;
+    const CANVAS = this.boardCanvas;
+    const PXS = CANVAS.CELL_SQUARE_PXS;
+    CANVAS.width = GAME.BOARD_COLUMNS * PXS;
+    CANVAS.height = GAME.BOARD_ROWS * PXS;
+    CANVAS.style.width = CANVAS.width;
+    CANVAS.style.height = CANVAS.height;
   }
   clearCanvas() {
-    const context = this.canvasContext;
-    const canvas = this.boardCanvas;
-    context.fillStyle = CANVAS.DEAD_COLOR;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    const CONTEXT = this.canvasContext;
+    const CANVAS = this.boardCanvas;
+    CONTEXT.fillStyle = CANVAS.DEAD_COLOR;
+    CONTEXT.fillRect(0, 0, CANVAS.width, CANVAS.height);
   }
   fillCell(cell, index) {
     if (cell.status.current === GAME.ALIVE) {
@@ -30,9 +31,9 @@ export class Painter {
     }
   }
   fillLivingCell(column, row) {
-    const context = this.canvasContext;
-    const pxs = CANVAS.CELL_SQUARE_PXS;
-    context.fillStyle = CANVAS.ALIVE_COLOR;
-    context.fillRect(column * pxs, row * pxs, pxs, pxs);
+    const CONTEXT = this.canvasContext;
+    const PXS = CANVAS.CELL_SQUARE_PXS;
+    CONTEXT.fillStyle = CANVAS.ALIVE_COLOR;
+    CONTEXT.fillRect(column * PXS, row * PXS, PXS, PXS);
   }
 }
