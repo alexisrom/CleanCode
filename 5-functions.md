@@ -1,4 +1,4 @@
-# 5- FUNCTIONS
+Deben tener un propósico# 5- FUNCTIONS
 
 ## Pequeñas piezas para organizar programas.
 
