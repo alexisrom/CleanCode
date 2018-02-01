@@ -1,16 +1,23 @@
-import { GAME } from "../config/game.js";
-import { Board } from "../database/board.js";
-
 import { Counter } from "./counter.js";
-import { Judge } from "./judge.js";
-import { Executor } from "./executor.js";
 import { Generator } from "./generator.js";
 import { Initializer } from "./initializer.js";
 export class Gamer {
-  constructor() {
-    this.board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
-    this._judge = new Judge(GAME);
-    this._executor = new Executor(GAME);
+  constructor(board, executor, judge, painter) {
+    this.board = board;
+    this._executor = executor;
+    this._judge = judge;
+    this._painter = painter;
+    this._createGame();
+  }
+  initializeBoard() {
+    this.board.forEach(this._initializeCell.bind(this));
+  }
+  updateIteration() {
+    this.board.forEach(this._generateNextState.bind(this));
+    this.board.forEach(this._updateStatus.bind(this));
+    this._drawBoardWithPainter();
+  }
+  _createGame() {
     this._counter = new Counter(this._judge);
     this._initializer = new Initializer(
       this._judge,
@@ -22,13 +29,6 @@ export class Gamer {
       this._executor
     );
   }
-  initializeBoard() {
-    this.board.forEach(this._initializeCell.bind(this));
-  }
-  updateIteration() {
-    this.board.forEach(this._generateNextState.bind(this));
-    this.board.forEach(this._updateStatus.bind(this));
-  }
   _initializeCell(cell) {
     this._initializer.initializeItem(cell);
   }
@@ -37,5 +37,8 @@ export class Gamer {
   }
   _updateStatus(cell) {
     this._executor.updateStatus(cell);
+  }
+  _drawBoardWithPainter() {
+    this._painter.drawBoard(this.board);
   }
 }
