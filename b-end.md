@@ -36,6 +36,6 @@
 
 ![How to Draw a Horse](./draw_horse.jpg)
 
-> "El **código de limpio** no se escribe siguiendo un conjunto de reglas. No te conviertes en un artesano de software al aprender una lista de heurísticas. El profesionalismo y la artesanía provienen de valores que impulsa la **disciplina**."
+> "El **código limpio** no se escribe siguiendo un conjunto de reglas. No te conviertes en un artesano de software al aprender una lista de heurísticas. El profesionalismo y la artesanía provienen de valores que impulsa la **disciplina**."
 >
 > -- _Robert C. Martin_

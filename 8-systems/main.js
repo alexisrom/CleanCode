@@ -1,27 +1,46 @@
-import { GAME_CONFIG } from "./config/game_config.js";
-import { CANVAS_CONFIG } from "./config/canvas_config.js";
-import { TEST_CONFIG } from "./config/test_config.js";
-import { Game } from "./app/game.js";
-import { Test } from "./test.js";
-let game;
+import { GAME } from "./app/game/config/game.js";
+import { Gamer } from "./app/game/lib/gamer.js";
+import { Painter } from "./app/canvas/lib/painter.js";
+const initializationTime = Date.now();
+const gamer = new Gamer();
+const painter = new Painter(GAME);
 
-start();
 function start() {
-  game = new Game(GAME_CONFIG, CANVAS_CONFIG);
-  Test.initialize(game.board, GAME_CONFIG);
-  mainGameLoop();
+  initializeBoard();
+  loopGame();
 }
-
-function mainGameLoop() {
-  game.live();
-  Test.live(game.board, GAME_CONFIG, TEST_CONFIG);
-  if (keepTesting()) {
-    setTimeout(mainGameLoop, TEST_CONFIG.DELAY_MS);
+function initializeBoard() {
+  gamer.initializeBoard();
+}
+function loopGame() {
+  updateIteration();
+  drawBoardOnCanvas();
+  stopOrKeepIterations();
+}
+function updateIteration() {
+  gamer.updateIteration();
+}
+function drawBoardOnCanvas() {
+  painter.drawBoardOnCanvas(gamer.board);
+}
+function stopOrKeepIterations() {
+  if (isOverTime()) {
+    return;
+  } else {
+    setTimeout(loopGame, GAME.DELAY_MS);
   }
 }
-
-function keepTesting() {
+function isOverTime() {
   const now = Date.now();
-  const workedTime = now - TEST_CONFIG.INITIALIZATION_TIME;
-  return workedTime < TEST_CONFIG.TIMING_TEST_MS;
+  const timeRunning = now - initializationTime;
+  return timeRunning > GAME.LIVE_GAME_MS;
 }
+
+// FOR TESTING PURPOSES
+export const main = {
+  CONFIG: GAME,
+  board: gamer.board,
+  initializeBoard,
+  loopGame,
+  updateIteration
+};
