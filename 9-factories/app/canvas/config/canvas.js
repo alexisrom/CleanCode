@@ -1,5 +1,5 @@
 export const CANVAS = {
-  DEAD_COLOR: "#9256B0",
-  ALIVE_COLOR: "#57B066",
+  DEAD_COLOR: "#FFFFFF",
+  ALIVE_COLOR: "#219ACA",
   CELL_SQUARE_PXS: 10
 };
