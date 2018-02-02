@@ -52,8 +52,11 @@ export class Gamer {
       }
     }
     if (this.isCellAlive(cell)) {
-      cell.lifeAround--;
+      this.deductItself(cell);
     }
+  }
+  deductItself(cell) {
+    cell.lifeAround--;
   }
   countIfNeighborIsAlive(neighborIndex, board) {
     if (board.isOnBoard(neighborIndex)) {

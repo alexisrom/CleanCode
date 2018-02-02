@@ -75,8 +75,11 @@ function countLifeAround(cell, index, board) {
     }
   }
   if (isCellAlive(cell)) {
-    cell.lifeAround--;
+    deductItself(cell);
   }
+}
+function deductItself(cell) {
+  cell.lifeAround--;
 }
 function countIfNeighborIsAlive(neighborIndex, board) {
   if (board.isOnBoard(neighborIndex)) {

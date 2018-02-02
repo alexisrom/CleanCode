@@ -8,19 +8,22 @@
 
 * Claridad
 
-  * Explicar la intención
+  * Explicar la **intención**. Por qué se hace.
+
+* Reglas
+
   * Sustantivos para variables / propiedades
 
-    * Crear un vocabulario de objetos de negocio
+    * Vocabulario de **entidades y propiedades** de negocio
 
       * client, customer ?
       * document, file ?
 
   * Verbos para funciones / métodos
 
-    * Crear un vocabulario para acciones comunes
+    * Vocabulario para **relaciones y acciones** comunes
 
-      * is, has, get, set, can, do
+      * is, has, get, set, can, must, do
       * create, read, update, delete
       * select, insert, update, delete
       * get, post, put, delete

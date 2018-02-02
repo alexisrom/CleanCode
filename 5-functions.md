@@ -1,4 +1,4 @@
-Deben tener un propósico# 5- FUNCTIONS
+# 5- FUNCTIONS
 
 ## Pequeñas piezas para organizar programas.
 
@@ -7,13 +7,24 @@ Deben tener un propósico# 5- FUNCTIONS
 > -- _Ley de Curly_.
 
 * **Pequeñas y Organizadas**
+  * Cuanto más pequeñas más reutilizables.
+  * DRY: Don´t Repeate yourself.
+
 * Con verbos en su nombre que indiquen propósito
-* Cuantos menos argumentos mejor
-* Mejor inmutables
-* Retornando datos, no errores
-* Un sólo propósito
-* ... o al menos un mismo nivel de abstracción
-* Sin comentarios
+  * ...sin comentarios.
+
+* Cuantos menos argumentos mejor.
+  * Mejor si son inmutables.
+  * Mejor si son puras.
+
+* Retornando datos, no errores.
+  * ... si el lenguaje lo permite. Si no, usar convenio.
+
+* Un sólo propósito.
+  * ... o al menos un mismo nivel de abstracción.
+
+* Sin comentarios.
+  * ¿Me repito?. MAL!!!
 
 > "Duplication is the primary enemy of a well-designed system"
 >

@@ -19,8 +19,11 @@ export class Counter {
       }
     }
     if (this._judge.isAlive(item)) {
-      item.lifeAround--;
+      this._deductItself(item);
     }
+  }
+  _deductItself(item) {
+    item.lifeAround--;
   }
   _countIfNeighborIsAlive(neighborIndex, board) {
     if (board.isOnBoard(neighborIndex)) {

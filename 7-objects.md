@@ -9,6 +9,13 @@
 * Las clases, como las funciones:
   * Pequeñas
   * Organizadas
+
+* Los objetos encapsulan la lógica.
+  * Usan estructuras de datos.
+
+* Suelen representar Actores.
+  * Relacionan unas entidades con otras.
+
 * **Interfaces** mejor que herencia
 
 ---

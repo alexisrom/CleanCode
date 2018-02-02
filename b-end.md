@@ -1,5 +1,7 @@
 # b - END
 
+## Artesanía del software
+
 > "First do it, then do it right, then do it better".
 >
 > -- _Addy Osmani_.
@@ -10,7 +12,7 @@
 
 ---
 
-## Artesanía del software
+## Manifiesto de un@ artesan@ del software
 
 ### No sólo software que funciona, también software bien diseñado
 

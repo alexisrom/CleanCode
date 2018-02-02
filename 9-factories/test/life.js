@@ -1,6 +1,6 @@
 export function testLife(main) {
   console.group("describe life iterations");
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     testIteration(main, i);
   }
   console.groupEnd();

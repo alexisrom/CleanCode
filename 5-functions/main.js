@@ -149,11 +149,13 @@ function fillLivingCell(column, row) {
 }
 function countLifeAround(board, column, row) {
   const livingAround = getLivingCellsAround(board, column, row);
-  let livingNeighbors = livingAround;
   if (isCellAlive(board, column, row)) {
-    return (livingNeighbors = livingAround - 1);
+    return deductItself(livingAround);
   }
-  return livingNeighbors;
+  return livingAround;
+}
+function deductItself(livingAround) {
+  return livingAround - 1;
 }
 function getLivingCellsAround(board, column, row) {
   let lifeAround = 0;

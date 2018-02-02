@@ -10,6 +10,7 @@
 * Necesitamos pruebas para limpiar tranquilos.
 * Los tests SON código.
 * Los tests deben estar limpios.
+* No hagas demasiados tests, mejor de integración.
 * Si funciona, y tienes pruebas, tócalo!!!
 
 > "Why do most developers fear to make continuous changes to their code? They are afraid they’ll break it! Why are they afraid they’ll break it? Because they don’t have tests."

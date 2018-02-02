@@ -9,7 +9,7 @@
 >
 > -- _The Boy Scout Rule_
 
-* Reglas y herramientas de limpieza
+* Herramientas de limpieza, segun IDE y lenguaje 
 
   * [Prettier](https://prettier.io/)
   * [Beutify](https://www.npmjs.com/package/js-beautify)
@@ -23,6 +23,13 @@
 
   * Indentación en bloques
   * Espaciado en expresiones
+
+* Reglas
+
+  * Decisión: vamos a establecer reglas.
+  * Opción: vamos a fijar valores razonables.
+  * Sentido: vamos a incumplirlas, pero a sabiendas.
+
 
 > "Clean code always looks like it was written by someone who cares"
 >
