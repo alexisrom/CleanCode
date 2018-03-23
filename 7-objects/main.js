@@ -1,6 +1,6 @@
 import { GAME } from "./config/game.js";
-import { Gamer } from "./app/gamer.js";
-import { Painter } from "./app/painter.js";
+import { Gamer } from "./lib/gamer.js";
+import { Painter } from "./lib/painter.js";
 const initializationTime = Date.now();
 const gamer = new Gamer();
 const painter = new Painter();

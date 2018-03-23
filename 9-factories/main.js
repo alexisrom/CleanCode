@@ -1,9 +1,9 @@
-import { GAME } from "./app/game/config/game.js";
-import { Board } from "./app/game/database/board.js";
-import { Gamer } from "./app/game/lib/gamer.js";
-import { Judge } from "./app/game/lib/judge.js";
-import { Executor } from "./app/game/lib/executor.js";
-import { Painter } from "./app/canvas/lib/painter.js";
+import { GAME } from "./components/game/config/game.js";
+import { Board } from "./components/game/database/board.js";
+import { Gamer } from "./components/game/lib/gamer.js";
+import { Judge } from "./components/game/lib/judge.js";
+import { Executor } from "./components/game/lib/executor.js";
+import { Painter } from "./components/canvas/lib/painter.js";
 const initializationTime = Date.now();
 const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
 const executor = new Executor(GAME);
