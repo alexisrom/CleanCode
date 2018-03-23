@@ -44,6 +44,8 @@
 >
 > -- _Ley de Curly_.
 
+![Don´t repeat Yourself](./dry.jpg)
+
 ---
 
 > "La duplicidad es el principal enemigo de un sistema bien diseñado"

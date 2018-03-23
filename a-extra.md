@@ -16,6 +16,8 @@
 * Pero informar al usaurio en el tono adecuado.
 * Dar una pista para la siguiente acción.
 
+![No veo errores](./no-bug.jpg)
+
 > "Code smells.".
 >
 > -- _Martin Fowler_.

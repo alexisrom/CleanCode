@@ -19,6 +19,8 @@
 
 ### Si funciona, y tienes pruebas, tócalo
 
+![No siempre pruebo mi código... pero cuando lo hago, es en producción](./test-production.jpeg)
+
 ---
 
 > "¿Por qué la mayoría de los desarrolladores temen hacer cambios en su código? ¡Tienen miedo a que se rompa! ¿Por qué tienen miedo de romperlo? Porque no tienen pruebas."

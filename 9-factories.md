@@ -20,6 +20,8 @@
 * Pensando en la **EVOLUCIÓN**
 * ...sin caer demasiado en el _por si acaso_.
 
+![A veces veo patrones de diseño](./isee.jpg)
+
 ---
 
 > "No es el lenguaje lo que hace que los programas parezcan simples. Es el programador el que hace que el lenguaje parezca simple!"

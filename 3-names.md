@@ -42,6 +42,8 @@ Explicar por qué se hace.
 * No me sorprendas
 * No me hagas pensar
 
+![wtf-naming](./naming.png)
+
 ---
 
 > "Un nombre descriptivo largo es mejor que un nombre corto enigmático. Un nombre descriptivo largo es mejor que un comentario descriptivo largo. Nombra una variable con el mismo cuidado con el que nombras a un primogénito"

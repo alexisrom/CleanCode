@@ -8,6 +8,8 @@
 
 ---
 
+![Perdone pero... le huele el código](./your-code-smells.jpg)
+
 ### La herencia, casi nunca es buena
 
 * El pescado pasado huele mal.

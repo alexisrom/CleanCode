@@ -16,6 +16,8 @@
 * Suelen tener nombres de **Entidades**
 * **Composición** mejor que herencia
 
+![Estructuras de datos por todas partes](./data-everywhere.jpg)
+
 ---
 
 > "La estructura de datos expone sus datos y no tiene funciones significativas"
