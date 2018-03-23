@@ -1,6 +1,6 @@
 const ALIVE = 1;
 const ALIVE_COLOR = "#9bf09d";
-const BOARD_COLUMNS = 70;
+const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
 const CELL_SQUARE_PIXELS = 10;
 const DEAD = 0;
