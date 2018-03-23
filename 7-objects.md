@@ -6,14 +6,14 @@
 >
 > -- _Michael C. Feathers_.
 
-* Las clases, como las funciones:
-  * Pequeñas
-  * Organizadas
+### Las clases, como las funciones, Pequeñas y Claras
 
 * Los objetos encapsulan la lógica.
+
   * Usan estructuras de datos.
 
-* Suelen representar Actores.
+* Suelen representar **Actores**.
+
   * Relacionan unas entidades con otras.
 
 * **Interfaces** mejor que herencia
@@ -47,6 +47,8 @@ Muchas interfaces cliente específicas son mejores que una interfaz de propósit
 **Principio de inversión de la dependencia (Dependency inversion principle)**
 Depender de abstracciones, no depender de implementaciones; usando la Inyección de Dependencias.
 
-> "Objects hide their data behind abstractions and expose functions that operate on that data."
+---
+
+> "Los objetos protegen sus datos detrás de abstracciones y exponen las funciones que operan con esos datos."
 >
 > -- _Robert C. Martin_

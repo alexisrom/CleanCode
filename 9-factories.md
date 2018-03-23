@@ -2,19 +2,26 @@
 
 ## Construcción de sistemas
 
-> "Simplicity is about subtracting the obvious and adding the meaningful.".
+> "La simplicidad consiste en quitar lo obvio y agregar lo significativo.".
 >
 > -- _John Maeda_.
 
-* Orden y control
-  * Espacios de nombres
-  * Herencia de conocimiento
-  * Control de fronteras
+---
 
-* Construcción de sistemas
-* Mantenimiento
-* **EVOLUCIÓN**
+### Orden y Control
 
-> "It is not the language that makes programs appear simple. It is the programmer that make the language appear simple!"
+* Espacios de nombres
+* Herencia de conocimiento
+* Control de fronteras
+
+### Fabricamos sistemas usando objetos y estructuras de datos
+
+* Pensando en el Mantenimiento
+* Pensando en la **EVOLUCIÓN**
+* ...sin caer demasiado en el _por si acaso_.
+
+---
+
+> "No es el lenguaje lo que hace que los programas parezcan simples. Es el programador el que hace que el lenguaje parezca simple!"
 >
 > -- _Robert C. Martin_

@@ -1,24 +1,28 @@
 # a- EXTRA
 
-## Errores, excepciones, usuarios y programdores
+## Errores, excepciones, usuarios y programadores
 
-> "If debugging is the process of removing software bugs, then programming must be the process of putting them in".
+> "Si la depuración es el proceso de eliminar errores, entonces la programación debe ser el proceso de ponerlos".
 >
 > -- _E. W. Dijkstra_.
+
+---
+
+### Código excepcionalmente robusto
+
+* Detección temprana de errores con herramientas y tests.
+* Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
+* Recuperar mucha información técnica para el diagnóstico.
+* Pero informar al usaurio en el tono adecuado.
+* Dar una pista para la siguiente acción.
 
 > "Code smells.".
 >
 > -- _Martin Fowler_.
 
-* Código excepcionalmente robusto
-
-* Detección temprana de errores con herramientas y test.
-* Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
-* Recuperar infromación para el diagnóstico.
-* Informar en el tono adecuado.
-* Dar una pista para la siguiente acción.
-
 * Detectar y eliminar los Malos Olores
+
+---
 
 > "Duplication is the primary enemy of a well-designed system"
 > ";-)"

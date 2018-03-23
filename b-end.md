@@ -2,11 +2,13 @@
 
 ## Artesanía del software
 
-> "First do it, then do it right, then do it better".
+> "Primero hazlo, luego hazlo bien, luego hazlo mejor."
 >
 > -- _Addy Osmani_.
 
-> "Good programming is good writing".
+---
+
+> "Programar bien es escribir bien".
 >
 > -- _John Shore_.
 
@@ -32,7 +34,7 @@
 
 ---
 
-> "It's a lot easier to talk about code than it is to write code".
+> "Es mucho más fácil hablar de código que escribir código".
 >
 > -- _John O'Nolan_.
 
