@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "eslint": "^4.19.1",
     "prettier-eslint": "^8.7.1"
   },
   "scripts": {
@@ -14,11 +15,17 @@
     "type": "git",
     "url": "git+https://github.com/AcademiaBinaria/CleanCode.git"
   },
-  "author":
-    "Alberto Basalo <albertobasalo@agorabinaria.com> (http://agorabinaria.com)",
+  "author": "Alberto Basalo <albertobasalo@agorabinaria.com> (http://agorabinaria.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AcademiaBinaria/CleanCode/issues"
   },
-  "homepage": "https://github.com/AcademiaBinaria/CleanCode#readme"
+  "homepage": "https://github.com/AcademiaBinaria/CleanCode#readme",
+  "keywords": [
+    "clean",
+    "code",
+    "game",
+    "of",
+    "life"
+  ]
 }
