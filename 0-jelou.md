@@ -1,21 +1,48 @@
 # 0- JELOU
 
-## Un ejemplo que huele mal.
+## Un ejemplo que huele mal
 
-> "Cualquier código tuyo que no hayas mirado en los últimos seis meses, es como si lo hubiese escrito otro"
+> "Cualquier código tuyo que no hayas mirado en los últimos meses, es como si lo hubiese escrito otro"
 >
 > -- Eagleson's Law
 
-* Cualquier código de más de una semana es heredado.
-* El código es como el pescado, en una semana huele mal.
+---
+
+### La herencia, casi nunca es buena
+
+* El pescado pasado huele mal.
+* El código es como el pescado.
+
+...
+
+* El código pasado es código heredado.
+
+...
+
 * El código heredado huele mal.
-* El código heredado es una oportunidad de mejora.
-* Reescribirlo para entenderlo es una necesidad.
 
-[Origen](https://github.com/benbyford/game-of-life-js)
+...
 
-![Pasos para un mejor código](./better_code.jpg)
+* El código heredado hay que mejorarlo.
+* El código heredado hay que entenderlo para mejorarlo.
+* El código heredado hay que refactorizarlo para entenderlo.
 
-> "The ratio of time spent reading versus writing is well over 10 to 1. We are constantly reading old code as part of the effort to write new code. ...[Therefore,] making it easy to read makes it easier to write."
+### Principios de mejora
+
+* Separar responsabilidades.
+
+* Evitar la globalización y el acoplamiento.
+
+* Dont Repeat Yourself
+
+* Keep It Simle, Stupid
+
+* Mostrar la intención y ocultar los detalles.
+
+[Proyecto Heredado...](https://github.com/benbyford/game-of-life-js)
+
+---
+
+> "La proporción de tiempo dedicado a la lectura frente a la escritura es muy superior a 10 a 1. Constantemente leemos código antiguo como parte del esfuerzo por escribir un nuevo código. ... [Por lo tanto,] facilitar la lectura hace que sea más fácil de escribir."
 >
 > -- _Robert C. Martin_

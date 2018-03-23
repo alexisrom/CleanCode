@@ -1,40 +1,49 @@
 # 3- NAMES
 
-## Dar sentido mediante los nombres.
+## Dar sentido mediante los nombres
 
-> "There are only two hard things in Computer Science: cache invalidation and naming things"
+> "Solo hay dos cosas difíciles en Informática: invalidar la caché y nombrar cosas"
 >
 > -- _Phil Karlton_
 
-* Claridad
+---
 
-  * Explicar la **intención**. Por qué se hace.
+### Claridad
 
-* Reglas
+#### Mostrar la INTENCIÓN
 
-  * Sustantivos para variables / propiedades
+Explicar por qué se hace.
 
-    * Vocabulario de **entidades y propiedades** de negocio
+### Reglas
 
-      * client, customer ?
-      * document, file ?
+#### Sustantivos para variables / propiedades
 
-  * Verbos para funciones / métodos
+* Vocabulario de **entidades y propiedades** de negocio
 
-    * Vocabulario para **relaciones y acciones** comunes
+  * client, customer ?
+  * document, file ?
 
-      * is, has, get, set, can, must, do
-      * create, read, update, delete
-      * select, insert, update, delete
-      * get, post, put, delete
+#### Verbos para funciones / métodos
 
-* Consistencia
+* Vocabulario para **relaciones y acciones** comunes
 
-  * Mejor ser **consistente** con pocas normas...
-  * ... que cambiar de norma.
-  * No me sorprendas
-  * No me hagas pensar
+  * is, has, get, set, can, must, do
+  * create, read, update, delete
+  * select, insert, update, delete
+  * get, post, put, delete
 
-> "A long descriptive name is better than a short enigmatic name. A long descriptive name is better than a long descriptive comment. You should name a variable using the same care with which you name a first-born child"
+### Consistencia
+
+* Mejor ser **consistente** con pocas normas...
+* ... que cambiar de norma.
+
+### Piensa en mi
+
+* No me sorprendas
+* No me hagas pensar
+
+---
+
+> "Un nombre descriptivo largo es mejor que un nombre corto enigmático. Un nombre descriptivo largo es mejor que un comentario descriptivo largo. Nombra una variable con el mismo cuidado con el que nombras a un primogénito"
 >
 > -- _Robert C. Martin_

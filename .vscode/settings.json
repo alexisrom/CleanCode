@@ -3,7 +3,7 @@
   "javascript.format.enable": true,
   "eslint.autoFixOnSave": true,
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Default Dark+",
+  "workbench.colorTheme": "Default Light+",
   "prettier.arrowParens": "avoid",
   "prettier.bracketSpacing": true,
   "prettier.disableLanguages": [],

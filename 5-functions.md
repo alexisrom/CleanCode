@@ -1,31 +1,51 @@
 # 5- FUNCTIONS
 
-## Pequeñas piezas para organizar programas.
+## Pequeñas piezas para organizar programas
 
 > "Una función debería hacer una sóla cosa, hacerla bien, y hacerla sólo ella".
 >
 > -- _Ley de Curly_.
 
-* **Pequeñas y Organizadas**
-  * Cuanto más pequeñas más reutilizables.
-  * DRY: Don´t Repeate yourself.
+---
 
-* Con verbos en su nombre que indiquen propósito
+### Pequeñas y Claras
+
+* Cuanto más pequeñas más reutilizables.
+* Con **verbos** en su nombre que indiquen propósito
+* DRY: Don´t Repeate yourself.
   * ...sin comentarios.
 
-* Cuantos menos argumentos mejor.
-  * Mejor si son inmutables.
-  * Mejor si son puras.
+### Estilos
+
+* Si no usas POO, usa funciones puras:
+
+  * predecibles
+  * sin dependencias del entorno
+  * sin efectos secundarios en el entorno
+
+* Si usas POO, cuantos menos argumentos mejor.
 
 * Retornando datos, no errores.
-  * ... si el lenguaje lo permite. Si no, usar convenio.
 
-* Un sólo propósito.
+  * Si el lenguaje no lo permite, usar convenio.
+
+### Objetivo: Muchas Pequeñas Funciones Organizadas
+
+* Una función, un sólo propósito.
+
   * ... o al menos un mismo nivel de abstracción.
 
 * Sin comentarios.
   * ¿Me repito?. MAL!!!
 
-> "Duplication is the primary enemy of a well-designed system"
+---
+
+> "Una función debería hacer una sóla cosa, hacerla bien, y hacerla sólo ella".
+>
+> -- _Ley de Curly_.
+
+---
+
+> "La duplicidad es el principal enemigo de un sistema bien diseñado"
 >
 > -- _Robert C. Martin_
