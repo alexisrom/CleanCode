@@ -8,35 +8,36 @@
 
 ---
 
-* Belleza horizontal
+- Belleza horizontal
 
-  * Indentación en bloques
-  * Espaciado en expresiones
+  - Indentación en bloques
+  - Espaciado en expresiones
 
-* Belleza vertical
+- Belleza vertical
 
-  * Orden público -> privado
-  * Orden newsletter
-  * ¿Cuantas lineas en blanco realmente necesitas?
+  - Orden
+    - público -> privado
+    - Orden newsletter
+  - ¿Cuantas lineas en blanco realmente necesitas?
 
 ## Código con Reglas de Estilo
 
-* **Decisión**: vamos a establecer reglas.
-* **Opción**: vamos a fijar valores razonables.
-* **Sentido**: vamos a incumplirlas... pero a sabiendas.
+- **Decisión**: vamos a establecer reglas.
+- **Opción**: vamos a fijar valores razonables.
+- **Sentido**: vamos a incumplirlas... pero a sabiendas.
 
 ---
 
-* Herramientas de limpieza, segun IDE y lenguaje:
+- Herramientas de limpieza, segun IDE y lenguaje:
 
-  * [Prettier](https://prettier.io/)
-  * [Beutify](https://www.npmjs.com/package/js-beautify)
+  - [Prettier](https://prettier.io/)
+  - [Beutify](https://www.npmjs.com/package/js-beautify)
 
 ![Tabs vs Spaces](./tabs_vs_spaces.png)
 
-* Evita conflictos trasladando la decidión a otros:
+- Evita conflictos trasladando la decidión a otros:
 
-  * [eslint-recommended](https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js)
+  - [eslint-recommended](https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js)
 
 ---
 

@@ -10,12 +10,12 @@
 
 ### Limpiar requiere cambiar por dentro sin cambiar por fuera
 
-* Necesitamos pruebas para limpiar tranquilos.
-* Haz algun tipo de prueba.
-* No hagas demasiados tests, mejor de integración.
-* Pero que sean automáticos.
-* Los tests SON código.
-* Los tests deben estar limpios.
+- Necesitamos pruebas para limpiar tranquilos.
+- Haz algún tipo de prueba, no demasiadas.
+- Mejor pruebas de integración.
+- Pero que sean automáticos.
+- Los tests SON código.
+- Los tests deben estar limpios.
 
 ### Si funciona, y tienes pruebas, tócalo
 
@@ -23,6 +23,8 @@
 
 ---
 
-> "¿Por qué la mayoría de los desarrolladores temen hacer cambios en su código? ¡Tienen miedo a que se rompa! ¿Por qué tienen miedo de romperlo? Porque no tienen pruebas."
+> "¿Por qué la mayoría de los desarrolladores temen hacer cambios en su código? Porque ¡Tienen miedo a que se rompa!
+
+> ¿Por qué tienen miedo de romperlo? Porque no tienen pruebas."
 >
 > -- _Robert C. Martin_

@@ -10,28 +10,29 @@
 
 ### Objetivo
 
-* Reducir el numero de lineas por bloque
-* Afecta a los `if/else` a los `for` a los `switch`...
+- Reducir el numero de lineas por bloque
+- Afecta a los `if/else` a los `for` a los `switch`...
 
 ### Reglas
 
 #### Extrema
 
-* Implementar e invocar una función para cada bloque.
+- Implementar e invocar una función para cada bloque.
+- Podría dar lugar a funciones de una sóla instrucción.
 
 #### Razonable
 
-* Al menos si hay más de una instrucción.
+- Al menos implementar e invocar una función para cada bloque si hay más de una instrucción.
 
 #### Mínima
 
-* Al menos piensa en ello.
+- Al menos piensa en ello.
 
 ### Consecuencias
 
-* Más reglas de negocio
-* Menos anidamiento
-* **Cero** comentarios
+- Más **reglas de negocio**
+- Menos anidamiento
+- **Cero** comentarios
 
 #### Muchas más funciones... y muchos menos comentarios
 

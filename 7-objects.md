@@ -2,21 +2,25 @@
 
 ## Arquitectura limpia
 
-> "La encapsulación es importante; pero la razón por la cual es importante es aún más importante. La encapsulación nos ayuda a razonar sobre nuestro código".
+> "La encapsulación es importante.
+
+> Pero la razón por la cual es importante es aún más importante.
+
+> La encapsulación nos ayuda a razonar sobre nuestro código".
 >
 > -- _Michael C. Feathers_.
 
-### Las clases, como las funciones, Pequeñas y Claras
+## Las clases, como las funciones, Pequeñas y Claras
 
-* Los objetos encapsulan la lógica.
+- Los objetos encapsulan la lógica.
 
-  * Usan estructuras de datos.
+  - Usan estructuras de datos.
 
-* Suelen representar **Actores**.
+- Suelen representar **Actores**.
 
-  * Relacionan unas entidades con otras.
+  - Relacionan unas entidades con otras.
 
-* **Interfaces** mejor que herencia
+- **Interfaces** mejor que herencia
 
 ---
 
@@ -35,17 +39,17 @@ Las entidades de software deben estar abiertas para su extensión, pero cerradas
 ### L LSP
 
 **Principio de sustitución de Liskov (Liskov substitution principle)**
-los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.
+Los objetos deberían ser reemplazables por subtipos sin alterar el funcionamiento del programa.
 
 ### I ISP
 
 **Principio de segregación de la interfaz (Interface segregation principle)**
-Muchas interfaces cliente específicas son mejores que una interfaz de propósito general.​
+Muchas interfaces específicas son mejores que una interfaz de propósito general.​
 
 ### D DIP
 
 **Principio de inversión de la dependencia (Dependency inversion principle)**
-Depender de abstracciones, no depender de implementaciones; usando la Inyección de Dependencias.
+Depender de abstracciones, no depender de implementaciones. Resolver en ejecución usando la Inyección de Dependencias.
 
 ---
 

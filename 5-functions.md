@@ -10,33 +10,33 @@
 
 ### Pequeñas y Claras
 
-* Cuanto más pequeñas más reutilizables.
-* Con **verbos** en su nombre que indiquen propósito
-* DRY: Don´t Repeate yourself.
-  * ...sin comentarios.
+- Cuanto más pequeñas más reutilizables.
+- Con **verbos** en su nombre que indiquen propósito
+- DRY: Don´t Repeate yourself.
+  - ...sin comentarios.
 
 ### Estilos
 
-* Si no usas POO, usa funciones puras:
+- Si no usas POO, usa funciones puras:
 
-  * predecibles
-  * sin dependencias del entorno
-  * sin efectos secundarios en el entorno
+  - predecibles
+  - sin dependencias del entorno
+  - sin efectos secundarios en el entorno
 
-* Si usas POO, cuantos menos argumentos mejor.
+- Si usas POO, cuantos menos argumentos mejor.
 
-* Retornando datos, no errores.
+- En todo caso retornando datos; no errores.
 
-  * Si el lenguaje no lo permite, usar convenio.
+  - Si el lenguaje no lo permite, usar convenio.
 
 ### Objetivo: Muchas Pequeñas Funciones Organizadas
 
-* Una función, un sólo propósito.
+- Una función, un sólo propósito.
 
-  * ... o al menos un mismo nivel de abstracción.
+  - ... o al menos un mismo nivel de abstracción.
 
-* Sin comentarios.
-  * ¿Me repito?. MAL!!!
+- Sin comentarios.
+  - ¿Me repito?. MAL!!!
 
 ---
 

@@ -10,11 +10,16 @@
 
 ### Código excepcionalmente robusto
 
-* Detección temprana de errores con herramientas y tests.
-* Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
-* Recuperar mucha información técnica para el diagnóstico.
-* Pero informar al usaurio en el tono adecuado.
-* Dar una pista para la siguiente acción.
+#### En desarrollo
+
+- Detección temprana de errores con herramientas y tests.
+- Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
+
+#### En ejecución
+
+- Recuperar mucha información técnica para el diagnóstico.
+- Pero informar al usaurio en el tono adecuado.
+- Dar una pista para la siguiente acción.
 
 ![No veo errores](./no-bug.jpg)
 
@@ -22,12 +27,14 @@
 >
 > -- _Martin Fowler_.
 
-* Detectar y eliminar los Malos Olores
+- Detectar y eliminar los Malos Olores
 
 ---
 
 > "Duplication is the primary enemy of a well-designed system"
-> ";-)"
-> ";-)"
+
+> ;-)
+
+> ;-)
 >
 > -- _Robert C. Martin_

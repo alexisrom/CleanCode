@@ -12,34 +12,34 @@
 
 ### La herencia, casi nunca es buena
 
-* El pescado pasado huele mal.
-* El código es como el pescado.
+- El pescado después de tiempo huele mal.
+- El código es como el pescado.
 
 ...
 
-* El código pasado es código heredado.
+- El código del pasado es código heredado.
 
 ...
 
-* El código heredado huele mal.
+- El código heredado huele mal.
 
 ...
 
-* El código heredado hay que mejorarlo.
-* El código heredado hay que entenderlo para mejorarlo.
-* El código heredado hay que refactorizarlo para entenderlo.
+- El código heredado hay que mejorarlo.
+- El código heredado hay que entenderlo para mejorarlo.
+- El código heredado hay que refactorizarlo para entenderlo.
 
 ### Principios de mejora
 
-* Separar responsabilidades.
+- Separar responsabilidades.
 
-* Evitar la globalización y el acoplamiento.
+- Evitar la globalización y el acoplamiento.
 
-* Dont Repeat Yourself
+- Dont Repeat Yourself
 
-* Keep It Simle, Stupid
+- Keep It Simle, Stupid
 
-* Mostrar la intención y ocultar los detalles.
+- Mostrar la intención y ocultar los detalles.
 
 [Proyecto Heredado...](https://github.com/benbyford/game-of-life-js)
 
