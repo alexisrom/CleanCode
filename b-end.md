@@ -25,16 +25,16 @@
 ### No sólo colaboración con el cliente, también asociaciones productivas
 
 > "Voy a hacer un buen trabajo.
-
-> No tengo prisa.
-
-> Escribiré tests.
-
-> Iré rápido a base de hacerlo bien.
-
-> No escribiré mierda.
-
-> Voy a practicar, practicar y practicar porque eso es lo que hace un profesional.
+>
+> > No tengo prisa.
+> >
+> > > Escribiré tests.
+> > >
+> > > > Iré rápido a base de hacerlo bien.
+> > > >
+> > > > > No escribiré mierda.
+> > > > >
+> > > > > > Voy a practicar, practicar y practicar porque eso es lo que hace un profesional.
 >
 > -- _Un Artesano del software_
 
