@@ -61,4 +61,8 @@ Depender de abstracciones, no depender de implementaciones. Resolver en ejecuciÃ
 
 - [<- Vuelta al Ã­ndice ](./)
 
-- [Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Repo](https://github.com/AcademiaBinaria/CleanCode){:target="\_blank"}
+
+- [Fuente](https://github.com/AcademiaBinaria/CleanCode/tree/master/7-objects){:target="\_blank"}
+
+- [Game Of Life](./7-objects/){:target="\_blank"}

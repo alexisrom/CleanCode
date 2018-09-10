@@ -58,4 +58,8 @@ Explicar por qué se hace.
 
 - [<- Vuelta al índice ](./)
 
-- [Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Repo](https://github.com/AcademiaBinaria/CleanCode){:target="\_blank"}
+
+- [Fuente](https://github.com/AcademiaBinaria/CleanCode/tree/master/3-names){:target="\_blank"}
+
+- [Game Of Life](./3-names/){:target="\_blank"}

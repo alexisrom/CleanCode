@@ -49,4 +49,8 @@
 
 - [<- Vuelta al índice ](./)
 
-- [Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Repo](https://github.com/AcademiaBinaria/CleanCode){:target="\_blank"}
+
+- [Fuente](https://github.com/AcademiaBinaria/CleanCode/tree/master/2-format){:target="\_blank"}
+
+- [Game Of Life](./2-format/){:target="\_blank"}
