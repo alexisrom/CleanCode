@@ -29,6 +29,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./2-format.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./2-format.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

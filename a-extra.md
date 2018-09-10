@@ -39,6 +39,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./b-end.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./b-end.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

@@ -54,6 +54,8 @@ Explicar por qué se hace.
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./4-blocks.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./4-blocks.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

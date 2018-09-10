@@ -57,6 +57,8 @@ Depender de abstracciones, no depender de implementaciones. Resolver en ejecuci�
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./8-systems.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./8-systems.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

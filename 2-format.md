@@ -45,6 +45,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./3-names.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./3-names.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

@@ -42,6 +42,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./5-functions.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./5-functions.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

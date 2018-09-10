@@ -52,6 +52,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./6-data.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./6-data.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

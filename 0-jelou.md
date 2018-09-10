@@ -49,6 +49,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./1-test.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./1-test.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)

@@ -35,6 +35,8 @@
 >
 > -- _Robert C. Martin_
 
-[Siguiente](./9-factories.md)
-[Vuelta al índice ./](./)
-[Repo](https://github.com/AcademiaBinaria/CleanCode)
+- [Siguiente](./9-factories.md)
+
+- [<- Vuelta al índice ](./)
+
+- [Repo](https://github.com/AcademiaBinaria/CleanCode)
