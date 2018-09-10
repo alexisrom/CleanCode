@@ -48,3 +48,5 @@
 > "La proporción de tiempo dedicado a la lectura frente a la escritura es muy superior a 10 a 1. Constantemente leemos código antiguo como parte del esfuerzo por escribir un nuevo código. ... [Por lo tanto,] facilitar la lectura hace que sea más fácil de escribir."
 >
 > -- _Robert C. Martin_
+
+[Vuelta al índice](./readme.md)

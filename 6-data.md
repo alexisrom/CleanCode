@@ -26,3 +26,5 @@
 > "La estructura de datos expone sus propiedades y no tiene funciones significativas"
 >
 > -- _Robert C. Martin_
+
+[Vuelta al índice](./readme.md)
