@@ -49,4 +49,5 @@
 >
 > -- _Robert C. Martin_
 
-[Vuelta al índice](./readme.md)
+[Siguiente](./1-test.md)
+[Vuelta al índice](./index.md)
