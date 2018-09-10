@@ -54,3 +54,5 @@
 - [<- Vuelta al índice ](./)
 
 - [Repo](https://github.com/AcademiaBinaria/CleanCode)
+
+- [Game Of Life](./0-jelou/){:target="\_blank"}
