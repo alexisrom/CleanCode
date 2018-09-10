@@ -30,4 +30,6 @@
 >
 > -- _Robert C. Martin_
 
-[Vuelta al índice](./readme.md)
+[Siguiente](./a-extra.md)
+[Vuelta al índice ./](./)
+[Repo](https://github.com/AcademiaBinaria/CleanCode)

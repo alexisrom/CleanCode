@@ -27,4 +27,6 @@
 >
 > -- _Robert C. Martin_
 
-[Vuelta al índice](./readme.md)
+[Siguiente](./7-objects.md)
+[Vuelta al índice ./](./)
+[Repo](https://github.com/AcademiaBinaria/CleanCode)

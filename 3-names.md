@@ -54,4 +54,6 @@ Explicar por qué se hace.
 >
 > -- _Robert C. Martin_
 
-[Vuelta al índice](./readme.md)
+[Siguiente](./4-blocks.md)
+[Vuelta al índice ./](./)
+[Repo](https://github.com/AcademiaBinaria/CleanCode)

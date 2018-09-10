@@ -51,6 +51,4 @@
 
 [Siguiente](./1-test.md)
 [Vuelta al índice ./](./)
-[Vuelta al índice ./readme](./readme)
-[Vuelta al índice ./clean_code](./clean_code)
 [Repo](https://github.com/AcademiaBinaria/CleanCode)
