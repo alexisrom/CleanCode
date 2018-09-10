@@ -49,7 +49,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./1-test.md)
+- [Siguiente ->](./1-test.md)
 
 - [<- Vuelta al índice ](./)
 

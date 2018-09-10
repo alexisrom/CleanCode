@@ -45,7 +45,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./3-names.md)
+- [Siguiente ->](./3-names.md)
 
 - [<- Vuelta al índice ](./)
 

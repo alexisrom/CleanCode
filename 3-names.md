@@ -54,7 +54,7 @@ Explicar por qué se hace.
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./4-blocks.md)
+- [Siguiente ->](./4-blocks.md)
 
 - [<- Vuelta al índice ](./)
 

@@ -52,7 +52,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./6-data.md)
+- [Siguiente ->](./6-data.md)
 
 - [<- Vuelta al índice ](./)
 

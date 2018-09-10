@@ -27,7 +27,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./7-objects.md)
+- [Siguiente ->](./7-objects.md)
 
 - [<- Vuelta al índice ](./)
 

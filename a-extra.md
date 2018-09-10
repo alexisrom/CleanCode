@@ -39,7 +39,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./b-end.md)
+- [Siguiente ->](./b-end.md)
 
 - [<- Vuelta al índice ](./)
 

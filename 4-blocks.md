@@ -42,7 +42,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./5-functions.md)
+- [Siguiente ->](./5-functions.md)
 
 - [<- Vuelta al índice ](./)
 

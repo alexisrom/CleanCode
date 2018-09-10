@@ -35,7 +35,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./9-factories.md)
+- [Siguiente ->](./9-factories.md)
 
 - [<- Vuelta al índice ](./)
 

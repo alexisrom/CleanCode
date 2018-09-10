@@ -57,7 +57,7 @@ Depender de abstracciones, no depender de implementaciones. Resolver en ejecuciÃ
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./8-systems.md)
+- [Siguiente ->](./8-systems.md)
 
 - [<- Vuelta al Ã­ndice ](./)
 

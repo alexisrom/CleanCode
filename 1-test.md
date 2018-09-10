@@ -29,7 +29,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./2-format.md)
+- [Siguiente ->](./2-format.md)
 
 - [<- Vuelta al índice ](./)
 

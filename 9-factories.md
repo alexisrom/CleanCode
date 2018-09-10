@@ -30,7 +30,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente](./a-extra.md)
+- [Siguiente ->](./a-extra.md)
 
 - [<- Vuelta al índice ](./)
 
