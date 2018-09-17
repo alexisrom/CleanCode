@@ -1,6 +1,6 @@
-export function testLife(game) {
+export function testLifeIterations(game, iterations) {
   console.group("describe life iterations");
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < iterations; i++) {
     testIteration(game, i);
   }
   console.groupEnd();
@@ -68,10 +68,12 @@ function testIteration(game, iteration) {
             }
           }
           function isInGrid(column, row) {
-            return column >= 0 &&
+            return (
+              column >= 0 &&
               row >= 0 &&
               column < game.gridWidth &&
-              row < game.gridHeight;
+              row < game.gridHeight
+            );
           }
           return lifeCounter;
         }
