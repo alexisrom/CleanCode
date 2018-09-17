@@ -1,6 +1,10 @@
-# a- EXTRA
+# c- CODE
 
-## Errores, excepciones, usuarios y programadores
+> TO DO. WIP
+
+Prácticas
+
+## Prácticas propuestas
 
 > "Si la depuración es el proceso de eliminar errores, entonces la programación debe ser el proceso de ponerlos".
 >
@@ -39,7 +43,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente ->](./d-end.md)
+- [Siguiente ->](./b-end.md)
 
 - [<- Vuelta al índice ](./)
 
