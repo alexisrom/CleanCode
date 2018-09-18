@@ -1,5 +1,7 @@
 const BOARD_COLUMNS = 140;
 const BOARD_ROWS = 70;
+const INIT_COLUMN = 0;
+const INIT_ROW = 0;
 const DELAY_MS = 50;
 const ALIVE = 1;
 const DEAD = 0;
@@ -11,7 +13,7 @@ const LIVE_GAME_MS = MINUTE_MS;
 const UNDER_POPULATION = 2;
 const board = [];
 const initializationTime = Date.now();
-const nextBoard = [];
+const nextStateBoard = [];
 
 function start() {
   initializeBoard();
@@ -20,12 +22,16 @@ function start() {
 function initializeBoard() {
   // create default board array
   // sudo random noise
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
+  for (
+    let column = INIT_COLUMN;
+    column < BOARD_COLUMNS;
+    column++
+  ) {
     board[column] = [];
-    nextBoard[column] = [];
-    for (let row = 0; row < BOARD_ROWS; row++) {
+    nextStateBoard[column] = [];
+    for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
       board[column][row] = DEAD;
-      nextBoard[column][row] = DEAD;
+      nextStateBoard[column][row] = DEAD;
       const randomLifeProbability = Math.random();
       if (randomLifeProbability > LIFE_PROBABILITY) {
         board[column][row] = ALIVE;
@@ -45,32 +51,40 @@ function loopGame() {
 function updateIteration() {
   generateNextCellState();
   function generateNextCellState() {
-    for (let column = 0; column < BOARD_COLUMNS; column++) {
-      for (let row = 0; row < BOARD_ROWS; row++) {
+    for (
+      let column = INIT_COLUMN;
+      column < BOARD_COLUMNS;
+      column++
+    ) {
+      for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
         const lifeAround = countLifeAround(column, row);
         if (board[column][row] == DEAD) {
           if (lifeAround == REPRODUCTION_POPULATION) {
-            nextBoard[column][row] = ALIVE;
+            nextStateBoard[column][row] = ALIVE;
           } else {
-            nextBoard[column][row] = DEAD;
+            nextStateBoard[column][row] = DEAD;
           }
         } else {
           if (
             lifeAround < UNDER_POPULATION ||
             lifeAround > OVER_POPULATION
           ) {
-            nextBoard[column][row] = DEAD;
+            nextStateBoard[column][row] = DEAD;
           } else {
-            nextBoard[column][row] = ALIVE;
+            nextStateBoard[column][row] = ALIVE;
           }
         }
       }
     }
-    cloneToCurrentBoard(board, nextBoard);
+    cloneToCurrentBoard(board, nextStateBoard);
   }
   function cloneToCurrentBoard(target, source) {
-    for (let column = 0; column < BOARD_COLUMNS; column++) {
-      for (let row = 0; row < BOARD_ROWS; row++) {
+    for (
+      let column = INIT_COLUMN;
+      column < BOARD_COLUMNS;
+      column++
+    ) {
+      for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
         target[column][row] = source[column][row];
       }
     }
@@ -80,6 +94,8 @@ function drawBoardOnCanvas() {
   const ALIVE_COLOR = "#ff7f00";
   const CELL_SQUARE_PIXELS = 10;
   const DEAD_COLOR = "#ffc898";
+  const INIT_WIDTH = 0;
+  const INIT_HEIGHT = 0;
   const boardCanvas = document.getElementById("gameCanvas");
   const canvasContext = boardCanvas.getContext("2d");
   // setup canvas
@@ -90,13 +106,17 @@ function drawBoardOnCanvas() {
   // clear canvas
   canvasContext.fillStyle = DEAD_COLOR;
   canvasContext.fillRect(
-    0,
-    0,
+    INIT_WIDTH,
+    INIT_HEIGHT,
     boardCanvas.width,
     boardCanvas.height
   );
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
-    for (let row = 0; row < BOARD_ROWS; row++) {
+  for (
+    let column = INIT_COLUMN;
+    column < BOARD_COLUMNS;
+    column++
+  ) {
+    for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
       if (board[column][row] == ALIVE) {
         canvasContext.fillStyle = ALIVE_COLOR;
         canvasContext.fillRect(
@@ -111,10 +131,11 @@ function drawBoardOnCanvas() {
 }
 function countLifeAround(column, row) {
   let lifeAround = 0;
-  const leftColumn = column - 1;
-  const rightColumn = column + 1;
-  const topRow = row - 1;
-  const bottomRow = row + 1;
+  const STEP = 1;
+  const leftColumn = column - STEP;
+  const rightColumn = column + STEP;
+  const topRow = row - STEP;
+  const bottomRow = row + STEP;
   countIfAlive(leftColumn, topRow);
   countIfAlive(leftColumn, row);
   countIfAlive(leftColumn, bottomRow);
@@ -126,9 +147,9 @@ function countLifeAround(column, row) {
   function countIfAlive(column, row) {
     // if x and y on the board
     if (
-      column >= 0 &&
+      column >= INIT_COLUMN &&
       column < BOARD_COLUMNS &&
-      row >= 0 &&
+      row >= INIT_ROW &&
       row < BOARD_ROWS
     ) {
       if (board[column][row] == ALIVE) lifeAround++;
@@ -147,7 +168,7 @@ export const game = {
   DEAD,
   initializeBoard,
   loopGame,
-  nextBoard,
+  nextStateBoard,
   OVER_POPULATION,
   REPRODUCTION_POPULATION,
   UNDER_POPULATION,

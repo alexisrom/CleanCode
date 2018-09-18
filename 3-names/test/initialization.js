@@ -1,8 +1,8 @@
 export function testInitialization(game) {
   console.group("describe initialization");
   game.initializeBoard();
-  testGrid(game, game.board, 'main');
-  testGrid(game, game.nextBoard, 'next');
+  testGrid(game, game.board, "main");
+  testGrid(game, game.nextStateBoard, "next");
   console.groupEnd();
 }
 function testGrid(game, board, name) {
@@ -20,11 +20,7 @@ function testGrid(game, board, name) {
         `should has a begin cell but has no begin`,
         game.board
       );
-      console.assert(
-        hasEnd(),
-        `has no end`,
-        game.board
-      );
+      console.assert(hasEnd(), `has no end`, game.board);
       console.assert(
         isNotOversized(),
         `is oversized`,
