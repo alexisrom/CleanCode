@@ -41,6 +41,8 @@ Explicar por qué se hace.
 
 - No me sorprendas
 - No me hagas pensar
+- **No magic numbers**
+- **No magic strings**
 
 ![wtf-naming](./naming.png)
 
