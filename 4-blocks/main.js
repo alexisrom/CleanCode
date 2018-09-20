@@ -1,7 +1,7 @@
 const ALIVE = 1;
 const ALIVE_COLOR = "#f8ed62";
-const BOARD_COLUMNS = 140;
-const BOARD_ROWS = 70;
+const COLUMNS = 140;
+const ROWS = 70;
 const CELL_SQUARE_PIXELS = 10;
 const DEAD = 0;
 const DEAD_COLOR = "#a98600";
@@ -25,18 +25,14 @@ function start() {
   loopGame();
 }
 function initializeBoard() {
-  for (
-    let column = INIT_COLUMN;
-    column < BOARD_COLUMNS;
-    column++
-  ) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
     initializeColumn(column);
   }
 }
 function initializeColumn(column) {
   board[column] = [];
   nextStateBoard[column] = [];
-  for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
+  for (let row = INIT_ROW; row < ROWS; row++) {
     initializeColumnRow(column, row);
   }
 }
@@ -64,12 +60,8 @@ function updateIteration() {
   generateNextCellState();
 }
 function generateNextCellState() {
-  for (
-    let column = INIT_COLUMN;
-    column < BOARD_COLUMNS;
-    column++
-  ) {
-    for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
       generateFromCell(column, row);
     }
   }
@@ -99,31 +91,23 @@ function generateFromLivingCell(lifeAround, column, row) {
   }
 }
 function cloneToCurrentBoard(target, source) {
-  for (
-    let column = INIT_COLUMN;
-    column < BOARD_COLUMNS;
-    column++
-  ) {
-    for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
       target[column][row] = source[column][row];
     }
   }
 }
 function drawBoardOnCanvas() {
   setUpCanvas();
-  for (
-    let column = INIT_COLUMN;
-    column < BOARD_COLUMNS;
-    column++
-  ) {
-    for (let row = INIT_ROW; row < BOARD_ROWS; row++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
       fillCell(column, row);
     }
   }
 }
 function setUpCanvas() {
-  boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
-  boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
+  boardCanvas.width = COLUMNS * CELL_SQUARE_PIXELS;
+  boardCanvas.height = ROWS * CELL_SQUARE_PIXELS;
   boardCanvas.style.width = boardCanvas.width;
   boardCanvas.style.height = boardCanvas.height;
   clearCanvas();
@@ -181,17 +165,17 @@ function countIfAlive(column, row) {
 function isCellOnBoard(column, row) {
   return (
     column >= INIT_COLUMN &&
-    column < BOARD_COLUMNS &&
+    column < COLUMNS &&
     row >= INIT_ROW &&
-    row < BOARD_ROWS
+    row < ROWS
   );
 }
 
 // FOR TESTING PURPOSES
 export const game = {
   ALIVE,
-  BOARD_COLUMNS,
-  BOARD_ROWS,
+  COLUMNS,
+  ROWS,
   board,
   countLifeAround,
   DEAD,

@@ -1,11 +1,15 @@
 const ALIVE = 1;
 const ALIVE_COLOR = "#9bf09d";
-const BOARD_COLUMNS = 140;
-const BOARD_ROWS = 70;
+const COLUMNS = 140;
+const ROWS = 70;
 const CELL_SQUARE_PIXELS = 10;
 const DEAD = 0;
 const DEAD_COLOR = "#4b7248";
 const DELAY_MS = 50;
+const INIT_COLUMN = 0;
+const INIT_HEIGHT = 0;
+const INIT_WIDTH = 0;
+const INIT_ROW = 0;
 const LIFE_PROBABILITY = 0.44;
 const MINUTE_MS = 60 * 1000;
 const LIVE_GAME_MS = MINUTE_MS;
@@ -23,14 +27,14 @@ function start() {
   loopGame();
 }
 function initializeBoard() {
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
     initializeColumn(column);
   }
 }
 function initializeColumn(column) {
   board[column] = [];
   nextBoard[column] = [];
-  for (let row = 0; row < BOARD_ROWS; row++) {
+  for (let row = INIT_ROW; row < ROWS; row++) {
     initializeCell(column, row);
   }
 }
@@ -67,8 +71,8 @@ function updateIteration(board) {
   cloneToCurrentBoard(board, nextBoard);
 }
 function generateNextCellState(board) {
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
-    for (let row = 0; row < BOARD_ROWS; row++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
       generateFromCell(board, column, row);
     }
   }
@@ -103,23 +107,27 @@ function mustDie(lifeAround) {
   );
 }
 function cloneToCurrentBoard(target, source) {
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
-    for (let row = 0; row < BOARD_ROWS; row++) {
-      target[column][row] = source[column][row];
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
+      cloneToCurrentCell(target, column, row, source);
     }
   }
 }
+function cloneToCurrentCell(target, column, row, source) {
+  target[column][row] = source[column][row];
+}
+
 function drawBoardOnCanvas(board) {
   setUpCanvas();
-  for (let column = 0; column < BOARD_COLUMNS; column++) {
-    for (let row = 0; row < BOARD_ROWS; row++) {
+  for (let column = INIT_COLUMN; column < COLUMNS; column++) {
+    for (let row = INIT_ROW; row < ROWS; row++) {
       fillCell(board, column, row);
     }
   }
 }
 function setUpCanvas() {
-  boardCanvas.width = BOARD_COLUMNS * CELL_SQUARE_PIXELS;
-  boardCanvas.height = BOARD_ROWS * CELL_SQUARE_PIXELS;
+  boardCanvas.width = COLUMNS * CELL_SQUARE_PIXELS;
+  boardCanvas.height = ROWS * CELL_SQUARE_PIXELS;
   boardCanvas.style.width = boardCanvas.width;
   boardCanvas.style.height = boardCanvas.height;
   clearCanvas();
@@ -127,8 +135,8 @@ function setUpCanvas() {
 function clearCanvas() {
   canvasContext.fillStyle = DEAD_COLOR;
   canvasContext.fillRect(
-    0,
-    0,
+    INIT_WIDTH,
+    INIT_HEIGHT,
     boardCanvas.width,
     boardCanvas.height
   );
@@ -159,11 +167,15 @@ function deductItself(livingAround) {
 }
 function getLivingCellsAround(board, column, row) {
   let lifeAround = 0;
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
-      const c = column + x;
-      const r = row + y;
-      lifeAround += countIfNeighborIsAlive(board, c, r);
+  const previous = -1;
+  const next = 2;
+  for (let xStep = previous; xStep < next; xStep++) {
+    for (let yStep = previous; yStep < next; yStep++) {
+      lifeAround += countIfNeighborIsAlive(
+        board,
+        column + xStep,
+        row + yStep
+      );
     }
   }
   return lifeAround;
@@ -171,17 +183,17 @@ function getLivingCellsAround(board, column, row) {
 function countIfNeighborIsAlive(board, column, row) {
   if (isCellOnBoard(column, row)) {
     if (isCellAlive(board, column, row)) {
-      return 1;
+      return ALIVE;
     }
   }
-  return 0;
+  return DEAD;
 }
 function isCellOnBoard(column, row) {
   return (
-    column >= 0 &&
-    column < BOARD_COLUMNS &&
-    row >= 0 &&
-    row < BOARD_ROWS
+    column >= INIT_COLUMN &&
+    column < COLUMNS &&
+    row >= INIT_ROW &&
+    row < ROWS
   );
 }
 function isCellAlive(board, column, row) {
@@ -199,8 +211,8 @@ function setCellDead(board, column, row) {
 // FOR TESTING PURPOSES
 export const game = {
   ALIVE,
-  BOARD_COLUMNS,
-  BOARD_ROWS,
+  COLUMNS,
+  ROWS,
   board,
   countLifeAround,
   DEAD,

@@ -1,8 +1,8 @@
 export function testInitialization(game) {
   console.group("describe initialization");
   game.initializeBoard();
-  testGrid(game, game.board, 'main');
-  testGrid(game, game.nextBoard, 'next');
+  testGrid(game, game.board, "main");
+  testGrid(game, game.nextBoard, "next");
   console.groupEnd();
 }
 function testGrid(game, board, name) {
@@ -20,11 +20,7 @@ function testGrid(game, board, name) {
         `should has a begin cell but has no begin`,
         game.board
       );
-      console.assert(
-        hasEnd(),
-        `has no end`,
-        game.board
-      );
+      console.assert(hasEnd(), `has no end`, game.board);
       console.assert(
         isNotOversized(),
         `is oversized`,
@@ -35,14 +31,14 @@ function testGrid(game, board, name) {
       return board[0][0] !== null;
     }
     function hasEnd() {
-      const lastColumn = game.BOARD_COLUMNS - 1;
-      const lastRow = game.BOARD_ROWS - 1;
+      const lastColumn = game.COLUMNS - 1;
+      const lastRow = game.ROWS - 1;
       return board[lastColumn][lastRow] !== null;
     }
     function isNotOversized() {
       return (
-        board[game.BOARD_COLUMNS] == undefined &&
-        board[0][game.BOARD_ROWS] == undefined
+        board[game.COLUMNS] == undefined &&
+        board[0][game.ROWS] == undefined
       );
     }
   }
