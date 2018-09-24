@@ -87,10 +87,10 @@ function countIfNeighborIsAlive(neighborIndex, board) {
   if (board.isOnBoard(neighborIndex)) {
     const neighbor = board.getItem(neighborIndex);
     if (isCellAlive(neighbor)) {
-      return GAME.ALIVE;
+      return GAME.IS_ALIVE;
     }
   }
-  return GAME.DEAD;
+  return GAME.IS_DEAD;
 }
 function generateFromDeadCell(cell) {
   if (mustBorn(cell)) {
@@ -151,16 +151,16 @@ function fillLivingCell(column, row) {
   );
 }
 function isCellAlive(cell) {
-  return cell.status.current === GAME.ALIVE;
+  return cell.status.current === GAME.IS_ALIVE;
 }
 function isCellDead(cell) {
-  return cell.status.current === GAME.DEAD;
+  return cell.status.current === GAME.IS_DEAD;
 }
 function setCellAlive(cell) {
-  cell.status.next = GAME.ALIVE;
+  cell.status.next = GAME.IS_ALIVE;
 }
 function setCellDead(cell) {
-  cell.status.next = GAME.DEAD;
+  cell.status.next = GAME.IS_DEAD;
 }
 // FOR TESTING PURPOSES
 export const game = {
