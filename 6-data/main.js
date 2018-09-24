@@ -4,7 +4,7 @@ import { Board } from "./database/board.js";
 import { Index } from "./database/index.js";
 const initializationTime = Date.now();
 const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
-const boardCanvas = document.getElementById(CANVAS.ELEMEMT_ID);
+const boardCanvas = document.getElementById(CANVAS.ELEMENT_ID);
 const canvasContext = boardCanvas.getContext(CANVAS.CONTEXT);
 
 function start() {

@@ -1,10 +1,9 @@
 import { Cell } from "./cell.js";
 import { Index } from "./index.js";
 export class Board {
-  INIT_COLUMN = 0;
-  INIT_ROW = 0;
-
   constructor(columns, rows) {
+    this.INIT_COLUMN = 0;
+    this.INIT_ROW = 0;
     this.columns = columns;
     this.rows = rows;
     this._createBoard();
