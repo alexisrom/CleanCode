@@ -1,11 +1,11 @@
-import { GAME } from "./config/game.js";
 import { CANVAS } from "./config/canvas.js";
+import { GAME } from "./config/game.js";
 import { Board } from "./database/board.js";
 import { Index } from "./database/index.js";
 const initializationTime = Date.now();
 const board = new Board(GAME.BOARD_COLUMNS, GAME.BOARD_ROWS);
-const boardCanvas = document.getElementById("gameCanvas");
-const canvasContext = boardCanvas.getContext("2d");
+const boardCanvas = document.getElementById(CANVAS.ELEMEMT_ID);
+const canvasContext = boardCanvas.getContext(CANVAS.CONTEXT);
 
 function start() {
   initializeBoard();
@@ -61,12 +61,14 @@ function updateStatus(cell) {
   cell.status.generation++;
 }
 function countLifeAround(cell, index, board) {
+  const previous = -1;
+  const next = 2;
   cell.lifeAround = 0;
-  for (let x = -1; x < 2; x++) {
-    for (let y = -1; y < 2; y++) {
+  for (let xStep = previous; xStep < next; xStep++) {
+    for (let yStep = previous; yStep < next; yStep++) {
       const neighborIndex = new Index(
-        index.column + x,
-        index.row + y
+        index.column + xStep,
+        index.row + yStep
       );
       cell.lifeAround += countIfNeighborIsAlive(
         neighborIndex,
@@ -85,10 +87,10 @@ function countIfNeighborIsAlive(neighborIndex, board) {
   if (board.isOnBoard(neighborIndex)) {
     const neighbor = board.getItem(neighborIndex);
     if (isCellAlive(neighbor)) {
-      return 1;
+      return GAME.ALIVE;
     }
   }
-  return 0;
+  return GAME.DEAD;
 }
 function generateFromDeadCell(cell) {
   if (mustBorn(cell)) {
@@ -128,8 +130,8 @@ function setUpCanvas() {
 function clearCanvas() {
   canvasContext.fillStyle = CANVAS.DEAD_COLOR;
   canvasContext.fillRect(
-    0,
-    0,
+    CANVAS.INIT_WIDTH,
+    CANVAS.INIT_HEIGHT,
     boardCanvas.width,
     boardCanvas.height
   );

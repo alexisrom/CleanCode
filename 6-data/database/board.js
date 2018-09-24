@@ -1,6 +1,9 @@
-import { Index } from "./index.js";
 import { Cell } from "./cell.js";
+import { Index } from "./index.js";
 export class Board {
+  INIT_COLUMN = 0;
+  INIT_ROW = 0;
+
   constructor(columns, rows) {
     this.columns = columns;
     this.rows = rows;
@@ -17,9 +20,9 @@ export class Board {
   isOnBoard(index) {
     const columns = this._board.length;
     return (
-      index.column >= 0 &&
+      index.column >= this.INIT_COLUMN &&
       index.column < this._board.length &&
-      index.row >= 0 &&
+      index.row >= this.INIT_ROW &&
       index.row < this._board[columns - 1].length
     );
   }
@@ -40,9 +43,13 @@ export class Board {
 
   _createBoard() {
     this._board = [];
-    for (var column = 0; column < this.columns; column++) {
+    for (
+      let column = this.INIT_COLUMN;
+      column < this.columns;
+      column++
+    ) {
       this._board[column] = [];
-      for (var row = 0; row < this.rows; row++) {
+      for (var row = this.INIT_ROW; row < this.rows; row++) {
         const index = new Index(column, row);
         const newCell = new Cell(index);
         this.setItem(newCell);
