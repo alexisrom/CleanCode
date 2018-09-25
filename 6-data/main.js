@@ -87,10 +87,10 @@ function countIfNeighborIsAlive(neighborIndex, board) {
   if (board.isOnBoard(neighborIndex)) {
     const neighbor = board.getItem(neighborIndex);
     if (isCellAlive(neighbor)) {
-      return GAME.IS_ALIVE;
+      return 1;
     }
   }
-  return GAME.IS_DEAD;
+  return 0;
 }
 function generateFromDeadCell(cell) {
   if (mustBorn(cell)) {

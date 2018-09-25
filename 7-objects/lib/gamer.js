@@ -38,12 +38,14 @@ export class Gamer {
     }
   }
   countLifeAround(cell, index, board) {
+    const previous = -1;
+    const next = 2;
     cell.lifeAround = 0;
-    for (let x = -1; x < 2; x++) {
-      for (let y = -1; y < 2; y++) {
+    for (let xStep = previous; xStep < next; xStep++) {
+      for (let yStep = previous; yStep < next; yStep++) {
         const neighborIndex = new Index(
-          index.column + x,
-          index.row + y
+          index.column + xStep,
+          index.row + yStep
         );
         cell.lifeAround += this.countIfNeighborIsAlive(
           neighborIndex,
@@ -91,15 +93,15 @@ export class Gamer {
     );
   }
   isCellAlive(cell) {
-    return cell.status.current === GAME.ALIVE;
+    return cell.status.current === GAME.IS_ALIVE;
   }
   isCellDead(cell) {
-    return cell.status.current === GAME.DEAD;
+    return cell.status.current === GAME.IS_DEAD;
   }
   setCellAlive(cell) {
-    cell.status.next = GAME.ALIVE;
+    cell.status.next = GAME.IS_ALIVE;
   }
   setCellDead(cell) {
-    cell.status.next = GAME.DEAD;
+    cell.status.next = GAME.IS_DEAD;
   }
 }

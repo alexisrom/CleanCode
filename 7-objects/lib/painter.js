@@ -1,9 +1,13 @@
-import { GAME } from "../config/game.js";
 import { CANVAS } from "../config/canvas.js";
+import { GAME } from "../config/game.js";
 export class Painter {
   constructor() {
-    this.boardCanvas = document.getElementById("gameCanvas");
-    this.canvasContext = this.boardCanvas.getContext("2d");
+    this.boardCanvas = document.getElementById(
+      CANVAS.ELEMENT_ID
+    );
+    this.canvasContext = this.boardCanvas.getContext(
+      CANVAS.CONTEXT
+    );
     this.setUpCanvas();
   }
 
@@ -23,10 +27,15 @@ export class Painter {
     const context = this.canvasContext;
     const canvas = this.boardCanvas;
     context.fillStyle = CANVAS.DEAD_COLOR;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(
+      CANVAS.INIT_WIDTH,
+      CANVAS.INIT_HEIGHT,
+      canvas.width,
+      canvas.height
+    );
   }
   fillCell(cell, index) {
-    if (cell.status.current === GAME.ALIVE) {
+    if (cell.status.current === GAME.IS_ALIVE) {
       this.fillLivingCell(index.column, index.row);
     }
   }

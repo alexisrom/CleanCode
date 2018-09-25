@@ -48,7 +48,7 @@ export class Board {
       column++
     ) {
       this._board[column] = [];
-      for (var row = this.INIT_ROW; row < this.rows; row++) {
+      for (let row = this.INIT_ROW; row < this.rows; row++) {
         const index = new Index(column, row);
         const newCell = new Cell(index);
         this.setItem(newCell);

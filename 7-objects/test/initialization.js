@@ -59,8 +59,8 @@ function testBoard(main, board) {
     console.groupEnd();
     function isValueOK(value) {
       return (
-        value === main.CONFIG.ALIVE ||
-        value === main.CONFIG.DEAD
+        value === main.CONFIG.IS_ALIVE ||
+        value === main.CONFIG.IS_DEAD
       );
     }
   }
