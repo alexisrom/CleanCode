@@ -1,9 +1,9 @@
 const MINUTE_MS = 60 * 1000;
 export const GAME = {
-  ALIVE: 1,
+  IS_ALIVE: 1,
   BOARD_COLUMNS: 140,
   BOARD_ROWS: 70,
-  DEAD: 0,
+  IS_DEAD: 0,
   DELAY_MS: 50,
   LIFE_PROBABILITY: 0.44,
   LIVE_GAME_MS: MINUTE_MS,

@@ -5,12 +5,14 @@ export class Counter {
   }
 
   countLifeAround(item, index, board) {
+    const previous = -1;
+    const next = 2;
     item.lifeAround = 0;
-    for (let x = -1; x < 2; x++) {
-      for (let y = -1; y < 2; y++) {
+    for (let xStep = previous; xStep < next; xStep++) {
+      for (let yStep = previous; yStep < next; yStep++) {
         const neighborIndex = new Index(
-          index.column + x,
-          index.row + y
+          index.column + xStep,
+          index.row + yStep
         );
         item.lifeAround += this._countIfNeighborIsAlive(
           neighborIndex,

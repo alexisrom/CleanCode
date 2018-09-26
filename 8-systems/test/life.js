@@ -11,7 +11,7 @@ function testIteration(main, iteration) {
   main.board.forEach(testCell);
   console.groupEnd();
   function testCell(cell) {
-    if (cell.status.former == main.CONFIG.DEAD) {
+    if (cell.status.former == main.CONFIG.IS_DEAD) {
       testTransitionForDead();
     } else {
       testTransitionForAlive();
@@ -22,7 +22,7 @@ function testIteration(main, iteration) {
         cell.lifeAround == main.CONFIG.REPRODUCTION_POPULATION
       ) {
         console.assert(
-          cell.status.current == main.CONFIG.ALIVE,
+          cell.status.current == main.CONFIG.IS_ALIVE,
           {
             message: "should have born",
             cell
@@ -30,7 +30,7 @@ function testIteration(main, iteration) {
         );
       } else {
         console.assert(
-          cell.status.current == main.CONFIG.DEAD,
+          cell.status.current == main.CONFIG.IS_DEAD,
           {
             message: "should keep dead",
             cell
@@ -44,7 +44,7 @@ function testIteration(main, iteration) {
         cell.lifeAround > main.CONFIG.OVER_POPULATION
       ) {
         console.assert(
-          cell.status.current == main.CONFIG.DEAD,
+          cell.status.current == main.CONFIG.IS_DEAD,
           {
             message: "should die",
             cell
@@ -52,7 +52,7 @@ function testIteration(main, iteration) {
         );
       } else {
         console.assert(
-          cell.status.current == main.CONFIG.ALIVE,
+          cell.status.current == main.CONFIG.IS_ALIVE,
           {
             message: "should keep alive",
             cell
