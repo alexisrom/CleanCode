@@ -4,10 +4,10 @@ export class Executor {
   }
 
   setDead(item) {
-    item.status.next = this._config.DEAD;
+    item.status.next = this._config.IS_DEAD;
   }
   setAlive(item) {
-    item.status.next = this._config.ALIVE;
+    item.status.next = this._config.IS_ALIVE;
   }
   updateStatus(item) {
     item.status.former = item.status.current;

@@ -4,10 +4,10 @@ export class Judge {
   }
 
   isAlive(item) {
-    return item.status.current === this._config.ALIVE;
+    return item.status.current === this._config.IS_ALIVE;
   }
   isDead(item) {
-    return item.status.current === this._config.DEAD;
+    return item.status.current === this._config.IS_DEAD;
   }
   canBorn() {
     const randomProbability = Math.random();
