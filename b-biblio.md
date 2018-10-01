@@ -1,8 +1,8 @@
 # b- BIBLIO
 
-> TO DO. WIP
-
 ## Biblioteca de referencia
+
+> TO DO. WIP
 
 > "Si la depuración es el proceso de eliminar errores, entonces la programación debe ser el proceso de ponerlos".
 >

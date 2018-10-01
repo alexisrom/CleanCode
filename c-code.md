@@ -1,10 +1,8 @@
 # c- CODE
 
-> TO DO. WIP
-
-Prácticas
-
 ## Prácticas propuestas
+
+> TO DO. WIP
 
 > "Si la depuración es el proceso de eliminar errores, entonces la programación debe ser el proceso de ponerlos".
 >
