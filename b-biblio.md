@@ -2,36 +2,37 @@
 
 ## Biblioteca de referencia
 
-> TO DO. WIP
+[10 consejos para programadores JS](https://blog.usejournal.com/10-things-you-will-eventually-learn-about-javascript-projects-efd7646b958a)
 
-> "Si la depuración es el proceso de eliminar errores, entonces la programación debe ser el proceso de ponerlos".
->
-> -- _E. W. Dijkstra_.
+[10 buenas prácticas para código más legible](https://dev.to/gonedark/10-practices-for-readable-code-143a)
 
----
+[Refactoring GURÚ. Incluye La biblia de los patrones de diseño](https://refactoring.guru/)
 
-### Código excepcionalmente robusto
+[Malos olores comunes en el código](https://dev.to/apium_hub/code-smells-that-are-found-the-most-aal)
 
-#### En desarrollo
+[4 consejos fundamentales de código limpio](https://engineering.videoblocks.com/these-four-clean-code-tips-will-dramatically-improve-your-engineering-teams-productivity-b5bd121dd150)
 
-- Detección temprana de errores con herramientas y tests.
-- Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
+[Refactorizar en JS](https://medium.com/@amartinezaguilar6/aprendiendo-a-refactorizar-en-javascript-consejos-y-pautas-4452bcb6890c)
 
-#### En ejecución
+[Video: 10 consejos de Código Limpio](https://www.youtube.com/watch?v=UjhX2sVf0eg)
 
-- Recuperar mucha información técnica para el diagnóstico.
-- Pero informar al usaurio en el tono adecuado.
-- Dar una pista para la siguiente acción.
+### Programación Orientada a objetos
 
-![No veo errores](./no-bug.jpg)
+[Programación Orientada a objetos en JS](https://hackernoon.com/the-little-guide-for-poo-in-js-3cfff83ad095)
 
-> "Code smells.".
->
-> -- _Martin Fowler_.
+[Patrones de diseño básicos](https://medium.com/launch-school/javascript-weekly-fundamental-object-design-patterns-31453f68427f)
 
-- Detectar y eliminar los Malos Olores
+[Principios SOLID](http://asiermarques.com/2018/principios-solid/)
 
----
+[Design Patterns for Humans](https://github.com/sohamkamani/javascript-design-patterns-for-humans)
+
+### Condicionales
+
+[Muerte al if/else](https://itnext.io/how-we-avoided-if-else-and-wrote-extendable-code-with-strategy-pattern-256e34b90caf)
+
+[5 trucos para mejorar los condicionales en JS](https://scotch.io/tutorials/5-tips-to-write-better-conditionals-in-javascript)
+
+[Video: reducir if/else en PHP](https://www.youtube.com/watch?v=ldqDpmMkXgw)
 
 > "Duplication is the primary enemy of a well-designed system"
 

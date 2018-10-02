@@ -21,6 +21,8 @@
 - Pero informar al usaurio en el tono adecuado.
 - Dar una pista para la siguiente acción.
 
+> [How to Write Good Error Messages](https://uxplanet.org/how-to-write-good-error-messages-858e4551cd4)
+
 ![No veo errores](./no-bug.jpg)
 
 > "Code smells.".
