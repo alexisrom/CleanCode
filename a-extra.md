@@ -41,7 +41,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente ->](./d-end.md)
+- [Siguiente ->](./a-biblio.md)
 
 - [<- Vuelta al índice ](./)
 

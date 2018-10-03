@@ -18,6 +18,8 @@
 
 ### Programación Orientada a objetos
 
+[Intro to OOP](https://dev.to/rainerhahnekamp/javascript-and-object-oriented-programming-55k6)
+
 [Programación Orientada a objetos en JS](https://hackernoon.com/the-little-guide-for-poo-in-js-3cfff83ad095)
 
 [Patrones de diseño básicos](https://medium.com/launch-school/javascript-weekly-fundamental-object-design-patterns-31453f68427f)
@@ -42,7 +44,7 @@
 >
 > -- _Robert C. Martin_
 
-- [Siguiente ->](./b-end.md)
+- [Siguiente ->](./c-code.md)
 
 - [<- Vuelta al índice ](./)
 
