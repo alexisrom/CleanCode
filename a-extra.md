@@ -15,6 +15,10 @@
 - Detección temprana de errores con herramientas y tests.
 - Diferenciar entre lo improbale, lo excepcional y lo incorrecto.
 
+> "There are two ways to write error-free programs; only the third one works.".
+>
+> -- _Alan Perlis_.
+
 #### En ejecución
 
 - Recuperar mucha información técnica para el diagnóstico.

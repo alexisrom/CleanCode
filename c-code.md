@@ -1,11 +1,23 @@
 # c- CODE
 
-## Prácticas propuestas
+> "Programar bien es escribir bien".
+>
+> -- _John Shore_.
 
-[Game of Life](https://editor.p5js.org/p5/sketches/B1Yl4eJQOm)
-[Code snippets](https://30secondsofcode.org/)
-[Algoritmos y estructuras de datos](https://github.com/trekhleb/javascript-algorithms)
-[Más algoritmos...](https://github.com/mgechev/javascript-algorithms)
+---
+
+> "Es mucho más fácil hablar de código que escribir código".
+>
+> -- _John O'Nolan_.
+
+![How to Draw a Horse](./draw_horse.jpg)
+
+## Ejemplos y prácticas propuestas
+
+- [Game of Life](https://editor.p5js.org/p5/sketches/B1Yl4eJQOm)
+- [Code snippets](https://30secondsofcode.org/)
+- [Algoritmos y estructuras de datos](https://github.com/trekhleb/javascript-algorithms)
+- [Más algoritmos...](https://github.com/mgechev/javascript-algorithms)
 
 > "Duplication is the primary enemy of a well-designed system"
 
