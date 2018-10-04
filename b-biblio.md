@@ -2,6 +2,8 @@
 
 ## Biblioteca de referencia
 
+### Consejos y trucos
+
 [10 consejos para programadores JS](https://blog.usejournal.com/10-things-you-will-eventually-learn-about-javascript-projects-efd7646b958a)
 
 [10 buenas prácticas para código más legible](https://dev.to/gonedark/10-practices-for-readable-code-143a)

@@ -83,10 +83,20 @@ Escribir programas para ser leídos, entendidos y mejorados es un difícil arte 
 - Código excepcionalmente robusto
 - Malos olores
 
-## b- END [Artesanía del software](./b-end.md)
+## b- BIBLIO [Biblioteca de referencia](./b-biblio.md)
 
-- Manifiesto del artesano
-- Disciplina
+- Consejos y trucos
+- Programación Orientada a objetos
+
+## c- CODE [Ejemplos y prácticas propuestas](./c-code.md)
+
+- Código excepcionalmente robusto
+- Malos olores
+
+## d- END [Artesanía del software](./d-end.md)
+
+- Algoritmos
+- Fragmentos
 
 > "La verdad sólo se encuentra en un lugar: el código"
 >
